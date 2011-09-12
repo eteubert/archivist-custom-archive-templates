@@ -32,6 +32,7 @@ THE SOFTWARE.
 // FIXME: find a name without "podcast" and remove all podcast references
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
+// TODO: support german language
 
 define('PA_CSS_DEFAULT', '
 .podcast_archive_wrapper .permalink {

@@ -168,16 +168,18 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		public function shortcode( $atts )
 		{
 			extract( shortcode_atts( array(
+				'query'		=> '',
 				'category'	=> '',
-				'tag'		=> ''
+				'tag'		=> '',
 			), $atts ) );			
 			
-			if ( $category !== '' ) {
+			if ( $query !== '' ) {
+				return $this->display_by_query( $query );
+			} elseif ( $category !== '' ) {
 				return $this->display_by_category( $category );
 			} else {
 				return $this->display_by_tag( $tag );
 			}
-			
 		}
 		
 		public function register_settings()
@@ -259,31 +261,34 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		
 		public function display_by_category( $category )
 		{
-			global $post;
-			
 			$parameters = array(
 				'posts_per_page'	=> -1,
 				'category_name'		=> $category
 			);
-			$query = new WP_Query( $parameters );
+			$loop = new WP_Query( $parameters );
 			
-			return $this->display_by_query( $query );
+			return $this->display_by_loop( $loop );
 		}
 		
 		public function display_by_tag( $tag )
 		{
-			global $post;
-			
 			$parameters = array(
 				'posts_per_page'	=> -1,
 				'tag'				=> $tag
 			);
-			$query = new WP_Query( $parameters );
+			$loop = new WP_Query( $parameters );
 			
-			return $this->display_by_query( $query );
+			return $this->display_by_loop( $loop );
 		}
 		
-		private function display_by_query( $query )
+		public function display_by_query( $query )
+		{
+			$loop = new WP_Query( $query );
+			
+			return $this->display_by_loop( $loop );
+		}
+		
+		private function display_by_loop( $loop )
 		{
 			$template = get_option( 'podcast_archive_template', PA_TEMPLATE_DEFAULT );
 			$template_before = get_option( 'podcast_archive_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
@@ -301,8 +306,8 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 				<?php endif ?>
 				
 				<?php echo $template_before; ?>
-				<?php while ( $query->have_posts() ) : ?>
-					<?php $query->the_post(); ?>
+				<?php while ( $loop->have_posts() ) : ?>
+					<?php $loop->the_post(); ?>
 					<?php echo $this->render_element( $post, $template ); ?>
 				<?php endwhile; ?>
 				<?php echo $template_after; ?>

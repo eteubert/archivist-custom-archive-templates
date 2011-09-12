@@ -1,12 +1,12 @@
 === Plugin Name ===
 Contributors: eteubert
 Donate link: http://FarBeyondProgramming.com/
-Tags: podcast, archive, loop, shortcode
+Tags: archive, loop, shortcode, category, tag, custom, query, template, html, customizable
 Requires at least: 3.0
 Tested up to: 3.2.1
 Stable tag: trunk
 
-Shortcode Plugin to display a Podcast Archive by category or tag.
+Shortcode Plugin to display an archive by category, tag or custom query. Customizable via HTML templates.
 
 == Description ==
 
@@ -40,6 +40,19 @@ Use HTML and any of the following template placeholders.
 - `%DATE|...%` - The post date with custom format. Example: `%DATE|Y/m/d%`
 - `%POST_THUMBNAIL|...x...%` - The post thumbnail with certain dimensions. Example: `%POST_THUMBNAIL|75x75%`
 - `%COMMENTS%` - The post comment count.
+
+Are you feeling bold? Is filtering by category or archive not satisfying you? Read on, I've got a challenge for you.
+WordPress uses a certain query syntax to define the so called loop which is used to display the archive.
+You can find the complete documentation at http://codex.wordpress.org/Class_Reference/WP_Query 
+and you can take advantage of every single parameter or combination of parameters listed there. Some examples:
+
+	[podcast-archive-page query="year=1984&author_name=gorwell"]
+	
+Lists all entries from the year `1984` by the author with `user_nicename` `gorwell`.
+
+	[podcast-archive-page query="tag=straw+mask&post_status=private&orderby=comment_count&order=DESC"]
+	
+Losts all entries marked with post status `private` which are tagged with both `straw` and `mask`, ordered by the amount of comments in a descending order.
 
 == Installation ==
 

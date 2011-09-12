@@ -9,33 +9,42 @@ Author URI: ericteubert@googlemail.com
 */
 
 define('PA_CSS_DEFAULT', '
-.podcast_archive_wrapper {
-	
+.podcast_archive_wrapper .permalink {
+	font-weight: bold;
 }
 
-.podcast_archive_wrapper .thumbnail {
-	float: left;
+.podcast_archive_wrapper td {
+	vertical-align: top;
+}
+
+.podcast_archive_wrapper img {
+	padding: 5px
 }');
 
 define('PA_TEMPLATE_DEFAULT', '
-<div class="podcast_archive_element">
-	<div class="thumbnail">%POST_THUMBNAIL|75x75%</div>
-	<div class="head_info">
-		<span class="episode_id">%POST_META|episode_id%</span> - <span class="release_date">%POST_META|release_date%</span>
-	</div>
-	<div class="title">
-		<a href="%PERMALINK%">%TITLE%</a>
-	</div>
-	<div class="excerpt">
-		%EXCERPT%
-	</div>
-	<div class="duration">
-		%POST_META|duration%
-	</div>
-</div>');
+<tr>
+	<td>%POST_THUMBNAIL|50x50%</td>
+	<td>
+		<a href="%PERMALINK%" class="permalink">%TITLE%</a> <br/>
+		<em>%DATE%</em> by <em>%AUTHOR%</em> <br/>
+		Filed as: %CATEGORIES|, %
+	</td>
+</tr>');
 
-define( 'PA_TEMPLATE_BEFORE_DEFAULT', '' );
-define( 'PA_TEMPLATE_AFTER_DEFAULT', '' );
+define( 'PA_TEMPLATE_BEFORE_DEFAULT', '
+<table>
+	<thead>
+		<tr>
+			<th>Thumb</th>
+			<th>Title</th>
+		</tr>
+	</thead>
+	<tbody>
+' );
+define( 'PA_TEMPLATE_AFTER_DEFAULT', '
+	</tbody>
+</table>
+' );
 
 function podcast_archive_page_options()
 {

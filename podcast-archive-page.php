@@ -135,16 +135,25 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
 			$template = str_replace( '%POST_META|duration%', get_post_meta( $post->ID, 'duration', true ), $template );
 			
+			// custom date format
 			$template = preg_replace_callback(
 			    '/%DATE\|(.*)%/',
 			    create_function(
-			      // hier sind entweder einfache Anführungszeichen nötig
-			      // oder alternativ die Maskierung aller $ als \$
-			      '$treffer',
-			      'return get_the_date($treffer[1]);'
-			    ),
-			    $template
-			  );
+					'$treffer',
+					'return get_the_date($treffer[1]);'
+				),
+			 	$template
+			 );
+			
+			// custom post thumbnails
+			$template = preg_replace_callback(
+			    '/%POST_THUMBNAIL\|(\d+)x(\d+)%/',
+			    create_function(
+					'$treffer',
+					'return get_the_post_thumbnail( $post->ID, array( $treffer[1], $treffer[2] ) );'
+				),
+			 	$template
+			 );
 			
 			return $template;
 		}

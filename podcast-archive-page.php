@@ -3,7 +3,7 @@
 Plugin Name: Podcast Archive Page
 Plugin URI: 
 Description: Shortcode Plugin to display a Podcast Archive by category
-Version: 0.1
+Version: 0.9
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -28,6 +28,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
+// TODO: enable filtering by tags
 
 define('PA_CSS_DEFAULT', '
 .podcast_archive_wrapper .permalink {

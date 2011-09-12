@@ -8,11 +8,16 @@ Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 */
 
-function podcast_archive_page_options()
-{
-	$template = get_option( 'podcast_archive_template' );
-	if ( ! $template ) {
-		$template = '
+define('PA_CSS_DEFAULT', '
+.podcast_archive_wrapper {
+	
+}
+
+.podcast_archive_wrapper .thumbnail {
+	float: left;
+}');
+
+define('PA_TEMPLATE_DEFAULT', '
 <div class="podcast_archive_element">
 	<div class="thumbnail">%POST_THUMBNAIL|75x75%</div>
 	<div class="head_info">
@@ -27,25 +32,17 @@ function podcast_archive_page_options()
 	<div class="duration">
 		%POST_META|duration%
 	</div>
-</div>
-		';
-	}
-	
-	$css = get_option( 'podcast_archive_css' );
-	if ( ! $css ) {
-		$css = '
-.podcast_archive_wrapper {
-	
-}
+</div>');
 
-.podcast_archive_wrapper .thumbnail {
-	float: left;
-}
-		';
-	}
-	
-	$template_before = get_option( 'podcast_archive_template_before' );
-	$template_after = get_option( 'podcast_archive_template_after' );
+define('PA_TEMPLATE_BEFORE_DEFAULT', '');
+define('PA_TEMPLATE_AFTER_DEFAULT', '');
+
+function podcast_archive_page_options()
+{
+	$template = get_option( 'podcast_archive_template', PA_TEMPLATE_DEFAULT );
+	$css = get_option( 'podcast_archive_css', PA_CSS_DEFAULT );
+	$template_before = get_option( 'podcast_archive_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
+	$template_after = get_option( 'podcast_archive_template_after', PA_TEMPLATE_AFTER_DEFAULT );
 	?>
 	
 	<div class="wrap">
@@ -168,9 +165,9 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			);
 			$query = new WP_Query( $parameters );
 			
-			$template = get_option( 'podcast_archive_template' );
-			$template_before = get_option( 'podcast_archive_template_before' );
-			$template_after = get_option( 'podcast_archive_template_after' );
+			$template = get_option( 'podcast_archive_template', PA_TEMPLATE_DEFAULT );
+			$template_before = get_option( 'podcast_archive_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
+			$template_after = get_option( 'podcast_archive_template_after', PA_TEMPLATE_AFTER_DEFAULT );
 
 			ob_start();
 			?>

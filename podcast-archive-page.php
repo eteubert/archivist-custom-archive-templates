@@ -30,7 +30,6 @@ THE SOFTWARE.
 */
 
 // FIXME: find a name without "podcast" and remove all podcast references
-// TODO: enable filtering by tags
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
 

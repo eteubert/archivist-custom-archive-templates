@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Archivist - Custom Archive Templates\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-14 10:49+0100\n"
-"PO-Revision-Date: 2011-09-14 10:57+0100\n"
+"PO-Revision-Date: 2011-09-14 11:04+0100\n"
 "Last-Translator: Eric Teubert <ericteubert@googlemail.com>\n"
 "Language-Team: Eric Teubert <ericteubert@googlemail.com>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Template"
 
 #: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:103
 msgid "Before"
-msgstr "Vorher"
+msgstr "Davor"
 
 #: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:105
 msgid "Add HTML to be displayed before the archive loop."

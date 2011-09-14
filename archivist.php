@@ -109,22 +109,21 @@ function archivist_options()
 			<h4><?php echo __( 'Element', 'archivist' ) ?></h4>
 			<div class="inline-pre">
 				<p>
-					<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.
+					<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', 'archivist' ) ?>
 					<br/><br/>
-				  	<pre>%TITLE%</pre> - The post title. <br/>
-				  	<pre>%PERMALINK%</pre> - The post permalink. <br/>
-				  	<pre>%AUTHOR%</pre> - The post author. <br/>
-				  	<pre>%CATEGORIES%</pre> - The post categories as unordered list. <br/>
-				  	<pre>%CATEGORIES|...%</pre> - The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre> <br/>
-				  	<pre>%TAGS%</pre> - The post tags with default separator. <br/>
-				  	<pre>%TAGS|...%</pre> - The post tags with a custom separator. Example: <pre>%TAGS|, %</pre> <br/>
-				  	<pre>%EXCERPT%</pre> - The post excerpt. <br/>
-				  	<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%POST_META|duration%</pre> <br/>
-				  	<pre>%DATE%</pre> - The post date with default format. <br/>
-				  	<pre>%DATE|...%</pre> - The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre> <br/>
-				  	<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>
-				  	<pre>%COMMENTS%</pre> - The post comment count. <br/>
-					', 'archivist' ) ?>
+				  	<pre>%TITLE%</pre> - <?php echo __( 'The post title.', 'archivist' ) ?> <br/>
+				  	<pre>%PERMALINK%</pre> - <?php echo __( 'The post permalink.', 'archivist' ) ?> <br/>
+				  	<pre>%AUTHOR%</pre> - <?php echo __( 'The post author.', 'archivist' ) ?> <br/>
+				  	<pre>%CATEGORIES%</pre> - <?php echo __( 'The post categories as unordered list.', 'archivist' ) ?> <br/>
+				  	<pre>%CATEGORIES|...%</pre> - <?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', 'archivist' ) ?> <br/>
+				  	<pre>%TAGS%</pre> - <?php echo __( 'The post tags with default separator.', 'archivist' ) ?> <br/>
+				  	<pre>%TAGS|...%</pre> - <?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', 'archivist' ) ?> <br/>
+				  	<pre>%EXCERPT%</pre> - <?php echo __( 'The post excerpt.', 'archivist' ) ?> <br/>
+				  	<pre>%POST_META|...%</pre> - <?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', 'archivist' ) ?> <br/>
+				  	<pre>%DATE%</pre> - <?php echo __( 'The post date with default format.', 'archivist' ) ?> <br/>
+				  	<pre>%DATE|...%</pre> - <?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', 'archivist' ) ?> <br/>
+				  	<pre>%POST_THUMBNAIL|...x...%</pre> - <?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', 'archivist' ) ?> <br/>
+				  	<pre>%COMMENTS%</pre> - <?php echo __( 'The post comment count.', 'archivist' ) ?> <br/>
 				</p>
 			</div>
 			<textarea name="archivist_template" rows="16" cols="80"><?php echo $template ?></textarea>
@@ -191,7 +190,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		
 		public function add_menu_entry()
 		{
-			add_submenu_page( 'options-general.php', 'Archivist', 'Archivist', 'edit_post', 'archivist_options', 'archivist_options' );
+			add_submenu_page( 'options-general.php', 'Archivist', 'Archivist', 'edit_post', 'archivist_options_handle', 'archivist_options' );
 		}
 		
 		function render_element( $post, $template )
@@ -332,7 +331,8 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
  
 		public function load_textdomain() {
-			load_plugin_textdomain( $this->get_textdomain(), FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+			$plugin_dir = basename(dirname(__FILE__));
+			load_plugin_textdomain( $this->get_textdomain(), FALSE, $plugin_dir . '/languages' );
 		}
  
 		private function get_plugin_data( $value = 'Version' ) {

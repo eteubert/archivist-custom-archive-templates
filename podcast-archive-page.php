@@ -172,16 +172,24 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			$template = get_option( 'podcast_archive_template', PA_TEMPLATE_DEFAULT );
 			$template_before = get_option( 'podcast_archive_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
 			$template_after = get_option( 'podcast_archive_template_after', PA_TEMPLATE_AFTER_DEFAULT );
+			$css = get_option( 'podcast_archive_css', PA_CSS_DEFAULT );
 
 			ob_start();
 			?>
 			<div class="podcast_archive_wrapper">
-			<?php echo $template_before; ?>
-			<?php while ( $query->have_posts() ) : ?>
-				<?php $query->the_post(); ?>
-				<?php echo $this->render_element( $post, $template ); ?>
-			<?php endwhile; ?>
-			<?php echo $template_after; ?>
+				
+				<?php if ( $css ): ?>
+					<style type="text/css" media="screen">
+						<?php echo $css ?>
+					</style>
+				<?php endif ?>
+				
+				<?php echo $template_before; ?>
+				<?php while ( $query->have_posts() ) : ?>
+					<?php $query->the_post(); ?>
+					<?php echo $this->render_element( $post, $template ); ?>
+				<?php endwhile; ?>
+				<?php echo $template_after; ?>
 			</div>
 			<?php
 			$content = ob_get_contents();

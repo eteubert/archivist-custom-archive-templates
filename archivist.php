@@ -31,7 +31,6 @@ THE SOFTWARE.
 
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
-// TODO: beautify backend
 
 define('PA_CSS_DEFAULT', '
 .archivist_wrapper .permalink {

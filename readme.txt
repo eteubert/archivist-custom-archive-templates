@@ -80,6 +80,10 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.1.0 =
+* add fallback thumbnail
+* new options page
+
 = 1.0.1 =
 * fix typos
 

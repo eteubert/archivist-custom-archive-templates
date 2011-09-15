@@ -80,10 +80,10 @@ function podcast_archive_page_options()
 				  	<pre>%TITLE%</pre> - The post title. <br/>
 				  	<pre>%PERMALINK%</pre> - The post permalink. <br/>
 				  	<pre>%AUTHOR%</pre> - The post author. <br/>
-				  	<pre>%CATEGORY%</pre> - The post categories as unordered list. <br/>
-				  	<pre>%CATEGORY|...%</pre> - The post categories with a custom separator. Example: <pre>%CATEGORY|, %</pre> <br/>
-				  	<pre>%TAG%</pre> - The post tags with default separator. <br/>
-				  	<pre>%TAG|...%</pre> - The post tags with a custom separator. Example: <pre>%TAG|, %</pre> <br/>
+				  	<pre>%CATEGORIES%</pre> - The post categories as unordered list. <br/>
+				  	<pre>%CATEGORIES|...%</pre> - The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre> <br/>
+				  	<pre>%TAGS%</pre> - The post tags with default separator. <br/>
+				  	<pre>%TAGS|...%</pre> - The post tags with a custom separator. Example: <pre>%TAGS|, %</pre> <br/>
 				  	<pre>%EXCERPT%</pre> - The post excerpt. <br/>
 				  	<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%POST_META|duration%</pre> <br/>
 				  	<pre>%DATE%</pre> - The post date with default format. <br/>
@@ -155,8 +155,8 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		function render_element( $post, $template )
 		{
 			$template = str_replace( '%AUTHOR%', get_the_author(), $template );
-			$template = str_replace( '%CATEGORY%', get_the_category_list(), $template );
-			$template = str_replace( '%TAG%', get_the_tag_list(), $template );
+			$template = str_replace( '%CATEGORIES%', get_the_category_list(), $template );
+			$template = str_replace( '%TAGS%', get_the_tag_list(), $template );
 			$template = str_replace( '%DATE%', get_the_date(), $template );
 			$template = str_replace( '%TITLE%', get_the_title(), $template );
 			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
@@ -165,7 +165,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 
 			// categories with custom separator
 			$template = preg_replace_callback(
-			    '/%TAG\|(.*)%/',
+			    '/%TAGS\|(.*)%/',
 			    create_function(
 					'$matches',
 					'return get_the_tag_list( "", $matches[1], "" );'
@@ -175,7 +175,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 
 			// categories with custom separator
 			$template = preg_replace_callback(
-			    '/%CATEGORY\|(.*)%/',
+			    '/%CATEGORIES\|(.*)%/',
 			    create_function(
 					'$matches',
 					'return get_the_category_list( $matches[1] );'

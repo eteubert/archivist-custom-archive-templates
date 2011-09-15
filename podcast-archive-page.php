@@ -116,9 +116,12 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		
 		function render_element( $post, $template )
 		{
+			// TODO: custom date form
+			$template = str_replace( '%DATE%', get_the_date(), $template );
 			$template = str_replace( '%TITLE%', get_the_title(), $template );
 			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
 			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
+			$template = str_replace( '%POST_META|duration%', get_post_meta( $post->ID, 'duration', true ), $template );
 			
 			return $template;
 		}

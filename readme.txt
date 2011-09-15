@@ -52,7 +52,7 @@ Lists all entries from the year `1984` by the author with `user_nicename` `gorwe
 
 	[archivist query="tag=straw+mask&post_status=private&orderby=comment_count&order=DESC"]
 	
-Losts all entries marked with post status `private` which are tagged with both `straw` and `mask`, ordered by the amount of comments in a descending order.
+Lists all entries marked with post status `private` which are tagged with both `straw` and `mask`, ordered by the amount of comments in a descending order.
 
 == Installation ==
 

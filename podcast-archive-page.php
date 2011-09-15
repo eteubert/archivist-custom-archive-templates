@@ -29,7 +29,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+// FIXME: find a name without "podcast" and remove all podcast references
 // TODO: enable filtering by tags
+// TODO: enable multiple archive templates
+// TODO: enable import & export of templates
 
 define('PA_CSS_DEFAULT', '
 .podcast_archive_wrapper .permalink {

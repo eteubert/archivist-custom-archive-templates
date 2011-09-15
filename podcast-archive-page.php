@@ -34,8 +34,8 @@ define('PA_TEMPLATE_DEFAULT', '
 	</div>
 </div>');
 
-define('PA_TEMPLATE_BEFORE_DEFAULT', '');
-define('PA_TEMPLATE_AFTER_DEFAULT', '');
+define( 'PA_TEMPLATE_BEFORE_DEFAULT', '' );
+define( 'PA_TEMPLATE_AFTER_DEFAULT', '' );
 
 function podcast_archive_page_options()
 {
@@ -47,25 +47,43 @@ function podcast_archive_page_options()
 	
 	<div class="wrap">
 		<div id="icon-options-general" class="icon32"></div>
-		<h2><?php echo __( 'Podcast Archive Options', 'podcast_archive' ) ?></h2>
+		<h2><?php echo __( 'Podcast Archive Options', 'podcast_archive_page' ) ?></h2>
 		
 		<form action="options.php" method="post">
 			<?php settings_fields( 'podcast-archive-option-group' ); ?>
 			<?php do_settings_fields( 'podcast-archive-option-group' ); ?>
 			
-			<h3><?php echo __( 'Custom CSS', 'podcast_archive' ) ?></h3>
+			<h3><?php echo __( 'Custom CSS', 'podcast_archive_page' ) ?></h3>
 			
 			<textarea name="podcast_archive_css" rows="16" cols="80"><?php echo $css ?></textarea>
 			
-			<h3><?php echo __( 'Template', 'podcast_archive' ) ?></h3>
+			<h3><?php echo __( 'Template', 'podcast_archive_page' ) ?></h3>
 
-			<h4>Before</h4>
+			<h4><?php echo __( 'Before', 'podcast_archive_page' ) ?></h4>
+			<p>
+				<?php echo __( 'Add HTML to be displayed before the archive loop.', 'podcast_archive_page' ) ?>
+			</p>
 			<textarea name="podcast_archive_template_before" rows="6" cols="80"><?php echo $template_before ?></textarea>
 			
-			<h4>Element</h4>
+			<h4><?php echo __( 'Element', 'podcast_archive_page' ) ?></h4>
+			<p>
+				<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.
+				<br/><br/>
+			  	<strong>%TITLE%</strong> - The post title. <br/>
+			  	<strong>%PERMALINK%</strong> - The post permalink. <br/>
+			  	<strong>%EXCERPT%</strong> - The post excerpt. <br/>
+			  	<strong>%POST_META|...%</strong> - Any post meta. Example: <em>%POST_META|duration%</em> <br/>
+			  	<strong>%DATE%</strong> - The post date with default format. <br/>
+			  	<strong>%DATE|...%</strong> - The post date with custom format. Example: <em>%DATE|Y/m/d%</em> <br/>
+			  	<strong>%POST_THUMBNAIL|...x...%</strong> - The post thumbnail with certain dimensions. Example: <em>%POST_THUMBNAIL|75x75%</em> <br/>
+				', 'podcast_archive_page' ) ?>
+			</p>
 			<textarea name="podcast_archive_template" rows="16" cols="80"><?php echo $template ?></textarea>
 			
-			<h4>After</h4>
+			<h4><?php echo __( 'After', 'podcast_archive_page' ) ?></h4>
+			<p>
+				<?php echo __( 'Add HTML to be displayed after the archive loop.', 'podcast_archive_page' ) ?>
+			</p>
 			<textarea name="podcast_archive_template_after" rows="6" cols="80"><?php echo $template_after ?></textarea>
 			
 			<p class="submit">
@@ -87,7 +105,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 	class podcast_archive_page {
  
 		static private $classobj = NULL;
-		public $textdomain = 'textdomain-podcast_archive_page';
+		public $textdomain = 'podcast_archive_page';
  
 		public function __construct() {
 			$this->load_textdomain();

@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Archivist - Custom Archive Templates\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-14 10:49+0100\n"
+"PO-Revision-Date: 2011-09-14 10:57+0100\n"
+"Last-Translator: Eric Teubert <ericteubert@googlemail.com>\n"
+"Language-Team: Eric Teubert <ericteubert@googlemail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: /Users/ericteubert/code/archivist-custom-archive-templates\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: Germany\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: /Users/ericteubert/code/archivist-custom-archive-templates\n"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:91
+msgid "Archivist Options"
+msgstr "Archivist Optionen"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:97
+msgid "Custom CSS"
+msgstr "Eigenes CSS"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:101
+msgid "Template"
+msgstr "Template"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:103
+msgid "Before"
+msgstr "Vorher"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:105
+msgid "Add HTML to be displayed before the archive loop."
+msgstr "Dieses HTML wird vor dem Archiv-Block dargestellt."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:109
+msgid "Element"
+msgstr "Element"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:112
+msgid "Add HTML for each archive element. Use placeholder tags to display post data."
+msgstr "Dieses HTML wird benutzt, um ein einzelnes Archiv-Element darzustellen. Benutze Platzhalter, um Artikel-spezifische Daten anzuzeigen."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:114
+msgid "The post title."
+msgstr "Der Titel des Artikels."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:115
+msgid "The post permalink."
+msgstr "Der Permalink des Artikels."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:116
+msgid "The post author."
+msgstr "Der Autor des Artikels."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:117
+msgid "The post categories as unordered list."
+msgstr "Die Kategorien des Artikels als ungeordnete Liste."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:118
+msgid "The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>"
+msgstr "Die Kategorien des Artikels mit benutzerdefiniertem Trennzeichen. Beispiel: <pre>%CATEGORIES|, %</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:119
+msgid "The post tags with default separator."
+msgstr "Die Tags des Artikels mit dem Standard Trennzeichen."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:120
+msgid "The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>"
+msgstr "Die Tags des Artikels mit definiertem Trennzeichen. Beispiel: <pre>%TAGS|, %</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:121
+msgid "The post excerpt."
+msgstr "Der Artikel Auszug."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:122
+msgid "Any post meta. Example: <pre>%POST_META|duration%</pre>"
+msgstr "Ein benutzerdefiniertes Feld eines Artikels. Beispiel: <pre>%POST_META|duration%</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:123
+msgid "The post date with default format."
+msgstr "Das Datum des Artikels im Standarformat."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:124
+msgid "The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>"
+msgstr "Das Datum mit benutzerdefiniertem Format. Beispiel: <pre>%DATE|Y/m/d%</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:125
+msgid "The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>"
+msgstr "Das Artikelbild mit benutzerdefinierter Höhe und Breite. Beispiel: <pre>%POST_THUMBNAIL|75x75%</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:126
+msgid "The post comment count."
+msgstr "Die Kommentaranzahl des Artikels."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:131
+msgid "After"
+msgstr "Danach"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:133
+msgid "Add HTML to be displayed after the archive loop."
+msgstr "Dieses HTML wird nach dem Archiv-Block dargestellt."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:138
+msgid "Save Changes"
+msgstr ""
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:353
+msgid "Sorry, This plugin requires WordPress 3.0+"
+msgstr "Whops, das Plugin benötigt mindestens WordPress 3.0."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:359
+#, php-format
+msgid "Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>."
+msgstr "Whops, dieses Plugin benutzt Features aus PHP 5.3.0. Dein Server läuft im Moment auf PHP %2s. Bitte deinen Hoster freundlich, auf eine aktuelle PHP Version (die auch weniger Fehler und weniger Sicherheitslücken enthält) umzusteigen. PHP 5.3.0 gibt es seit Sommer 2009, es wird also höchste Zeit!"
+
+#~ msgid ""
+#~ "Add HTML for each archive element. Use placeholder tags to display post "
+#~ "data.\n"
+#~ "\t\t\t\t\t<br/><br/>\n"
+#~ "\t\t\t\t  \t<pre>%TITLE%</pre> - The post title. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%PERMALINK%</pre> - The post permalink. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%AUTHOR%</pre> - The post author. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES%</pre> - The post categories as unordered "
+#~ "list. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES|...%</pre> - The post categories with a "
+#~ "custom separator. Example: <pre>%CATEGORIES|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%TAGS%</pre> - The post tags with default separator. <br/"
+#~ ">\n"
+#~ "\t\t\t\t  \t<pre>%TAGS|...%</pre> - The post tags with a custom "
+#~ "separator. Example: <pre>%TAGS|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%EXCERPT%</pre> - The post excerpt. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%"
+#~ "POST_META|duration%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE%</pre> - The post date with default format. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE|...%</pre> - The post date with custom format. "
+#~ "Example: <pre>%DATE|Y/m/d%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with "
+#~ "certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%COMMENTS%</pre> - The post comment count. <br/>\n"
+#~ "\t\t\t\t\t"
+#~ msgstr ""
+#~ "Dieses HTML wird benutzt, um ein einzelnes Archiv-Element darzustellen. "
+#~ "Benutze Platzhalter, um Artikel-spezifische Daten anzuzeigen.\n"
+#~ "\t\t\t\t\t<br/><br/>\n"
+#~ "\t\t\t\t  \t<pre>%TITLE%</pre> - Der Titel des Artikels. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%PERMALINK%</pre> - Der Permalink des Artikels. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%AUTHOR%</pre> - Der Autor des Artikels. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES%</pre> - Die Kategorien des Artikels als "
+#~ "ungeordnete Liste. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES|...%</pre> - Die Kategorien des Artikels mit "
+#~ "definiertem Trennzeichen. Beispiel: <pre>%CATEGORIES|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%TAGS%</pre> - Die Tags des Artikels mit dem Standard "
+#~ "Trennzeichen. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%TAGS|...%</pre> - Die Tags des Artikels mit definiertem "
+#~ "Trennzeichen. Beispiel: <pre>%TAGS|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%EXCERPT%</pre> - The post excerpt. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%"
+#~ "POST_META|duration%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE%</pre> - The post date with default format. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE|...%</pre> - The post date with custom format. "
+#~ "Example: <pre>%DATE|Y/m/d%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with "
+#~ "certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%COMMENTS%</pre> - The post comment count. <br/>\n"
+#~ "\t\t\t\t\t"

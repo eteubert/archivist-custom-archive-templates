@@ -2,7 +2,7 @@
 /*
 Plugin Name: Podcast Archive Page
 Plugin URI: 
-Description: Shortcode Plugin to display a Podcast Archive by category
+Description: Shortcode Plugin to display an archive by category, tag or custom query.
 Version: 0.9
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com

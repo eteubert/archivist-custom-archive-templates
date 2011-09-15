@@ -130,8 +130,8 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			$template = preg_replace_callback(
 			    '/%POST_META\|(.*)%/',
 			    create_function(
-					'$treffer',
-					'global $post; return get_post_meta( $post->ID, "$treffer[1]", true );'
+					'$matches',
+					'global $post; return get_post_meta( $post->ID, "$matches[1]", true );'
 				),
 			 	$template
 			 );			
@@ -140,8 +140,8 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			$template = preg_replace_callback(
 			    '/%DATE\|(.*)%/',
 			    create_function(
-					'$treffer',
-					'return get_the_date($treffer[1]);'
+					'$matches',
+					'return get_the_date($matches[1]);'
 				),
 			 	$template
 			 );
@@ -150,8 +150,8 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			$template = preg_replace_callback(
 			    '/%POST_THUMBNAIL\|(\d+)x(\d+)%/',
 			    create_function(
-					'$treffer',
-					'return get_the_post_thumbnail( $post->ID, array( $treffer[1], $treffer[2] ) );'
+					'$matches',
+					'return get_the_post_thumbnail( $post->ID, array( $matches[1], $matches[2] ) );'
 				),
 			 	$template
 			 );

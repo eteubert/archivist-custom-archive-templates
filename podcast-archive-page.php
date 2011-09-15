@@ -10,7 +10,14 @@ Author URI: ericteubert@googlemail.com
 
 function podcast_archive_page_options()
 {
-	echo "Foo Bar";
+?>
+	<div class="wrap">
+	  <h2><?php echo __( 'Podcast Archive Options', 'podcast_archive' ) ?></h2>
+
+	  
+
+	</div>
+<?php
 }
 
 if ( ! class_exists( 'podcast_archive_page' ) ) {
@@ -71,7 +78,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 							<?php endif ?>
 						</td>
 						<td>
-							<?php the_title(); ?>
+							<a href="<?php the_permalink() ?>"><?php the_title(); ?></a>
 						</td>
 						<td>
 							<?php if ( get_post_meta( $post->ID, 'duration', true ) ): ?>

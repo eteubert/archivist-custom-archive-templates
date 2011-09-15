@@ -80,9 +80,16 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.0 =
+* change name to Archivist - "Custom Archive Templates"
+* change shortcode
+
 = 0.9 =
 * It's alive!
 
 == Upgrade Notice ==
+
+= 0.9 to 1.0 =
+* change your shortcodes to [archivist ...]
 
 No updates yet. Be ready to upgrade to 1.0 once it's available.

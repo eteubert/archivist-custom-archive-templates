@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.2.1
 Stable tag: trunk
 
-Shortcode Plugin to display a Podcast Archive by category.
+Shortcode Plugin to display a Podcast Archive by category or tag.
 
 == Description ==
 
@@ -16,9 +16,10 @@ The plugin assumes your podcasts are well categorized.
 To display the archive, use the shortcode anywhere in a page or article.
 
 	[podcast-archive-page category="podcast"]
+	[podcast-archive-page tag="podcast"]
 
-Replace "podcast" with your category. Watch out, we need the slug here.
-That's the category name without capital letters and spaces.
+Replace "podcast" with your category/tag. Watch out, we need the slug here.
+That's the name without capital letters and spaces.
 
 = Specifics =
 

@@ -168,10 +168,16 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		public function shortcode( $atts )
 		{
 			extract( shortcode_atts( array(
-				'category' => 'podcast',
-			), $atts ) );
-
-			return $this->display_by_category( $category );
+				'category'	=> '',
+				'tag'		=> ''
+			), $atts ) );			
+			
+			if ( $category !== '' ) {
+				return $this->display_by_category( $category );
+			} else {
+				return $this->display_by_tag( $tag );
+			}
+			
 		}
 		
 		public function register_settings()
@@ -261,6 +267,24 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			);
 			$query = new WP_Query( $parameters );
 			
+			return $this->display_by_query( $query );
+		}
+		
+		public function display_by_tag( $tag )
+		{
+			global $post;
+			
+			$parameters = array(
+				'posts_per_page'	=> -1,
+				'tag'				=> $tag
+			);
+			$query = new WP_Query( $parameters );
+			
+			return $this->display_by_query( $query );
+		}
+		
+		private function display_by_query( $query )
+		{
 			$template = get_option( 'podcast_archive_template', PA_TEMPLATE_DEFAULT );
 			$template_before = get_option( 'podcast_archive_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
 			$template_after = get_option( 'podcast_archive_template_after', PA_TEMPLATE_AFTER_DEFAULT );

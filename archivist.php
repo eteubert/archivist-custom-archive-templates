@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
-// TODO: support german language
+// TODO: fallback thumbnail
 
 define('PA_CSS_DEFAULT', '
 .archivist_wrapper .permalink {

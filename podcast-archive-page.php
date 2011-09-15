@@ -89,6 +89,7 @@ function podcast_archive_page_options()
 				  	<pre>%DATE%</pre> - The post date with default format. <br/>
 				  	<pre>%DATE|...%</pre> - The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre> <br/>
 				  	<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>
+				  	<pre>%COMMENTS%</pre> - The post comment count. <br/>
 					', 'podcast_archive_page' ) ?>
 				</p>
 			</div>
@@ -160,6 +161,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			$template = str_replace( '%TITLE%', get_the_title(), $template );
 			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
 			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
+			$template = str_replace( '%COMMENTS%', get_comments_number(), $template );
 
 			// categories with custom separator
 			$template = preg_replace_callback(

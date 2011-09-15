@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Archivist - Custom Archive Templates ===
 Contributors: eteubert
 Donate link: http://FarBeyondProgramming.com/
 Tags: archive, loop, shortcode, category, tag, custom, query, template, html, customizable
@@ -12,19 +12,19 @@ Shortcode Plugin to display an archive by category, tag or custom query. Customi
 
 = Quick Start =
 
-The plugin assumes your podcasts are well categorized.
+The plugin assumes your articles are well categorized.
 To display the archive, use the shortcode anywhere in a page or article.
 
-	[podcast-archive-page category="podcast"]
-	[podcast-archive-page tag="podcast"]
+	[archivist category="kitten"]
+	[archivist tag="kitten"]
 
-Replace "podcast" with your category/tag. Watch out, we need the slug here.
+Replace "kitten" with your category/tag. Watch out, we need the slug here.
 That's the name without capital letters and spaces.
 
 = Specifics =
 
 You can specify a custom template to display the archive elements.
-Go to `Preferences > Podcast Archive` for plugin preferences.
+Go to `Preferences > Archivist` for plugin preferences.
 Use HTML and any of the following template placeholders.
 
 - `%TITLE%` - The post title.
@@ -46,19 +46,19 @@ WordPress uses a certain query syntax to define the so called loop which is used
 You can find the complete documentation at http://codex.wordpress.org/Class_Reference/WP_Query 
 and you can take advantage of every single parameter or combination of parameters listed there. Some examples:
 
-	[podcast-archive-page query="year=1984&author_name=gorwell"]
+	[archivist query="year=1984&author_name=gorwell"]
 	
 Lists all entries from the year `1984` by the author with `user_nicename` `gorwell`.
 
-	[podcast-archive-page query="tag=straw+mask&post_status=private&orderby=comment_count&order=DESC"]
+	[archivist query="tag=straw+mask&post_status=private&orderby=comment_count&order=DESC"]
 	
 Losts all entries marked with post status `private` which are tagged with both `straw` and `mask`, ordered by the amount of comments in a descending order.
 
 == Installation ==
 
-1. Upload the `podcast-archive-page` directory to the `/wp-content/plugins/` directory
+1. Upload the `archivist` directory to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `[podcast-archive-page category="podcast"]` in your archive post or page
+1. Place `[archivist category="kitten"]` in your archive post or page
 
 == Frequently Asked Questions ==
 
@@ -71,7 +71,7 @@ Please ask your hoster to update, kindly.
 = Can I help to add a feature? =
 
 That would be awesome!
-Visit https://github.com/eteubert/Podcast-Archive-Page, fork the project, add your feature and create a Pull Request. I'll be happy to review and add your changes.
+Visit https://github.com/eteubert/archivist, fork the project, add your feature and create a Pull Request. I'll be happy to review and add your changes.
 
 == Screenshots ==
 

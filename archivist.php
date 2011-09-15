@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Podcast Archive Page
+Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: 
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
 Version: 0.9
@@ -29,24 +29,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// FIXME: find a name without "podcast" and remove all podcast references
-// -- archive, custom template, simple, customizable, minimalistic, loop, present, display, list
-// -- Customizable Archive Lists [hmph ...]
-// -- Archivist - Templateable Archives
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
 // TODO: support german language
 
 define('PA_CSS_DEFAULT', '
-.podcast_archive_wrapper .permalink {
+.archivist_wrapper .permalink {
 	font-weight: bold;
 }
 
-.podcast_archive_wrapper td {
+.archivist_wrapper td {
 	vertical-align: top;
 }
 
-.podcast_archive_wrapper img {
+.archivist_wrapper img {
 	padding: 5px
 }');
 
@@ -75,12 +71,12 @@ define( 'PA_TEMPLATE_AFTER_DEFAULT', '
 </table>
 ' );
 
-function podcast_archive_page_options()
+function archivist_options()
 {
-	$template = get_option( 'podcast_archive_template', PA_TEMPLATE_DEFAULT );
-	$css = get_option( 'podcast_archive_css', PA_CSS_DEFAULT );
-	$template_before = get_option( 'podcast_archive_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
-	$template_after = get_option( 'podcast_archive_template_after', PA_TEMPLATE_AFTER_DEFAULT );
+	$template = get_option( 'archivist_template', PA_TEMPLATE_DEFAULT );
+	$css = get_option( 'archivist_css', PA_CSS_DEFAULT );
+	$template_before = get_option( 'archivist_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
+	$template_after = get_option( 'archivist_template_after', PA_TEMPLATE_AFTER_DEFAULT );
 	?>
 	
 	<!-- TODO: extra css file -->
@@ -92,25 +88,25 @@ function podcast_archive_page_options()
 	
 	<div class="wrap">
 		<div id="icon-options-general" class="icon32"></div>
-		<h2><?php echo __( 'Podcast Archive Options', 'podcast_archive_page' ) ?></h2>
+		<h2><?php echo __( 'Archivist Options', 'archivist' ) ?></h2>
 		
 		<form action="options.php" method="post">
-			<?php settings_fields( 'podcast-archive-option-group' ); ?>
-			<?php do_settings_fields( 'podcast-archive-option-group' ); ?>
+			<?php settings_fields( 'archivist-option-group' ); ?>
+			<?php do_settings_fields( 'archivist-option-group' ); ?>
 			
-			<h3><?php echo __( 'Custom CSS', 'podcast_archive_page' ) ?></h3>
+			<h3><?php echo __( 'Custom CSS', 'archivist' ) ?></h3>
 			
-			<textarea name="podcast_archive_css" rows="16" cols="80"><?php echo $css ?></textarea>
+			<textarea name="archivist_css" rows="16" cols="80"><?php echo $css ?></textarea>
 			
-			<h3><?php echo __( 'Template', 'podcast_archive_page' ) ?></h3>
+			<h3><?php echo __( 'Template', 'archivist' ) ?></h3>
 
-			<h4><?php echo __( 'Before', 'podcast_archive_page' ) ?></h4>
+			<h4><?php echo __( 'Before', 'archivist' ) ?></h4>
 			<p>
-				<?php echo __( 'Add HTML to be displayed before the archive loop.', 'podcast_archive_page' ) ?>
+				<?php echo __( 'Add HTML to be displayed before the archive loop.', 'archivist' ) ?>
 			</p>
-			<textarea name="podcast_archive_template_before" rows="6" cols="80"><?php echo $template_before ?></textarea>
+			<textarea name="archivist_template_before" rows="6" cols="80"><?php echo $template_before ?></textarea>
 			
-			<h4><?php echo __( 'Element', 'podcast_archive_page' ) ?></h4>
+			<h4><?php echo __( 'Element', 'archivist' ) ?></h4>
 			<div class="inline-pre">
 				<p>
 					<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.
@@ -128,16 +124,16 @@ function podcast_archive_page_options()
 				  	<pre>%DATE|...%</pre> - The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre> <br/>
 				  	<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>
 				  	<pre>%COMMENTS%</pre> - The post comment count. <br/>
-					', 'podcast_archive_page' ) ?>
+					', 'archivist' ) ?>
 				</p>
 			</div>
-			<textarea name="podcast_archive_template" rows="16" cols="80"><?php echo $template ?></textarea>
+			<textarea name="archivist_template" rows="16" cols="80"><?php echo $template ?></textarea>
 			
-			<h4><?php echo __( 'After', 'podcast_archive_page' ) ?></h4>
+			<h4><?php echo __( 'After', 'archivist' ) ?></h4>
 			<p>
-				<?php echo __( 'Add HTML to be displayed after the archive loop.', 'podcast_archive_page' ) ?>
+				<?php echo __( 'Add HTML to be displayed after the archive loop.', 'archivist' ) ?>
 			</p>
-			<textarea name="podcast_archive_template_after" rows="6" cols="80"><?php echo $template_after ?></textarea>
+			<textarea name="archivist_template_after" rows="6" cols="80"><?php echo $template_after ?></textarea>
 			
 			<p class="submit">
 				<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
@@ -148,21 +144,21 @@ function podcast_archive_page_options()
 <?php
 }
 
-if ( ! class_exists( 'podcast_archive_page' ) ) {
+if ( ! class_exists( 'archivist' ) ) {
  
 	if ( function_exists( 'add_action' ) && function_exists( 'register_activation_hook' ) ) {
-		add_action( 'plugins_loaded', array( 'podcast_archive_page', 'get_object' ) );
-		register_activation_hook( __FILE__, array( 'podcast_archive_page', 'activation_hook' ) );
+		add_action( 'plugins_loaded', array( 'archivist', 'get_object' ) );
+		register_activation_hook( __FILE__, array( 'archivist', 'activation_hook' ) );
 	}
 
-	class podcast_archive_page {
+	class archivist {
  
 		static private $classobj = NULL;
-		public $textdomain = 'podcast_archive_page';
+		public $textdomain = 'archivist';
  
 		public function __construct() {
 			$this->load_textdomain();
-			add_shortcode( 'podcast-archive-page', array( $this, 'shortcode' ) );
+			add_shortcode( 'archivist', array( $this, 'shortcode' ) );
 			
 			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
@@ -187,15 +183,15 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		
 		public function register_settings()
 		{
-			register_setting( 'podcast-archive-option-group', 'podcast_archive_template' );
-			register_setting( 'podcast-archive-option-group', 'podcast_archive_template_before' );
-			register_setting( 'podcast-archive-option-group', 'podcast_archive_template_after' );
-			register_setting( 'podcast-archive-option-group', 'podcast_archive_css' );
+			register_setting( 'archivist-option-group', 'archivist_template' );
+			register_setting( 'archivist-option-group', 'archivist_template_before' );
+			register_setting( 'archivist-option-group', 'archivist_template_after' );
+			register_setting( 'archivist-option-group', 'archivist_css' );
 		}
 		
 		public function add_menu_entry()
 		{
-			add_submenu_page( 'options-general.php', 'Podcast Archive', 'Podcast Archive', 'edit_post', 'podcast-archive', 'podcast_archive_page_options' );
+			add_submenu_page( 'options-general.php', 'Archivist', 'Archivist', 'edit_post', 'archivist_options', 'archivist_options' );
 		}
 		
 		function render_element( $post, $template )
@@ -293,14 +289,14 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		
 		private function display_by_loop( $loop )
 		{
-			$template = get_option( 'podcast_archive_template', PA_TEMPLATE_DEFAULT );
-			$template_before = get_option( 'podcast_archive_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
-			$template_after = get_option( 'podcast_archive_template_after', PA_TEMPLATE_AFTER_DEFAULT );
-			$css = get_option( 'podcast_archive_css', PA_CSS_DEFAULT );
+			$template = get_option( 'archivist_template', PA_TEMPLATE_DEFAULT );
+			$template_before = get_option( 'archivist_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
+			$template_after = get_option( 'archivist_template_after', PA_TEMPLATE_AFTER_DEFAULT );
+			$css = get_option( 'archivist_css', PA_CSS_DEFAULT );
 
 			ob_start();
 			?>
-			<div class="podcast_archive_wrapper">
+			<div class="archivist_wrapper">
 				
 				<?php if ( $css ): ?>
 					<style type="text/css" media="screen">
@@ -348,7 +344,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			global $wp_version;
  
 			// Load Text-Domain
-			$obj = podcast_archive_page::get_object();
+			$obj = archivist::get_object();
 			$obj->load_textdomain();
  
 			// check wp version

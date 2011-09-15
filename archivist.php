@@ -312,69 +312,166 @@ if ( ! class_exists( 'archivist' ) ) {
 
 			<div class="wrap">
 				<div id="icon-options-general" class="icon32"></div>
-				<h2><?php echo __( 'Archivist Options', 'archivist' ) ?></h2>
+				<h2><?php echo __( 'Archivist Options', archivist::get_textdomain() ) ?></h2>
 
-				<form action="options.php" method="post">
-					<?php settings_fields( 'archivist-option-group' ); ?>
-					<?php do_settings_fields( 'archivist-option-group' ); ?>
-
-					<h3><?php echo __( 'Custom CSS', 'archivist' ) ?></h3>
-
-					<textarea name="archivist_css" rows="16" cols="80"><?php echo $css ?></textarea>
-
-					<h3><?php echo __( 'Template', 'archivist' ) ?></h3>
-
-					<h4><?php echo __( 'Before', 'archivist' ) ?></h4>
-					<p>
-						<?php echo __( 'Add HTML to be displayed before the archive loop.', 'archivist' ) ?>
-					</p>
-					<textarea name="archivist_template_before" rows="6" cols="80"><?php echo $template_before ?></textarea>
-
-					<h4><?php echo __( 'Element', 'archivist' ) ?></h4>
-					<div class="inline-pre">
-						<p>
-							<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', 'archivist' ) ?>
-							<br/><br/>
-						  	<pre>%TITLE%</pre> - <?php echo __( 'The post title.', 'archivist' ) ?> <br/>
-						  	<pre>%PERMALINK%</pre> - <?php echo __( 'The post permalink.', 'archivist' ) ?> <br/>
-						  	<pre>%AUTHOR%</pre> - <?php echo __( 'The post author.', 'archivist' ) ?> <br/>
-						  	<pre>%CATEGORIES%</pre> - <?php echo __( 'The post categories as unordered list.', 'archivist' ) ?> <br/>
-						  	<pre>%CATEGORIES|...%</pre> - <?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', 'archivist' ) ?> <br/>
-						  	<pre>%TAGS%</pre> - <?php echo __( 'The post tags with default separator.', 'archivist' ) ?> <br/>
-						  	<pre>%TAGS|...%</pre> - <?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', 'archivist' ) ?> <br/>
-						  	<pre>%EXCERPT%</pre> - <?php echo __( 'The post excerpt.', 'archivist' ) ?> <br/>
-						  	<pre>%POST_META|...%</pre> - <?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', 'archivist' ) ?> <br/>
-						  	<pre>%DATE%</pre> - <?php echo __( 'The post date with default format.', 'archivist' ) ?> <br/>
-						  	<pre>%DATE|...%</pre> - <?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', 'archivist' ) ?> <br/>
-						  	<pre>%POST_THUMBNAIL|...x...%</pre> - <?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', 'archivist' ) ?> <br/>
-						  	<pre>%COMMENTS%</pre> - <?php echo __( 'The post comment count.', 'archivist' ) ?> <br/>
-						</p>
-					</div>
-					<textarea name="archivist_template" rows="16" cols="80"><?php echo $template ?></textarea>
-
-					<h4><?php echo __( 'After', 'archivist' ) ?></h4>
-					<p>
-						<?php echo __( 'Add HTML to be displayed after the archive loop.', 'archivist' ) ?>
-					</p>
-					<textarea name="archivist_template_after" rows="6" cols="80"><?php echo $template_after ?></textarea>
-
-					<h4><?php echo __( 'Default Thumbnail url', 'archivist' ) ?></h4>
-					<div class="inline-pre">
-						<p>
-							<div>
-								<?php echo __( 'If you are using the <pre>%POST_THUMBNAIL|...x...%</pre> placeholder and the post has no thumbnail, then this image will be used.', 'archivist' ) ?>
+				<div id="poststuff" class="metabox-holder has-right-sidebar">
+					
+					<!-- Sidebar -->
+					<div id="side-info-column" class="inner-sidebar">
+						<div id="side-sortables" class="meta-box-sortables ui-sortable">
+							
+							<div id="wp-archivist-infobox" class="postbox">
+								<h3 class="hndle"><span><?php _e( 'Creator', archivist::get_textdomain() ); ?></span></h3>
+								<div class="inside">
+									<p>
+										<?php _e( 'Hey, I\'m Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer.', archivist::get_textdomain() ); ?>
+									</p>
+									<script type="text/javascript">
+									/* <![CDATA[ */
+									    (function() {
+									        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+									        s.type = 'text/javascript';
+									        s.async = true;
+									        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+									        t.parentNode.insertBefore(s, t);
+									    })();
+									/* ]]> */
+									</script>
+									<p>
+										<a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive"></a>
+										<noscript><a href="http://flattr.com/thing/396382/WordPress-Plugin-Archivist-Custom-Archive-Templates" target="_blank">
+										<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+									</p>
+									<p>
+										<?php echo wp_sprintf( __( 'Get in touch: Visit my <a href="%1s">Homepage</a>, follow me on <a href="%2s">Twitter</a> or look at my projects on <a href="%3s">GitHub</a>.', archivist::get_textdomain() ), 'http://www.FarBeyondProgramming.com/', 'http://www.twitter.com/ericteubert', 'https://github.com/eteubert' ) ?>
+									</p>
+								</div>
 							</div>
-						</p>	
-					</div>
+							
+							<div id="wp-archivist-placeholders" class="postbox">
+								<h3 class="hndle"><span><?php _e( 'Placeholders', archivist::get_textdomain() ); ?></span></h3>
+								<div class="inside">
+									<div class="inline-pre">
+										<p>
+										  	<pre>%TITLE%</pre><br/><?php echo __( 'The post title.', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%PERMALINK%</pre><br/><?php echo __( 'The post permalink.', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%AUTHOR%</pre><br/><?php echo __( 'The post author.', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%CATEGORIES%</pre><br/><?php echo __( 'The post categories as unordered list.', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%CATEGORIES|...%</pre><br/><?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%TAGS%</pre><br/><?php echo __( 'The post tags with default separator.', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%TAGS|...%</pre><br/><?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%EXCERPT%</pre><br/><?php echo __( 'The post excerpt.', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%POST_META|...%</pre><br/><?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%DATE%</pre><br/><?php echo __( 'The post date with default format.', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%DATE|...%</pre><br/><?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%POST_THUMBNAIL|...x...%</pre><br/><?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+										  	<pre>%COMMENTS%</pre><br/><?php echo __( 'The post comment count.', archivist::get_textdomain() ) ?> <br/>
+										</p>
+									</div>
 
-					<input type="text" name="archivist_default_thumb" value="<?php echo $default_thumb ?>" id="archivist_default_thumb" style="width:500px">
+								</div>
+							</div>
+							
+						</div> <!-- side-sortables -->
+					</div> <!-- side-info-column -->
 
-					<p class="submit">
-						<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
-					</p>
-				</form>
+					<!-- Main Column -->
+					<div id="post-body">
+						<div id="post-body-content">
+							<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+						
+								<div id="settings" class="postbox">
+									<h3 class="hndle"><span><?php _e( 'General Settings', archivist::get_textdomain() ); ?></span></h3>
+									<div class="inside">
+										<form action="options.php" method="post">
+											<?php settings_fields( 'archivist-option-group' ); ?>
+											<?php do_settings_fields( 'archivist-option-group' ); ?>
 
-			</div>
+
+											<table class="form-table">
+												<tbody>
+													<tr valign="top">
+														<th scope="row" colspan="2">
+															<h4><?php echo __( 'Template', archivist::get_textdomain() ) ?></h4>
+														</th>
+													</tr>
+													<tr>	
+														<th scope="row">
+															<?php echo __( 'Before', archivist::get_textdomain() ) ?>
+														</th>
+														<td valign="top">
+															<textarea name="archivist_template_before" rows="6" class="large-text"><?php echo $template_before ?></textarea>
+															<p>
+																<small><?php echo __( 'Add HTML to be displayed before the archive loop.', archivist::get_textdomain() ) ?></small>
+															</p>
+														</td>
+													</tr>
+													<tr>	
+														<th scope="row">
+															<?php echo __( 'Element', archivist::get_textdomain() ) ?>
+														</th>
+														<td valign="top">
+															<textarea name="archivist_template" rows="10" class="large-text"><?php echo $template ?></textarea>
+															<p>
+																<small><?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', archivist::get_textdomain() ) ?></small>
+															</p>
+														</td>
+													</tr>
+													<tr>	
+														<th scope="row">
+															<?php echo __( 'After', archivist::get_textdomain() ) ?>
+														</th>
+														<td valign="top">
+															<textarea name="archivist_template_after" rows="6" class="large-text"><?php echo $template_after ?></textarea>
+															<p>
+																<small><?php echo __( 'Add HTML to be displayed after the archive loop.', archivist::get_textdomain() ) ?></small>
+															</p>
+														</td>
+													</tr>
+													<tr valign="top">
+														<th scope="row" colspan="2">
+															<h4><?php echo __( 'Other', archivist::get_textdomain() ) ?></h4>
+														</th>
+													</tr>
+													<tr valign="top">
+														<th scope="row">
+															<?php echo __( 'Custom CSS', archivist::get_textdomain() ) ?>
+														</th>
+														<td>
+															<textarea name="archivist_css" rows="10" class="large-text"><?php echo $css ?></textarea>
+														</td>
+													</tr>
+													<tr>	
+														<th scope="row">
+															<?php echo __( 'Default Thumbnail url', archivist::get_textdomain() ) ?>
+														</th>
+														<td valign="top">
+															<input type="text" name="archivist_default_thumb" value="<?php echo $default_thumb ?>" id="archivist_default_thumb" class="large-text">
+															<p>
+																<small><?php echo __( 'If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used.', archivist::get_textdomain() ) ?></small>
+															</p>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+
+											<p class="submit">
+												<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
+											</p>
+											
+											<br class="clear" />
+											
+										</form>
+									</div> <!-- .inside -->
+									
+								</div> <!-- #settings -->
+								
+							</div> <!-- #normal-sortables -->
+						</div> <!-- #post-body-content -->
+					</div> <!-- #post-body -->
+					
+				</div> <!-- #poststuff -->
+			</div> <!-- .wrap -->
 		<?php
 		}
 	}

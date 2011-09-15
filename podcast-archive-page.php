@@ -45,6 +45,13 @@ function podcast_archive_page_options()
 	$template_after = get_option( 'podcast_archive_template_after', PA_TEMPLATE_AFTER_DEFAULT );
 	?>
 	
+	<!-- TODO: extra css file -->
+	<style type="text/css" media="screen">
+		.inline-pre pre {
+			display: inline !important;
+		}
+	</style>
+	
 	<div class="wrap">
 		<div id="icon-options-general" class="icon32"></div>
 		<h2><?php echo __( 'Podcast Archive Options', 'podcast_archive_page' ) ?></h2>
@@ -66,18 +73,20 @@ function podcast_archive_page_options()
 			<textarea name="podcast_archive_template_before" rows="6" cols="80"><?php echo $template_before ?></textarea>
 			
 			<h4><?php echo __( 'Element', 'podcast_archive_page' ) ?></h4>
-			<p>
-				<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.
-				<br/><br/>
-			  	<strong>%TITLE%</strong> - The post title. <br/>
-			  	<strong>%PERMALINK%</strong> - The post permalink. <br/>
-			  	<strong>%EXCERPT%</strong> - The post excerpt. <br/>
-			  	<strong>%POST_META|...%</strong> - Any post meta. Example: <em>%POST_META|duration%</em> <br/>
-			  	<strong>%DATE%</strong> - The post date with default format. <br/>
-			  	<strong>%DATE|...%</strong> - The post date with custom format. Example: <em>%DATE|Y/m/d%</em> <br/>
-			  	<strong>%POST_THUMBNAIL|...x...%</strong> - The post thumbnail with certain dimensions. Example: <em>%POST_THUMBNAIL|75x75%</em> <br/>
-				', 'podcast_archive_page' ) ?>
-			</p>
+			<div class="inline-pre">
+				<p>
+					<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.
+					<br/><br/>
+				  	<pre>%TITLE%</pre> - The post title. <br/>
+				  	<pre>%PERMALINK%</pre> - The post permalink. <br/>
+				  	<pre>%EXCERPT%</pre> - The post excerpt. <br/>
+				  	<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%POST_META|duration%</pre> <br/>
+				  	<pre>%DATE%</pre> - The post date with default format. <br/>
+				  	<pre>%DATE|...%</pre> - The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre> <br/>
+				  	<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>
+					', 'podcast_archive_page' ) ?>
+				</p>
+			</div>
 			<textarea name="podcast_archive_template" rows="16" cols="80"><?php echo $template ?></textarea>
 			
 			<h4><?php echo __( 'After', 'podcast_archive_page' ) ?></h4>

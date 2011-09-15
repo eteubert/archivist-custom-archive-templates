@@ -30,6 +30,9 @@ THE SOFTWARE.
 */
 
 // FIXME: find a name without "podcast" and remove all podcast references
+// -- archive, custom template, simple, customizable, minimalistic, loop, present, display, list
+// -- Customizable Archive Lists [hmph ...]
+// -- Archivist - Templateable Archives
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
 // TODO: support german language

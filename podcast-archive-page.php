@@ -80,6 +80,8 @@ function podcast_archive_page_options()
 				  	<pre>%TITLE%</pre> - The post title. <br/>
 				  	<pre>%PERMALINK%</pre> - The post permalink. <br/>
 				  	<pre>%AUTHOR%</pre> - The post author. <br/>
+				  	<pre>%CATEGORY%</pre> - The post categories as unordered list. <br/>
+				  	<pre>%CATEGORY|...%</pre> - The post categories with a custom separator. Example: <pre>%CATEGORY|, %</pre> <br/>
 				  	<pre>%EXCERPT%</pre> - The post excerpt. <br/>
 				  	<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%POST_META|duration%</pre> <br/>
 				  	<pre>%DATE%</pre> - The post date with default format. <br/>
@@ -150,10 +152,21 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		function render_element( $post, $template )
 		{
 			$template = str_replace( '%AUTHOR%', get_the_author(), $template );
+			$template = str_replace( '%CATEGORY%', get_the_category_list(), $template );
 			$template = str_replace( '%DATE%', get_the_date(), $template );
 			$template = str_replace( '%TITLE%', get_the_title(), $template );
 			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
 			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
+
+			// categories with custom separator
+			$template = preg_replace_callback(
+			    '/%CATEGORY\|(.*)%/',
+			    create_function(
+					'$matches',
+					'return get_the_category_list( $matches[1] );'
+				),
+			 	$template
+			 );
 
 			// custom post meta
 			$template = preg_replace_callback(

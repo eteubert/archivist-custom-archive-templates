@@ -24,7 +24,7 @@ That's the name without capital letters and spaces.
 = Specifics =
 
 You can specify a custom template to display the archive elements.
-Go to `Preferences > Archivist` for plugin preferences.
+Go to `Settings > Archivist` for plugin preferences.
 Use HTML and any of the following template placeholders.
 
 - `%TITLE%` - The post title.

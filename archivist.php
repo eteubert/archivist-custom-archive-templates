@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.0.1
+Version: 1.1.0
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
-// TODO: fallback thumbnail
+// TODO: beautify backend
 
 define('PA_CSS_DEFAULT', '
 .archivist_wrapper .permalink {
@@ -70,78 +70,7 @@ define( 'PA_TEMPLATE_AFTER_DEFAULT', '
 	</tbody>
 </table>
 ' );
-
-function archivist_options()
-{
-	$template = get_option( 'archivist_template', PA_TEMPLATE_DEFAULT );
-	$css = get_option( 'archivist_css', PA_CSS_DEFAULT );
-	$template_before = get_option( 'archivist_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
-	$template_after = get_option( 'archivist_template_after', PA_TEMPLATE_AFTER_DEFAULT );
-	?>
-	
-	<!-- TODO: extra css file -->
-	<style type="text/css" media="screen">
-		.inline-pre pre {
-			display: inline !important;
-		}
-	</style>
-	
-	<div class="wrap">
-		<div id="icon-options-general" class="icon32"></div>
-		<h2><?php echo __( 'Archivist Options', 'archivist' ) ?></h2>
-		
-		<form action="options.php" method="post">
-			<?php settings_fields( 'archivist-option-group' ); ?>
-			<?php do_settings_fields( 'archivist-option-group' ); ?>
-			
-			<h3><?php echo __( 'Custom CSS', 'archivist' ) ?></h3>
-			
-			<textarea name="archivist_css" rows="16" cols="80"><?php echo $css ?></textarea>
-			
-			<h3><?php echo __( 'Template', 'archivist' ) ?></h3>
-
-			<h4><?php echo __( 'Before', 'archivist' ) ?></h4>
-			<p>
-				<?php echo __( 'Add HTML to be displayed before the archive loop.', 'archivist' ) ?>
-			</p>
-			<textarea name="archivist_template_before" rows="6" cols="80"><?php echo $template_before ?></textarea>
-			
-			<h4><?php echo __( 'Element', 'archivist' ) ?></h4>
-			<div class="inline-pre">
-				<p>
-					<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', 'archivist' ) ?>
-					<br/><br/>
-				  	<pre>%TITLE%</pre> - <?php echo __( 'The post title.', 'archivist' ) ?> <br/>
-				  	<pre>%PERMALINK%</pre> - <?php echo __( 'The post permalink.', 'archivist' ) ?> <br/>
-				  	<pre>%AUTHOR%</pre> - <?php echo __( 'The post author.', 'archivist' ) ?> <br/>
-				  	<pre>%CATEGORIES%</pre> - <?php echo __( 'The post categories as unordered list.', 'archivist' ) ?> <br/>
-				  	<pre>%CATEGORIES|...%</pre> - <?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', 'archivist' ) ?> <br/>
-				  	<pre>%TAGS%</pre> - <?php echo __( 'The post tags with default separator.', 'archivist' ) ?> <br/>
-				  	<pre>%TAGS|...%</pre> - <?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', 'archivist' ) ?> <br/>
-				  	<pre>%EXCERPT%</pre> - <?php echo __( 'The post excerpt.', 'archivist' ) ?> <br/>
-				  	<pre>%POST_META|...%</pre> - <?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', 'archivist' ) ?> <br/>
-				  	<pre>%DATE%</pre> - <?php echo __( 'The post date with default format.', 'archivist' ) ?> <br/>
-				  	<pre>%DATE|...%</pre> - <?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', 'archivist' ) ?> <br/>
-				  	<pre>%POST_THUMBNAIL|...x...%</pre> - <?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', 'archivist' ) ?> <br/>
-				  	<pre>%COMMENTS%</pre> - <?php echo __( 'The post comment count.', 'archivist' ) ?> <br/>
-				</p>
-			</div>
-			<textarea name="archivist_template" rows="16" cols="80"><?php echo $template ?></textarea>
-			
-			<h4><?php echo __( 'After', 'archivist' ) ?></h4>
-			<p>
-				<?php echo __( 'Add HTML to be displayed after the archive loop.', 'archivist' ) ?>
-			</p>
-			<textarea name="archivist_template_after" rows="6" cols="80"><?php echo $template_after ?></textarea>
-			
-			<p class="submit">
-				<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
-			</p>
-		</form>
-
-	</div>
-<?php
-}
+define( 'PA_THUMB_DEFAULT', '' );
 
 if ( ! class_exists( 'archivist' ) ) {
  
@@ -163,8 +92,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 		}
 		
-		public function shortcode( $atts )
-		{
+		public function shortcode( $atts ) {
 			extract( shortcode_atts( array(
 				'query'		=> '',
 				'category'	=> '',
@@ -173,36 +101,36 @@ if ( ! class_exists( 'archivist' ) ) {
 			
 			if ( $query !== '' ) {
 				return $this->display_by_query( $query );
-			} elseif ( $category !== '' ) {
+			}
+			elseif ( $category !== '' ) {
 				return $this->display_by_category( $category );
-			} else {
+			}
+			else {
 				return $this->display_by_tag( $tag );
 			}
 		}
 		
-		public function register_settings()
-		{
-			register_setting( 'archivist-option-group', 'archivist_template' );
-			register_setting( 'archivist-option-group', 'archivist_template_before' );
-			register_setting( 'archivist-option-group', 'archivist_template_after' );
+		public function register_settings() {
 			register_setting( 'archivist-option-group', 'archivist_css' );
+			register_setting( 'archivist-option-group', 'archivist_template' );
+			register_setting( 'archivist-option-group', 'archivist_default_thumb' );
+			register_setting( 'archivist-option-group', 'archivist_template_after' );			
+			register_setting( 'archivist-option-group', 'archivist_template_before' );
 		}
 		
-		public function add_menu_entry()
-		{
-			add_submenu_page( 'options-general.php', 'Archivist', 'Archivist', 'edit_post', 'archivist_options_handle', 'archivist_options' );
+		public function add_menu_entry() {
+			add_submenu_page( 'options-general.php', 'Archivist', 'Archivist', 'edit_post', 'archivist_options_handle', array( $this, 'settings_page' ) );
 		}
 		
-		function render_element( $post, $template )
-		{
-			$template = str_replace( '%AUTHOR%', get_the_author(), $template );
-			$template = str_replace( '%CATEGORIES%', get_the_category_list(), $template );
-			$template = str_replace( '%TAGS%', get_the_tag_list(), $template );
+		function render_element( $post, $template ) {
 			$template = str_replace( '%DATE%', get_the_date(), $template );
 			$template = str_replace( '%TITLE%', get_the_title(), $template );
+			$template = str_replace( '%AUTHOR%', get_the_author(), $template );
+			$template = str_replace( '%TAGS%', get_the_tag_list(), $template );			
 			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
 			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
 			$template = str_replace( '%COMMENTS%', get_comments_number(), $template );
+			$template = str_replace( '%CATEGORIES%', get_the_category_list(), $template );
 
 			// categories with custom separator
 			$template = preg_replace_callback(
@@ -249,7 +177,18 @@ if ( ! class_exists( 'archivist' ) ) {
 			    '/%POST_THUMBNAIL\|(\d+)x(\d+)%/',
 			    create_function(
 					'$matches',
-					'return get_the_post_thumbnail( $post->ID, array( $matches[1], $matches[2] ) );'
+					'
+					$thumb = get_the_post_thumbnail( $post->ID, array( $matches[ 1 ], $matches[ 2 ] ) );
+					
+					
+					if ( ! $thumb ) {
+						$default_thumb = get_option( "archivist_default_thumb", PA_THUMB_DEFAULT );
+						if ( $default_thumb ) {
+							$thumb = "<img src=\"$default_thumb\" alt=\"Archive Thumb\" width=\"" . $matches[ 1 ] . "\" height=\"" . $matches[ 2 ] . "\">";
+						}
+					}
+					
+					return $thumb;'
 				),
 			 	$template
 			 );
@@ -257,41 +196,37 @@ if ( ! class_exists( 'archivist' ) ) {
 			return $template;
 		}
 		
-		public function display_by_category( $category )
-		{
+		public function display_by_category( $category ) {
 			$parameters = array(
-				'posts_per_page'	=> -1,
-				'category_name'		=> $category
+				'posts_per_page' => -1,
+				'category_name'  => $category
 			);
 			$loop = new WP_Query( $parameters );
 			
 			return $this->display_by_loop( $loop );
 		}
 		
-		public function display_by_tag( $tag )
-		{
+		public function display_by_tag( $tag ) {
 			$parameters = array(
-				'posts_per_page'	=> -1,
-				'tag'				=> $tag
+				'posts_per_page' => -1,
+				'tag'            => $tag
 			);
 			$loop = new WP_Query( $parameters );
 			
 			return $this->display_by_loop( $loop );
 		}
 		
-		public function display_by_query( $query )
-		{
+		public function display_by_query( $query ) {
 			$loop = new WP_Query( $query );
 			
 			return $this->display_by_loop( $loop );
 		}
 		
-		private function display_by_loop( $loop )
-		{
-			$template = get_option( 'archivist_template', PA_TEMPLATE_DEFAULT );
-			$template_before = get_option( 'archivist_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
-			$template_after = get_option( 'archivist_template_after', PA_TEMPLATE_AFTER_DEFAULT );
+		private function display_by_loop( $loop ) {
 			$css = get_option( 'archivist_css', PA_CSS_DEFAULT );
+			$template = get_option( 'archivist_template', PA_TEMPLATE_DEFAULT );
+			$template_after = get_option( 'archivist_template_after', PA_TEMPLATE_AFTER_DEFAULT );
+			$template_before = get_option( 'archivist_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
 
 			ob_start();
 			?>
@@ -358,6 +293,89 @@ if ( ! class_exists( 'archivist' ) ) {
 				deactivate_plugins( __FILE__ ); // Deactivate ourself
 				wp_die( wp_sprintf( '%1s: ' . __( 'Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>.', $obj->get_textdomain() ), self::get_plugin_data( 'Name' ), PHP_VERSION ) );
 			}
+		}
+		
+		function settings_page() {
+			$css = get_option( 'archivist_css', PA_CSS_DEFAULT );
+			$template = get_option( 'archivist_template', PA_TEMPLATE_DEFAULT );
+			$default_thumb = get_option( 'archivist_default_thumb', PA_THUMB_DEFAULT );
+			$template_after = get_option( 'archivist_template_after', PA_TEMPLATE_AFTER_DEFAULT );
+			$template_before = get_option( 'archivist_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
+			?>
+
+			<!-- TODO: extra css file -->
+			<style type="text/css" media="screen">
+				.inline-pre pre {
+					display: inline !important;
+				}
+			</style>
+
+			<div class="wrap">
+				<div id="icon-options-general" class="icon32"></div>
+				<h2><?php echo __( 'Archivist Options', 'archivist' ) ?></h2>
+
+				<form action="options.php" method="post">
+					<?php settings_fields( 'archivist-option-group' ); ?>
+					<?php do_settings_fields( 'archivist-option-group' ); ?>
+
+					<h3><?php echo __( 'Custom CSS', 'archivist' ) ?></h3>
+
+					<textarea name="archivist_css" rows="16" cols="80"><?php echo $css ?></textarea>
+
+					<h3><?php echo __( 'Template', 'archivist' ) ?></h3>
+
+					<h4><?php echo __( 'Before', 'archivist' ) ?></h4>
+					<p>
+						<?php echo __( 'Add HTML to be displayed before the archive loop.', 'archivist' ) ?>
+					</p>
+					<textarea name="archivist_template_before" rows="6" cols="80"><?php echo $template_before ?></textarea>
+
+					<h4><?php echo __( 'Element', 'archivist' ) ?></h4>
+					<div class="inline-pre">
+						<p>
+							<?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', 'archivist' ) ?>
+							<br/><br/>
+						  	<pre>%TITLE%</pre> - <?php echo __( 'The post title.', 'archivist' ) ?> <br/>
+						  	<pre>%PERMALINK%</pre> - <?php echo __( 'The post permalink.', 'archivist' ) ?> <br/>
+						  	<pre>%AUTHOR%</pre> - <?php echo __( 'The post author.', 'archivist' ) ?> <br/>
+						  	<pre>%CATEGORIES%</pre> - <?php echo __( 'The post categories as unordered list.', 'archivist' ) ?> <br/>
+						  	<pre>%CATEGORIES|...%</pre> - <?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', 'archivist' ) ?> <br/>
+						  	<pre>%TAGS%</pre> - <?php echo __( 'The post tags with default separator.', 'archivist' ) ?> <br/>
+						  	<pre>%TAGS|...%</pre> - <?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', 'archivist' ) ?> <br/>
+						  	<pre>%EXCERPT%</pre> - <?php echo __( 'The post excerpt.', 'archivist' ) ?> <br/>
+						  	<pre>%POST_META|...%</pre> - <?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', 'archivist' ) ?> <br/>
+						  	<pre>%DATE%</pre> - <?php echo __( 'The post date with default format.', 'archivist' ) ?> <br/>
+						  	<pre>%DATE|...%</pre> - <?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', 'archivist' ) ?> <br/>
+						  	<pre>%POST_THUMBNAIL|...x...%</pre> - <?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', 'archivist' ) ?> <br/>
+						  	<pre>%COMMENTS%</pre> - <?php echo __( 'The post comment count.', 'archivist' ) ?> <br/>
+						</p>
+					</div>
+					<textarea name="archivist_template" rows="16" cols="80"><?php echo $template ?></textarea>
+
+					<h4><?php echo __( 'After', 'archivist' ) ?></h4>
+					<p>
+						<?php echo __( 'Add HTML to be displayed after the archive loop.', 'archivist' ) ?>
+					</p>
+					<textarea name="archivist_template_after" rows="6" cols="80"><?php echo $template_after ?></textarea>
+
+					<h4><?php echo __( 'Default Thumbnail url', 'archivist' ) ?></h4>
+					<div class="inline-pre">
+						<p>
+							<div>
+								<?php echo __( 'If you are using the <pre>%POST_THUMBNAIL|...x...%</pre> placeholder and the post has no thumbnail, then this image will be used.', 'archivist' ) ?>
+							</div>
+						</p>	
+					</div>
+
+					<input type="text" name="archivist_default_thumb" value="<?php echo $default_thumb ?>" id="archivist_default_thumb" style="width:500px">
+
+					<p class="submit">
+						<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
+					</p>
+				</form>
+
+			</div>
+		<?php
 		}
 	}
 }

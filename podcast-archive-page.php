@@ -79,6 +79,7 @@ function podcast_archive_page_options()
 					<br/><br/>
 				  	<pre>%TITLE%</pre> - The post title. <br/>
 				  	<pre>%PERMALINK%</pre> - The post permalink. <br/>
+				  	<pre>%AUTHOR%</pre> - The post author. <br/>
 				  	<pre>%EXCERPT%</pre> - The post excerpt. <br/>
 				  	<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%POST_META|duration%</pre> <br/>
 				  	<pre>%DATE%</pre> - The post date with default format. <br/>
@@ -148,6 +149,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		
 		function render_element( $post, $template )
 		{
+			$template = str_replace( '%AUTHOR%', get_the_author(), $template );
 			$template = str_replace( '%DATE%', get_the_date(), $template );
 			$template = str_replace( '%TITLE%', get_the_title(), $template );
 			$template = str_replace( '%PERMALINK%', get_permalink(), $template );

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Archivist - Custom Archive Templates\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-15 14:28+0100\n"
-"PO-Revision-Date: 2011-09-15 14:30+0100\n"
+"POT-Creation-Date: 2011-09-16 14:50+0100\n"
+"PO-Revision-Date: 2011-09-16 15:00+0100\n"
 "Last-Translator: Eric Teubert <ericteubert@googlemail.com>\n"
 "Language-Team: Eric Teubert <ericteubert@googlemail.com>\n"
 "MIME-Version: 1.0\n"
@@ -16,139 +16,215 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: /Users/ericteubert/code/archivist-custom-archive-templates\n"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:288
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:250
+#, php-format
+msgid "Archivist Error: Unknown template \"%1s\""
+msgstr "Archivist Fehler: Unbekanntes Template \"%1s\""
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:310
 msgid "Sorry, This plugin requires WordPress 3.0+"
 msgstr "Whops, das Plugin benötigt mindestens WordPress 3.0."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:294
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:316
 #, php-format
 msgid "Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>."
 msgstr "Whops, dieses Plugin benutzt Features aus PHP 5.3.0. Dein Server läuft im Moment auf PHP %2s. Bitte deinen Hoster freundlich, auf eine aktuelle PHP Version (die auch weniger Fehler und weniger Sicherheitslücken enthält) umzusteigen. PHP 5.3.0 gibt es seit Sommer 2009, es wird also höchste Zeit!"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:315
-msgid "Archivist Options"
-msgstr "Archivist Optionen"
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:352
+#, php-format
+msgid "Template \"%1s\" deleted."
+msgstr "Template \"%1s\" gelöscht."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:324
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:394
+#, php-format
+msgid "Template \"%1s\" created."
+msgstr "Template \"%1s\" erstellt."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:403
+#, php-format
+msgid "Template \"%1s\" already exists."
+msgstr "Template \"%1s\" existiert bereits."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:423
+msgid "Edit Templates"
+msgstr "Template Bearbeiten"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:426
+msgid "Add Templates"
+msgstr "Template Hinzufügen"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:452
 msgid "Creator"
 msgstr "Entwickler"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:327
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:455
 msgid "Hey, I'm Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer."
 msgstr "Hi, ich bin Eric. Ich habe das Plugin geschrieben.<br/> Wenn du es magst, kannst du mir ein Bier flattrn."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:346
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:474
 #, php-format
 msgid "Get in touch: Visit my <a href=\"%1s\">Homepage</a>, follow me on <a href=\"%2s\">Twitter</a> or look at my projects on <a href=\"%3s\">GitHub</a>."
 msgstr "Kontaktmöglichkeiten: Besuche meine <a href=\"%1s\">Homepage</a>, folge mir auf <a href=\"%2s\">Twitter</a> oder schau dir meine Projekte auf <a href=\"%3s\">GitHub</a> an."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:352
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:488
+msgid "Examples"
+msgstr "Beispiele"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:491
+msgid "Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking."
+msgstr "Dies sind einige Shortcode-Beispiele. Kopiere sie in einen Artikel oder eine Seite und passe den Code dann an."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:495
+msgid "Display all posts in the \"kitten\" category."
+msgstr "Zeige alle Artikel, die in der \"kitten\" Kategorie sind."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:499
+msgid "Display all posts tagged with \"kitten\"."
+msgstr "Zeige alle Artikel, die mit \"kitten\" getaggt sind."
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:509
 msgid "Placeholders"
 msgstr "Platzhalter"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:356
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:513
 msgid "The post title."
 msgstr "Der Titel des Artikels."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:357
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:514
 msgid "The post permalink."
 msgstr "Der Permalink des Artikels."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:358
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:515
 msgid "The post author."
 msgstr "Der Autor des Artikels."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:359
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:516
 msgid "The post categories as unordered list."
 msgstr "Die Kategorien des Artikels als ungeordnete Liste."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:360
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:517
 msgid "The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>"
 msgstr "Die Kategorien des Artikels mit benutzerdefiniertem Trennzeichen. Beispiel: <pre>%CATEGORIES|, %</pre>"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:361
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:518
 msgid "The post tags with default separator."
 msgstr "Die Tags des Artikels mit dem Standard Trennzeichen."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:362
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:519
 msgid "The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>"
 msgstr "Die Tags des Artikels mit definiertem Trennzeichen. Beispiel: <pre>%TAGS|, %</pre>"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:363
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:520
 msgid "The post excerpt."
 msgstr "Der Artikel Auszug."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:364
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:521
 msgid "Any post meta. Example: <pre>%POST_META|duration%</pre>"
 msgstr "Ein benutzerdefiniertes Feld eines Artikels. Beispiel: <pre>%POST_META|duration%</pre>"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:365
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:522
 msgid "The post date with default format."
 msgstr "Das Datum des Artikels im Standarformat."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:366
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:523
 msgid "The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>"
 msgstr "Das Datum mit benutzerdefiniertem Format. Beispiel: <pre>%DATE|Y/m/d%</pre>"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:367
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:524
 msgid "The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>"
 msgstr "Das Artikelbild mit benutzerdefinierter Höhe und Breite. Beispiel: <pre>%POST_THUMBNAIL|75x75%</pre>"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:368
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:525
 msgid "The post comment count."
 msgstr "Die Kommentaranzahl des Artikels."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:384
-msgid "General Settings"
-msgstr "Einstellungen"
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:545
+msgid "Add Template"
+msgstr "Template Hinzufügen"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:395
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:553
+msgid "New Template Name"
+msgstr "Name des neuen Templates"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:558
+msgid "This name will be used in the shortcode to identify the template.<br/>Example: If you name the template \"rockstar\", then you can use it with a shortcode like <em>[archivist template=\"rockstar\" category=\"...\"]</em>"
+msgstr "Dieser Name wird im Shortcode benutzt, um das Template zu identifizieren.<br/>Beispiel: Wenn du das Template \"rockstar\" nennst, dann kannst du es mit einem solchen Shortcode benutzen: <em>[archivist template=\"rockstar\" category=\"...\"]</em>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:566
+msgid "Add New Template"
+msgstr "Neues Template hinzufügen"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:616
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:652
+msgid "Choose Template"
+msgstr "Template auswählen"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:637
+msgid "Template to edit"
+msgstr "Zu bearbeitendes Template"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:664
+#, php-format
+msgid "Settings for \"%1s\" Template"
+msgstr "Einstellungen für das \"%1s\" Template"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:678
 msgid "Template"
 msgstr "Template"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:400
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:683
 msgid "Before"
 msgstr "Davor"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:405
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:688
 msgid "Add HTML to be displayed before the archive loop."
 msgstr "Dieses HTML wird vor dem Archiv-Block dargestellt."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:411
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:694
 msgid "Element"
 msgstr "Element"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:416
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:699
 msgid "Add HTML for each archive element. Use placeholder tags to display post data."
 msgstr "Dieses HTML wird benutzt, um ein einzelnes Archiv-Element darzustellen. Benutze Platzhalter, um Artikel-spezifische Daten anzuzeigen."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:422
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:705
 msgid "After"
 msgstr "Danach"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:427
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:710
 msgid "Add HTML to be displayed after the archive loop."
 msgstr "Dieses HTML wird nach dem Archiv-Block dargestellt."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:433
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:716
 msgid "Other"
 msgstr "Sonstiges"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:438
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:721
 msgid "Custom CSS"
 msgstr "Eigenes CSS"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:446
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:729
 msgid "Default Thumbnail url"
 msgstr "Standard Artikelbild url"
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:451
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:734
 msgid "If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used."
 msgstr "Wenn du den <em>%POST_THUMBNAIL|...x...%</em> Platzhalter nutzt und der Artikel kein Artikelbild hat, wird dieses Bild angezeigt."
 
-#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:459
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:749
+msgid "delete permanently"
+msgstr "dauerhaft löschen"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:750
 msgid "Save Changes"
 msgstr ""
+
+#~ msgid "Archivist Options"
+#~ msgstr "Archivist Optionen"
+
+#~ msgid "General Settings"
+#~ msgstr "Einstellungen"
 
 #~ msgid ""
 #~ "Add HTML for each archive element. Use placeholder tags to display post "

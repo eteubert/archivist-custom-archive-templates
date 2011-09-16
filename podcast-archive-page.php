@@ -93,13 +93,8 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			$this->load_textdomain();
 			add_shortcode( 'podcast-archive-page', array( $this, 'shortcode' ) );
 			
-			
-			if ( is_admin() ) {
-				add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
-				add_action( 'admin_init', array( $this, 'register_settings' ) );
-			} else {
-			  // non-admin enqueues, actions, and filters
-			}
+			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
+			add_action( 'admin_init', array( $this, 'register_settings' ) );
 		}
 		
 		public function shortcode( $atts )

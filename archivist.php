@@ -548,53 +548,55 @@ if ( ! class_exists( 'archivist' ) ) {
 					<div id="post-body-content">
 						<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 							
-							<?php // FIXME: only show if more than 1 template exists ?>
-							<div id="switch_template" class="postbox">
-								<h3 class="hndle"><span><?php _e( 'Choose Template', archivist::get_textdomain() ); ?></span></h3>
-								<div class="inside">
-									<form action="<?php echo admin_url( 'options-general.php' ) ?>" method="get">
-										<input type="hidden" name="tab" value="edit" />
-										<input type="hidden" name="page" value="archivist_options_handle">
-										
-										<script type="text/javascript" charset="utf-8">
-											jQuery( document ).ready( function() {
-												// hide button only if js is enabled
-												jQuery( '#choose_template_button' ).hide();
-												// if js is enabled, auto-submit form on change
-												jQuery( '#choose_template_name' ).change( function() {
-													this.form.submit();
-												} );
-											});
-										</script>
-										
-										<table class="form-table">
-											<tbody>
-												<tr>
-													<th scope="row">
-														<?php echo __( 'Template to edit', archivist::get_textdomain() ) ?>
-													</th>
-													<td>
-														<?php // TODO: move style stuff to css block/file ?>
-														<select name="choose_template_name" id="choose_template_name" style="width:99%">
-															<?php foreach ( $all_template_settings as $template_name => $template_settings ): ?>
-																<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name ?></option>
-															<?php endforeach ?>
-														</select>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-										
-										<p class="submit" id="choose_template_button">
-											<input type="submit" class="button-primary" value="<?php _e( 'Choose Template', archivist::get_textdomain() ) ?>" />
-										</p>
-										
-										<br class="clear" />
-										
-									</form>
-								</div> <!-- .inside -->
-								
-							</div> <!-- #switch_template -->
+							<?php // only allow template switching when there is more than one ?>
+							<?php if ( count( $all_template_settings ) > 1 ): ?>
+								<div id="switch_template" class="postbox">
+									<h3 class="hndle"><span><?php _e( 'Choose Template', archivist::get_textdomain() ); ?></span></h3>
+									<div class="inside">
+										<form action="<?php echo admin_url( 'options-general.php' ) ?>" method="get">
+											<input type="hidden" name="tab" value="edit" />
+											<input type="hidden" name="page" value="archivist_options_handle">
+
+											<script type="text/javascript" charset="utf-8">
+												jQuery( document ).ready( function() {
+													// hide button only if js is enabled
+													jQuery( '#choose_template_button' ).hide();
+													// if js is enabled, auto-submit form on change
+													jQuery( '#choose_template_name' ).change( function() {
+														this.form.submit();
+													} );
+												});
+											</script>
+
+											<table class="form-table">
+												<tbody>
+													<tr>
+														<th scope="row">
+															<?php echo __( 'Template to edit', archivist::get_textdomain() ) ?>
+														</th>
+														<td>
+															<?php // TODO: move style stuff to css block/file ?>
+															<select name="choose_template_name" id="choose_template_name" style="width:99%">
+																<?php foreach ( $all_template_settings as $template_name => $template_settings ): ?>
+																	<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name ?></option>
+																<?php endforeach ?>
+															</select>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+
+											<p class="submit" id="choose_template_button">
+												<input type="submit" class="button-primary" value="<?php _e( 'Choose Template', archivist::get_textdomain() ) ?>" />
+											</p>
+
+											<br class="clear" />
+
+										</form>
+									</div> <!-- .inside -->
+
+								</div> <!-- #switch_template -->
+							<?php endif ?>
 							
 							<div id="settings" class="postbox">
 								<h3 class="hndle"><span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', archivist::get_textdomain() ), $name ); ?></span></h3>

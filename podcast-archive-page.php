@@ -34,11 +34,11 @@ function podcast_archive_page_options()
 	$css = get_option( 'podcast_archive_css' );
 	if ( ! $css ) {
 		$css = '
-.podcast_archive_element {
+.podcast_archive_wrapper {
 	
 }
 
-.podcast_archive_element .thumbnail {
+.podcast_archive_wrapper .thumbnail {
 	float: left;
 }
 		';
@@ -114,6 +114,15 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			add_submenu_page( 'options-general.php', 'Podcast Archive', 'Podcast Archive', 'edit_post', 'podcast-archive', 'podcast_archive_page_options' );
 		}
 		
+		function render_element( $post, $template )
+		{
+			$template = str_replace( '%TITLE%', get_the_title(), $template );
+			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
+			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
+			
+			return $template;
+		}
+		
 		public function display_by_category( $category )
 		{
 			global $post;
@@ -124,35 +133,33 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			);
 			$query = new WP_Query( $parameters );
 			
+			$template = get_option( 'podcast_archive_template' );
+
 			ob_start();
 			?>
-			<table>
-				<tr>
-					<th></th>
-					<th>Titel / Beschreibung</th>
-					<th>Dauer</th>
-				</tr>
-				<?php while ( $query->have_posts() ) : ?>
-					<?php $query->the_post(); ?>
-					<tr>
-						<td>
-							<?php if ( has_post_thumbnail() ): ?>
-								<?php the_post_thumbnail( array( 75, 75 ) ); ?>
-							<?php endif ?>
-						</td>
-						<td>
-							<a href="<?php the_permalink() ?>"><?php the_title(); ?></a>
-						</td>
-						<td>
-							<?php if ( get_post_meta( $post->ID, 'duration', true ) ): ?>
-								<?php echo get_post_meta( $post->ID, 'duration', true ); ?>								
-							<?php else: ?>
-								???
-							<?php endif ?>
-						</td>
-					</tr>
-				<?php endwhile; ?>
-			</table>
+			<div class="podcast_archive_wrapper">
+			<?php while ( $query->have_posts() ) : ?>
+				<?php $query->the_post(); ?>
+				<?php echo $this->render_element( $post, $template ); ?>
+				<!-- <tr>
+					<td>
+						<?php if ( has_post_thumbnail() ): ?>
+							<?php the_post_thumbnail( array( 75, 75 ) ); ?>
+						<?php endif ?>
+					</td>
+					<td>
+						<a href="<?php the_permalink() ?>"><?php the_title(); ?></a>
+					</td>
+					<td>
+						<?php if ( get_post_meta( $post->ID, 'duration', true ) ): ?>
+							<?php echo get_post_meta( $post->ID, 'duration', true ); ?>								
+						<?php else: ?>
+							???
+						<?php endif ?>
+					</td>
+				</tr> -->
+			<?php endwhile; ?>
+			</div>
 			<?php
 			$content = ob_get_contents();
 			ob_end_clean();

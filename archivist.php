@@ -297,6 +297,39 @@ if ( ! class_exists( 'archivist' ) ) {
 		
 		public function settings_page() {
 			$tab = ( $_GET['tab'] == 'add' ) ? 'add' : 'edit';
+			
+			// CREATE action
+			if ( isset( $_POST[ 'archivist_new_template_name' ] ) ) {
+				$success = add_option( 'archivist[' . $_POST[ 'archivist_new_template_name' ] . ']', array(
+					'name'            => $_POST[ 'archivist_new_template_name' ], // FIXME: do I have to safeify this or does WP take care?
+					'css'             => PA_CSS_DEFAULT,
+					'default_thumb'   => PA_THUMB_DEFAULT,
+					'template'        => PA_TEMPLATE_DEFAULT,
+					'template_after'  => PA_TEMPLATE_AFTER_DEFAULT,
+					'template_before' => PA_TEMPLATE_BEFORE_DEFAULT
+				) );
+				if ( $success ) {
+					$tab = 'edit'; // display edit-template-form for this template
+					// FIXME: switch to this forms template
+					?>
+						<div class="updated">
+							<p>
+								<strong><?php echo wp_sprintf( __( 'Template "%1s" created.' ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
+							</p>
+						</div>
+					<?php
+				} else {
+					$tab = 'add'; // display add-template-form again
+					?>
+						<div class="updated">
+							<p>
+								<strong><?php echo wp_sprintf( __( 'Template "%1s" already exists.' ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
+							</p>
+						</div>
+					<?php
+				}
+			}
+			
 			?>
 
 			<!-- TODO: extra css file -->
@@ -396,7 +429,50 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		private function settings_page_add($value='') {
-			# code...
+			?>
+				<!-- Main Column -->
+				<div id="post-body">
+					<div id="post-body-content">
+						<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+					
+							<div id="settings" class="postbox">
+								<h3 class="hndle"><span><?php _e( 'Add Template', archivist::get_textdomain() ); ?></span></h3>
+								<div class="inside">
+									<form action="" method="post">
+										<?php settings_fields( 'archivist-option-group' ); ?>
+										<?php do_settings_fields( 'archivist-option-group' ); ?>
+
+										<table class="form-table">
+											<tbody>
+												<tr>
+													<th scope="row">
+														<?php echo __( 'New Template Name', archivist::get_textdomain() ) ?>
+													</th>
+													<td>
+														<input type="text" name="archivist_new_template_name" value="" id="archivist_new_template_name" class="large-text">
+														<p>
+															<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', archivist::get_textdomain() ) ?></small>
+														</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+
+										<p class="submit">
+											<input type="submit" class="button-primary" value="<?php _e( 'Add New Template', archivist::get_textdomain() ) ?>" />
+										</p>
+										
+										<br class="clear" />
+										
+									</form>
+								</div> <!-- .inside -->
+								
+							</div> <!-- #settings -->
+							
+						</div> <!-- #normal-sortables -->
+					</div> <!-- #post-body-content -->
+				</div> <!-- #post-body -->
+			<?php
 		}
 		
 		private function settings_page_edit() {

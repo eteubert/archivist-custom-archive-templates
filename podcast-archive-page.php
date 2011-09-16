@@ -14,7 +14,17 @@ function podcast_archive_page_options()
 	<div class="wrap">
 	  <h2><?php echo __( 'Podcast Archive Options', 'podcast_archive' ) ?></h2>
 
-	  
+	  <textarea name="podcast_archive_template" rows="16" cols="80">
+<div class="podcast_archive">
+	<div class="thumbnail">%POST_THUMBNAIL|75x75%</div>
+	<div class="head_info">
+		<span class="episode_id">%POST_META|episode_id%</span> - <span class="release_date">%POST_META|release_date%</span>
+	</div>
+	<div class="title">
+		<a href="%PERMALINK%">%TITLE%</a>
+	</div>
+</div>
+	  </textarea>
 
 	</div>
 <?php
@@ -44,7 +54,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 				'category' => 'podcast',
 			), $atts ) );
 
-			$this->display_by_category($category);
+			return $this->display_by_category( $category );
 		}
 		
 		public function add_menu_entry()
@@ -58,10 +68,11 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			
 			$parameters = array(
 				'posts_per_page'	=> -1,
-				'category_name'		=> $category_name
+				'category_name'		=> $category
 			);
 			$query = new WP_Query( $parameters );
 			
+			ob_start();
 			?>
 			<table>
 				<tr>
@@ -91,8 +102,12 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 				<?php endwhile; ?>
 			</table>
 			<?php
+			$content = ob_get_contents();
+			ob_end_clean();
 			
 			wp_reset_postdata();
+			
+			return $content;
 		}
  
 		public function get_object() {

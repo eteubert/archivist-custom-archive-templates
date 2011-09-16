@@ -475,6 +475,9 @@ if ( ! class_exists( 'archivist' ) ) {
 							<h3 class="hndle"><span><?php _e( 'Examples', archivist::get_textdomain() ); ?></span></h3>
 							<div class="inside">
 								<p>
+									<?php echo __( 'Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking.', archivist::get_textdomain() ) ?>
+								</p>
+								<p>
 									<input type="text" name="example1" class="large-text" value='[archivist<?php echo $template_part  ?>category="kitten"]'>
 									<?php echo __( 'Display all posts in the "kitten" category.', archivist::get_textdomain() ) ?>
 								</p>

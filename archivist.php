@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 // TODO: enable multiple archive templates
 // TODO: enable import & export of templates
+// TODO: maybe an image picker for the default thumbnail?
 
 define('PA_CSS_DEFAULT', '
 .archivist_wrapper .permalink {

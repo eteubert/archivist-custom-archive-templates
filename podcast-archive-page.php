@@ -225,9 +225,9 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			}
  
 			// check php version
-			if ( ! version_compare( PHP_VERSION, '5.2.9', '>=' ) ) {
+			if ( ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
 				deactivate_plugins( __FILE__ ); // Deactivate ourself
-				wp_die( wp_sprintf( '&lt;strong>%1s:&lt;/strong> ' . __( 'Sorry, This plugin has taken a bold step in requiring PHP 5.2.9+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>.', $obj->get_textdomain() ), self::get_plugin_data( 'Name' ), PHP_VERSION ) );
+				wp_die( wp_sprintf( '&lt;strong>%1s:&lt;/strong> ' . __( 'Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>.', $obj->get_textdomain() ), self::get_plugin_data( 'Name' ), PHP_VERSION ) );
 			}
 		}
 	}

@@ -28,7 +28,7 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		public function __construct() {
 			$this->load_textdomain();
 			add_shortcode( 'podcast-archive-page', array( $this, 'shortcode' ) );
-			add_action( 'admin_bar_menu', array( $this, 'add_menu_entry' ) );
+			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
 		}
 		
 		public function shortcode( $atts )

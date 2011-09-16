@@ -84,6 +84,7 @@ Please ask your hoster to update, kindly.
 = Can I help to add a feature? =
 
 That would be awesome!
+
 Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the project, add your feature and create a Pull Request. I'll be happy to review and add your changes.
 
 == Screenshots ==

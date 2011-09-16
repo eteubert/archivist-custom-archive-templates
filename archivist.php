@@ -246,7 +246,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			$settings = $all_settings[ $template ];
 			
 			if ( ! $settings ) {
-				return '<div>' . wp_sprintf( __( 'Archivist Error: Unknown template "%1s"' ), $template ) . '</div>';
+				return '<div>' . wp_sprintf( __( 'Archivist Error: Unknown template "%1s"', archivist::get_textdomain() ), $template ) . '</div>';
 			}
 
 			ob_start();
@@ -348,7 +348,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				?>
 					<div class="updated">
 						<p>
-							<strong><?php echo wp_sprintf( __( 'Template "%1s" deleted.' ), $current_template ) ?></strong>
+							<strong><?php echo wp_sprintf( __( 'Template "%1s" deleted.', archivist::get_textdomain() ), $current_template ) ?></strong>
 						</p>
 					</div>
 				<?php				
@@ -390,7 +390,7 @@ if ( ! class_exists( 'archivist' ) ) {
 					?>
 						<div class="updated">
 							<p>
-								<strong><?php echo wp_sprintf( __( 'Template "%1s" created.' ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
+								<strong><?php echo wp_sprintf( __( 'Template "%1s" created.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
 							</p>
 						</div>
 					<?php
@@ -399,7 +399,7 @@ if ( ! class_exists( 'archivist' ) ) {
 					?>
 						<div class="updated">
 							<p>
-								<strong><?php echo wp_sprintf( __( 'Template "%1s" already exists.' ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
+								<strong><?php echo wp_sprintf( __( 'Template "%1s" already exists.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
 							</p>
 						</div>
 					<?php

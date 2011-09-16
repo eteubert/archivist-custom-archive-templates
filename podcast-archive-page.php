@@ -49,6 +49,7 @@ function podcast_archive_page_options()
 	?>
 	
 	<div class="wrap">
+		<div id="icon-options-general" class="icon32"></div>
 		<h2><?php echo __( 'Podcast Archive Options', 'podcast_archive' ) ?></h2>
 		
 		<form action="options.php" method="post">
@@ -128,12 +129,22 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		
 		function render_element( $post, $template )
 		{
-			// TODO: custom date form
 			$template = str_replace( '%DATE%', get_the_date(), $template );
 			$template = str_replace( '%TITLE%', get_the_title(), $template );
 			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
 			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
 			$template = str_replace( '%POST_META|duration%', get_post_meta( $post->ID, 'duration', true ), $template );
+			
+			$template = preg_replace_callback(
+			    '/%DATE\|(.*)%/',
+			    create_function(
+			      // hier sind entweder einfache Anführungszeichen nötig
+			      // oder alternativ die Maskierung aller $ als \$
+			      '$treffer',
+			      'return get_the_date($treffer[1]);'
+			    ),
+			    $template
+			  );
 			
 			return $template;
 		}

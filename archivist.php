@@ -29,7 +29,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// TODO: enable multiple archive templates
 // TODO: enable import & export of templates
 // TODO: maybe an image picker for the default thumbnail?
 

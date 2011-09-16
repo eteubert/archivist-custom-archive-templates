@@ -21,7 +21,7 @@ To display the archive, use the shortcode anywhere in a page or article.
 Replace "kitten" with your category/tag. Watch out, we need the slug here.
 That's the name without capital letters and spaces.
 
-= Specifics =
+= Placeholders =
 
 You can specify a custom template to display the archive elements.
 Go to `Settings > Archivist` for plugin preferences.
@@ -41,6 +41,8 @@ Use HTML and any of the following template placeholders.
 - `%POST_THUMBNAIL|...x...%` - The post thumbnail with certain dimensions. Example: `%POST_THUMBNAIL|75x75%`
 - `%COMMENTS%` - The post comment count.
 
+= Filter by Query =
+
 Are you feeling bold? Is filtering by category or archive not satisfying you? Read on, I've got a challenge for you.
 WordPress uses a certain query syntax to define the so called loop which is used to display the archive.
 You can find the complete documentation at http://codex.wordpress.org/Class_Reference/WP_Query 
@@ -53,6 +55,17 @@ Lists all entries from the year `1984` by the author with `user_nicename` `gorwe
 	[archivist query="tag=straw+mask&post_status=private&orderby=comment_count&order=DESC"]
 	
 Lists all entries marked with post status `private` which are tagged with both `straw` and `mask`, ordered by the amount of comments in a descending order.
+
+= Using multiple Templates =
+
+When you install the plugin, there is just one templated called "default".
+If you don't specify a specific template in the shortcode, this one will be used.
+Therefore the following two shortcodes yield identical results.
+
+	[archivist category="kitten"]
+	[archivist category="kitten" template="default"]
+	
+You can add as many templates as you like. Think twice before deleting one. If it's still in use, the archive can't be displayed.
 
 == Installation ==
 
@@ -79,6 +92,10 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 2. Example Archive
 
 == Changelog ==
+
+= 1.2.0 =
+* allow for multiple templates
+* add an examples block in the sidebar
 
 = 1.1.0 =
 * add fallback thumbnail

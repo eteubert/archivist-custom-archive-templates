@@ -124,16 +124,17 @@ if ( ! class_exists( 'archivist' ) ) {
 				'query'		=> '',
 				'category'	=> '',
 				'tag'		=> '',
+				'template'  => 'default'
 			), $atts ) );			
 			
 			if ( $query !== '' ) {
-				return $this->display_by_query( $query );
+				return $this->display_by_query( $query, $template );
 			}
 			elseif ( $category !== '' ) {
-				return $this->display_by_category( $category );
+				return $this->display_by_category( $category, $template );
 			}
 			else {
-				return $this->display_by_tag( $tag );
+				return $this->display_by_tag( $tag, $template );
 			}
 		}
 		
@@ -215,37 +216,39 @@ if ( ! class_exists( 'archivist' ) ) {
 			return $template;
 		}
 		
-		public function display_by_category( $category ) {
+		public function display_by_category( $category, $template = 'default' ) {
 			$parameters = array(
 				'posts_per_page' => -1,
 				'category_name'  => $category
 			);
 			$loop = new WP_Query( $parameters );
 			
-			return $this->display_by_loop( $loop );
+			return $this->display_by_loop( $loop, $template );
 		}
 		
-		public function display_by_tag( $tag ) {
+		public function display_by_tag( $tag, $template = 'default' ) {
 			$parameters = array(
 				'posts_per_page' => -1,
 				'tag'            => $tag
 			);
 			$loop = new WP_Query( $parameters );
 			
-			return $this->display_by_loop( $loop );
+			return $this->display_by_loop( $loop, $template );
 		}
 		
-		public function display_by_query( $query ) {
+		public function display_by_query( $query, $template = 'default' ) {
 			$loop = new WP_Query( $query );
 			
-			return $this->display_by_loop( $loop );
+			return $this->display_by_loop( $loop, $template );
 		}
 		
-		private function display_by_loop( $loop ) {
-			$css = get_option( 'archivist_css', PA_CSS_DEFAULT );
-			$template = get_option( 'archivist_template', PA_TEMPLATE_DEFAULT );
-			$template_after = get_option( 'archivist_template_after', PA_TEMPLATE_AFTER_DEFAULT );
-			$template_before = get_option( 'archivist_template_before', PA_TEMPLATE_BEFORE_DEFAULT );
+		private function display_by_loop( $loop, $template = 'default' ) {
+			$all_settings = get_option( 'archivist' );
+			$settings = $all_settings[ $template ];
+			
+			if ( ! $settings ) {
+				return '<div>' . wp_sprintf( __( 'Archivist Error: Unknown template "%1s"' ), $template ) . '</div>';
+			}
 
 			ob_start();
 			?>
@@ -253,16 +256,16 @@ if ( ! class_exists( 'archivist' ) ) {
 				
 				<?php if ( $css ): ?>
 					<style type="text/css" media="screen">
-						<?php echo $css ?>
+						<?php echo $settings['css'] ?>
 					</style>
 				<?php endif ?>
 				
-				<?php echo $template_before; ?>
+				<?php echo $settings[ 'template_before' ]; ?>
 				<?php while ( $loop->have_posts() ) : ?>
 					<?php $loop->the_post(); ?>
-					<?php echo $this->render_element( $post, $template ); ?>
+					<?php echo $this->render_element( $post, $settings[ 'template' ] ); ?>
 				<?php endwhile; ?>
-				<?php echo $template_after; ?>
+				<?php echo $settings[ 'template_after' ]; ?>
 			</div>
 			<?php
 			$content = ob_get_contents();

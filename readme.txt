@@ -94,6 +94,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.2.1 =
+* add missing textdomains
+
 = 1.2.0 =
 * allow for multiple templates
 * add an examples block in the sidebar

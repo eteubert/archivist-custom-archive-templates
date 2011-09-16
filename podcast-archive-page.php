@@ -10,12 +10,10 @@ Author URI: ericteubert@googlemail.com
 
 function podcast_archive_page_options()
 {
-?>
-	<div class="wrap">
-	  <h2><?php echo __( 'Podcast Archive Options', 'podcast_archive' ) ?></h2>
-
-	  <textarea name="podcast_archive_template" rows="16" cols="80">
-<div class="podcast_archive">
+	$template = get_option( 'podcast_archive_template' );
+	if ( ! $template ) {
+		$template = '
+<div class="podcast_archive_element">
 	<div class="thumbnail">%POST_THUMBNAIL|75x75%</div>
 	<div class="head_info">
 		<span class="episode_id">%POST_META|episode_id%</span> - <span class="release_date">%POST_META|release_date%</span>
@@ -23,8 +21,49 @@ function podcast_archive_page_options()
 	<div class="title">
 		<a href="%PERMALINK%">%TITLE%</a>
 	</div>
+	<div class="excerpt">
+		%EXCERPT%
+	</div>
+	<div class="duration">
+		%POST_META|duration%
+	</div>
 </div>
-	  </textarea>
+		';
+	}
+	
+	$css = get_option( 'podcast_archive_css' );
+	if ( ! $css ) {
+		$css = '
+.podcast_archive_element {
+	
+}
+
+.podcast_archive_element .thumbnail {
+	float: left;
+}
+		';
+	}
+	?>
+	
+	<div class="wrap">
+		<h2><?php echo __( 'Podcast Archive Options', 'podcast_archive' ) ?></h2>
+		
+		<form action="options.php" method="post">
+			<?php settings_fields( 'podcast-archive-option-group' ); ?>
+			<?php do_settings_fields( 'podcast-archive-option-group' ); ?>
+			
+			<h3><?php echo __( 'Custom CSS', 'podcast_archive' ) ?></h3>
+			
+			<textarea name="podcast_archive_css" rows="16" cols="80"><?php echo $css ?></textarea>
+			
+			<h3><?php echo __( 'Template', 'podcast_archive' ) ?></h3>
+			
+			<textarea name="podcast_archive_template" rows="16" cols="80"><?php echo $template ?></textarea>
+			
+			<p class="submit">
+				<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
+			</p>
+		</form>
 
 	</div>
 <?php
@@ -45,7 +84,14 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 		public function __construct() {
 			$this->load_textdomain();
 			add_shortcode( 'podcast-archive-page', array( $this, 'shortcode' ) );
-			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
+			
+			
+			if ( is_admin() ) {
+				add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
+				add_action( 'admin_init', array( $this, 'register_settings' ) );
+			} else {
+			  // non-admin enqueues, actions, and filters
+			}
 		}
 		
 		public function shortcode( $atts )
@@ -55,6 +101,12 @@ if ( ! class_exists( 'podcast_archive_page' ) ) {
 			), $atts ) );
 
 			return $this->display_by_category( $category );
+		}
+		
+		public function register_settings()
+		{
+			register_setting( 'podcast-archive-option-group', 'podcast_archive_template' );
+			register_setting( 'podcast-archive-option-group', 'podcast_archive_css' );
 		}
 		
 		public function add_menu_entry()

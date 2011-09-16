@@ -361,11 +361,10 @@ if ( ! class_exists( 'archivist' ) ) {
 				    $_POST = array_map( 'stripslashes_deep', $_POST );
 				}
 				$settings = get_option( 'archivist' );
-				// TODO: use $current_template, not loop
 				foreach ( $_POST[ 'archivist' ] as $key => $value ) {
 					$settings[ $key ] = $value;
-					update_option( 'archivist', $settings);
 				}
+				update_option( 'archivist', $settings);
 			}
 			// CREATE action
 			elseif ( isset( $_POST[ 'archivist_new_template_name' ] ) ) {

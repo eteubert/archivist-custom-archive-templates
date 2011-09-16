@@ -462,6 +462,32 @@ if ( ! class_exists( 'archivist' ) ) {
 								</p>
 							</div>
 						</div>
+								
+						<?php
+						$name = $this->get_current_template_name();
+						if ( $name == 'default' ) {
+							$template_part = ' ';
+						} else {
+							$template_part = ' template="' . $name . '" ';
+						}
+						?>
+						<div id="wp-archivist-usagebox" class="postbox">
+							<h3 class="hndle"><span><?php _e( 'Examples', archivist::get_textdomain() ); ?></span></h3>
+							<div class="inside">
+								<p>
+									<input type="text" name="example1" class="large-text" value='[archivist<?php echo $template_part  ?>category="kitten"]'>
+									<?php echo __( 'Display all posts in the "kitten" category.', archivist::get_textdomain() ) ?>
+								</p>
+								<p>
+									<input type="text" name="example2" class="large-text" value='[archivist<?php echo $template_part  ?>tag="kitten"]'>
+									<?php echo __( 'Display all posts tagged with "kitten".', archivist::get_textdomain() ) ?>
+								</p>
+								<p>
+									<input type="text" name="example3" class="large-text" value='[archivist<?php echo $template_part  ?>query="year=1984"]'>
+									<?php echo __( wp_sprintf( 'Display all posts published in year 1984. See %1s for all options.', '<a href="http://codex.wordpress.org/Class_Reference/WP_Query">WordPress Codex</a>' ), archivist::get_textdomain() ) ?>
+								</p>
+							</div>
+						</div>
 						
 						<div id="wp-archivist-placeholders" class="postbox">
 							<h3 class="hndle"><span><?php _e( 'Placeholders', archivist::get_textdomain() ); ?></span></h3>
@@ -492,7 +518,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			<?php
 		}
 		
-		private function settings_page_add($value='') {
+		private function settings_page_add() {
 			?>
 				<!-- Main Column -->
 				<div id="post-body">
@@ -537,10 +563,19 @@ if ( ! class_exists( 'archivist' ) ) {
 			<?php
 		}
 		
-		private function settings_page_edit() {
+		private function get_current_template_name() {
+			// check template chooser
 			$name       = ( isset( $_REQUEST[ 'choose_template_name' ] ) ) ? $_REQUEST[ 'choose_template_name' ] : false;
+			// check if a new template has been created
 			$name       = ( ! $name && isset( $_POST[ 'archivist_new_template_name' ] ) ) ? $_POST[ 'archivist_new_template_name' ] : $name;
+			// fallback to 'default' template
 			$name       = ( ! $name ) ? 'default' : $name;
+			
+			return $name;
+		}
+		
+		private function settings_page_edit() {
+			$name       = $this->get_current_template_name();
 			$field_name = 'archivist[' . $name . ']';
 			
 			$all_template_settings = get_option( 'archivist' );

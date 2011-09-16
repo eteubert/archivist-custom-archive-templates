@@ -338,23 +338,37 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		public function settings_page() {
-			$tab = ( $_REQUEST['tab'] == 'add' ) ? 'add' : 'edit';
+			$tab = ( $_REQUEST[ 'tab' ] == 'add' ) ? 'add' : 'edit';
+			$current_template = $this->get_current_template_name();
 			
+			// DELETE action
+			if ( isset( $_POST[ 'delete' ] ) && strlen( $_POST[ 'delete' ] ) > 0 ) {
+				$settings = get_option( 'archivist' );
+				unset( $settings[ $current_template ] );
+				update_option( 'archivist', $settings );
+				?>
+					<div class="updated">
+						<p>
+							<strong><?php echo wp_sprintf( __( 'Template "%1s" deleted.' ), $current_template ) ?></strong>
+						</p>
+					</div>
+				<?php				
+			}
 			// EDIT action
-			if ( isset($_POST[ 'action' ]) && $_POST[ 'action' ] == 'edit' ) {
+			elseif ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'edit' ) {
 				if ( get_magic_quotes_gpc() ) {
 					// strip slashes so HTML won't be escaped
 				    $_POST = array_map( 'stripslashes_deep', $_POST );
 				}
 				$settings = get_option( 'archivist' );
+				// TODO: use $current_template, not loop
 				foreach ( $_POST[ 'archivist' ] as $key => $value ) {
 					$settings[ $key ] = $value;
 					update_option( 'archivist', $settings);
 				}
 			}
-			
 			// CREATE action
-			if ( isset( $_POST[ 'archivist_new_template_name' ] ) ) {
+			elseif ( isset( $_POST[ 'archivist_new_template_name' ] ) ) {
 				$settings = get_option( 'archivist' );
 				
 				if ( isset( $settings[ $_POST[ 'archivist_new_template_name' ] ] ) ) {
@@ -574,6 +588,14 @@ if ( ! class_exists( 'archivist' ) ) {
 			// fallback to 'default' template
 			$name       = ( ! $name ) ? 'default' : $name;
 			
+			// does it still exist? might be deleted
+			$all_settings = get_option( 'archivist' );
+			$settings     = $all_settings[ $name ];
+			// if the setting does not exist, take the first you can get
+			if ( ! $settings ) {
+				$name = array_shift(array_keys($all_settings));
+			}
+			
 			return $name;
 		}
 		
@@ -717,7 +739,15 @@ if ( ! class_exists( 'archivist' ) ) {
 											</tbody>
 										</table>
 
+										<p class="delete">
+											
+										</p>
+
 										<p class="submit">
+											<!-- <span class="delete">
+												<a href="" class="submitdelete" style="color:#BC0B0B">delete permanently</a>
+											</span> -->
+											<input type="submit" class="button-secondary" style="color:#BC0B0B;margin-right:20px" name="delete" value="<?php _e( 'delete permanently', archivist::get_textdomain() ) ?>">
 											<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
 										</p>
 										

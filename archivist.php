@@ -29,6 +29,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+// TODO: refactoring: rethinking plugin architecture
+// - better (more visually pleasing for the eye of the programmer) way to have DEFAULTs
+// - separate module to handle the settings page
+// - some kind of model class for the settings
+// - generic helper functions to make creating settings pages more straight forward
+// - rails-ish redirect after sending of forms, so cmd-r doesn't send them again
+// TODO: icing on the cake - add filters and hooks
 // TODO: enable import & export of templates
 // TODO: maybe an image picker for the default thumbnail?
 
@@ -316,10 +323,10 @@ if ( ! class_exists( 'archivist' ) ) {
 			}
 			
 			// create default template
-			$this->create_default_template();
+			archivist::create_default_template();
 		}
 		
-		private function create_default_template() {
+		static public function create_default_template() {
 			$settings = get_option( 'archivist' );
 			if ( ! isset( $settings[ 'default' ] ) ) {
 				// TODO: refactor model archivist_settings::new
@@ -408,7 +415,6 @@ if ( ! class_exists( 'archivist' ) ) {
 			
 			?>
 
-			<!-- TODO: extra css file -->
 			<style type="text/css" media="screen">
 				.inline-pre pre {
 					display: inline !important;

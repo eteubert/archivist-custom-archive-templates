@@ -94,6 +94,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.2.2 =
+* fix bug which prevented plugin activation
+
 = 1.2.1 =
 * add missing textdomains
 

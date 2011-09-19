@@ -29,6 +29,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+// FIXME: if no template exists -> go to "add templates"
+// FIXME: default "return" action must not be deletion but saving
+// FIXME: load_textdomain is called as both static and nonstatic
 // TODO: refactoring: rethinking plugin architecture
 // - better (more visually pleasing for the eye of the programmer) way to have DEFAULTs
 // - separate module to handle the settings page
@@ -123,20 +126,26 @@ if ( ! class_exists( 'archivist' ) ) {
 			$obj->create_default_template();
 		}
 		
+		static function get_default_template_name() {
+			$name = get_option( 'archivist_default_template_name' );
+			return ( strlen( $name ) > 0 ) ? $name : 'default';
+		}
+		
 		public function create_default_template() {
+			$default_name = self::get_default_template_name();
 			$settings = get_option( 'archivist' );
-			if ( ! isset( $settings[ 'default' ] ) ) {
+			if ( ! isset( $settings[ $default_name ] ) ) {
 				// TODO: refactor model archivist_settings::new
 				// TODO: refactor model archivist_settings::new_with_defaults
-				$settings[ 'default' ] = array(
-					'name'            => 'default',
+				$settings[ $default_name ] = array(
+					'name'            => $default_name,
 					'css'             => PA_CSS_DEFAULT,
 					'default_thumb'   => PA_THUMB_DEFAULT,
 					'template'        => PA_TEMPLATE_DEFAULT,
 					'template_after'  => PA_TEMPLATE_AFTER_DEFAULT,
 					'template_before' => PA_TEMPLATE_BEFORE_DEFAULT
 				);
-				update_option( 'archivist', $settings);
+				update_option( 'archivist', $settings );
 			}
 		}
 		
@@ -146,11 +155,12 @@ if ( ! class_exists( 'archivist' ) ) {
 			// if single template stuff exists, create a 'default'
 			// template entry based on those values.
 			// When finished, delete the old data
+			$default_name = self::get_default_template_name();
 			$option = get_option( 'archivist_template' );
 			if ( $option ) {
 				$settings = array();
-				$settings[ 'default' ] = array(
-					'name'            => 'default',
+				$settings[ $default_name ] = array(
+					'name'            => $default_name,
 					'css'             => get_option( 'archivist_css', PA_CSS_DEFAULT ),
 					'template'        => get_option( 'archivist_template', PA_TEMPLATE_DEFAULT ),
 					'default_thumb'   => get_option( 'archivist_default_thumb', PA_THUMB_DEFAULT ),
@@ -172,7 +182,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				'query'		=> '',
 				'category'	=> '',
 				'tag'		=> '',
-				'template'  => 'default'
+				'template'  => self::get_default_template_name()
 			), $atts ) );			
 			
 			if ( $query !== '' ) {
@@ -264,34 +274,51 @@ if ( ! class_exists( 'archivist' ) ) {
 			return $template;
 		}
 		
-		public function display_by_category( $category, $template = 'default' ) {
+		public function display_by_category( $category, $template = false ) {
 			$parameters = array(
 				'posts_per_page' => -1,
 				'category_name'  => $category
 			);
 			$loop = new WP_Query( $parameters );
 			
+			if ( ! $template ) {
+				$template = self::get_default_template_name();
+			}
+			
 			return $this->display_by_loop( $loop, $template );
 		}
 		
-		public function display_by_tag( $tag, $template = 'default' ) {
+		public function display_by_tag( $tag, $template = false ) {
 			$parameters = array(
 				'posts_per_page' => -1,
 				'tag'            => $tag
 			);
 			$loop = new WP_Query( $parameters );
 			
-			return $this->display_by_loop( $loop, $template );
-		}
-		
-		public function display_by_query( $query, $template = 'default' ) {
-			$loop = new WP_Query( $query );
+			if ( ! $template ) {
+				$template = self::get_default_template_name();
+			}
 			
 			return $this->display_by_loop( $loop, $template );
 		}
 		
-		private function display_by_loop( $loop, $template = 'default' ) {
+		public function display_by_query( $query, $template = false ) {
+			$loop = new WP_Query( $query );
+			
+			if ( ! $template ) {
+				$template = self::get_default_template_name();
+			}
+			
+			return $this->display_by_loop( $loop, $template );
+		}
+		
+		private function display_by_loop( $loop, $template = false ) {
 			$all_settings = get_option( 'archivist' );
+			
+			if ( ! $template ) {
+				$template = self::get_default_template_name();
+			}
+			
 			$settings = $all_settings[ $template ];
 			
 			if ( ! $settings ) {
@@ -348,12 +375,19 @@ if ( ! class_exists( 'archivist' ) ) {
 		public function settings_page() {
 			$tab = ( $_REQUEST[ 'tab' ] == 'add' ) ? 'add' : 'edit';
 			$current_template = $this->get_current_template_name();
+			$settings = get_option( 'archivist' );
 			
 			// DELETE action
 			if ( isset( $_POST[ 'delete' ] ) && strlen( $_POST[ 'delete' ] ) > 0 ) {
-				$settings = get_option( 'archivist' );
 				unset( $settings[ $current_template ] );
 				update_option( 'archivist', $settings );
+				
+				// if default template is deleted, make another one default
+				if ( $current_template == self::get_default_template_name() && count( $settings ) > 0 ) {
+					$first_template_name = array_shift(array_keys($settings));
+					update_option( 'archivist_default_template_name', $first_template_name );
+				}
+				
 				?>
 					<div class="updated">
 						<p>
@@ -368,16 +402,24 @@ if ( ! class_exists( 'archivist' ) ) {
 					// strip slashes so HTML won't be escaped
 				    $_POST = array_map( 'stripslashes_deep', $_POST );
 				}
-				$settings = get_option( 'archivist' );
 				foreach ( $_POST[ 'archivist' ] as $key => $value ) {
-					$settings[ $key ] = $value;
+					$template_name = $key;
+					// update name
+					if ( $value[ 'name' ] != $template_name ) {
+						$template_name = $value[ 'name' ];
+						// remove old settings enry
+						unset( $settings[ $key ] );
+						// update default_template_name setting
+						update_option( 'archivist_default_template_name', $template_name );
+					}
+					
+					// update all options
+					$settings[ $template_name ] = $value;
 				}
 				update_option( 'archivist', $settings);
 			}
 			// CREATE action
 			elseif ( isset( $_POST[ 'archivist_new_template_name' ] ) ) {
-				$settings = get_option( 'archivist' );
-				
 				if ( isset( $settings[ $_POST[ 'archivist_new_template_name' ] ] ) ) {
 					$success = false;
 				} else {
@@ -391,6 +433,13 @@ if ( ! class_exists( 'archivist' ) ) {
 					);
 
 					update_option( 'archivist', $settings);
+					
+					// if it is the only template setting, that means the default has been deleted
+					// so we make the newly created one the new default
+					if ( count( $settings ) === 1 ) {
+						update_option( 'archivist_default_template_name', $_POST[ 'archivist_new_template_name' ] );
+					}
+					
 					$success = true;
 				}
 
@@ -413,6 +462,11 @@ if ( ! class_exists( 'archivist' ) ) {
 						</div>
 					<?php
 				}
+			}
+			
+			// disable "edit" tab if there is nothing to show
+			if ( count( $settings ) === 0 ) {
+				$tab = 'add';
 			}
 			
 			?>
@@ -485,7 +539,7 @@ if ( ! class_exists( 'archivist' ) ) {
 								
 						<?php
 						$name = $this->get_current_template_name();
-						if ( $name == 'default' ) {
+						if ( $name == self::get_default_template_name() ) {
 							$template_part = ' ';
 						} else {
 							$template_part = ' template="' . $name . '" ';
@@ -588,11 +642,16 @@ if ( ! class_exists( 'archivist' ) ) {
 		
 		private function get_current_template_name() {
 			// check template chooser
-			$name       = ( isset( $_REQUEST[ 'choose_template_name' ] ) ) ? $_REQUEST[ 'choose_template_name' ] : false;
+			$name = ( isset( $_REQUEST[ 'choose_template_name' ] ) ) ? $_REQUEST[ 'choose_template_name' ] : false;
 			// check if a new template has been created
-			$name       = ( ! $name && isset( $_POST[ 'archivist_new_template_name' ] ) ) ? $_POST[ 'archivist_new_template_name' ] : $name;
+			$name = ( ! $name && isset( $_POST[ 'archivist_new_template_name' ] ) ) ? $_POST[ 'archivist_new_template_name' ] : $name;
 			// fallback to 'default' template
-			$name       = ( ! $name ) ? 'default' : $name;
+			$name = ( ! $name ) ? self::get_default_template_name() : $name;
+
+			// check if template has been renamed
+			if ( isset( $_POST[ 'archivist' ][ $name ] ) && $_POST[ 'archivist' ][ $name ][ 'name' ] != $name ) {
+				$name = $_POST[ 'archivist' ][ $name ][ 'name' ];
+			}
 			
 			// does it still exist? might be deleted
 			$all_settings = get_option( 'archivist' );
@@ -668,7 +727,12 @@ if ( ! class_exists( 'archivist' ) ) {
 							<?php endif ?>
 							
 							<div id="settings" class="postbox">
-								<h3 class="hndle"><span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', archivist::get_textdomain() ), $name ); ?></span></h3>
+								<h3 class="hndle">
+									<span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', archivist::get_textdomain() ), $name ); ?></span>
+									<?php if ( $name == self::get_default_template_name() ): ?>
+										(<?php _e( 'Default Template', archivist::get_textdomain() ); ?>)
+									<?php endif ?>
+								</h3>
 								<div class="inside">
 									<form action="<?php echo admin_url( 'options-general.php?page=archivist_options_handle' ) ?>" method="post">
 										<?php // settings_fields( 'archivist-options' ); ?>
@@ -742,12 +806,16 @@ if ( ! class_exists( 'archivist' ) ) {
 														</p>
 													</td>
 												</tr>
+												<tr>	
+													<th scope="row">
+														<?php echo __( 'Template Name', archivist::get_textdomain() ) ?>
+													</th>
+													<td valign="top">
+														<input type="text" name="<?php echo $field_name ?>[name]" value="<?php echo $settings[ 'name' ]?>" id="archivist_template_name" class="large-text">
+													</td>
+												</tr>
 											</tbody>
 										</table>
-
-										<p class="delete">
-											
-										</p>
 
 										<p class="submit">
 											<!-- <span class="delete">

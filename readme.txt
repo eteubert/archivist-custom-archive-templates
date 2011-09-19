@@ -94,6 +94,12 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.3.0 =
+* templates can be renamed
+* 'default' template can be renamed, too
+* when you delete the last template, the "edit template" button is deactivated until you create a new one
+* some bug fixes
+
 = 1.2.2, 1.2.3 =
 * Hotfixes
 

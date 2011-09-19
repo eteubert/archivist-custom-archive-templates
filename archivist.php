@@ -29,8 +29,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// FIXME: if no template exists -> go to "add templates"
-// FIXME: default "return" action must not be deletion but saving
 // FIXME: load_textdomain is called as both static and nonstatic
 // TODO: refactoring: rethinking plugin architecture
 // - better (more visually pleasing for the eye of the programmer) way to have DEFAULTs
@@ -41,6 +39,7 @@ THE SOFTWARE.
 // TODO: icing on the cake - add filters and hooks
 // TODO: enable import & export of templates
 // TODO: maybe an image picker for the default thumbnail?
+// TODO: change default template
 
 define('PA_CSS_DEFAULT', '
 .archivist_wrapper .permalink {
@@ -818,11 +817,8 @@ if ( ! class_exists( 'archivist' ) ) {
 										</table>
 
 										<p class="submit">
-											<!-- <span class="delete">
-												<a href="" class="submitdelete" style="color:#BC0B0B">delete permanently</a>
-											</span> -->
+											<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" style="float:right" />
 											<input type="submit" class="button-secondary" style="color:#BC0B0B;margin-right:20px" name="delete" value="<?php _e( 'delete permanently', archivist::get_textdomain() ) ?>">
-											<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" />
 										</p>
 										
 										<br class="clear" />

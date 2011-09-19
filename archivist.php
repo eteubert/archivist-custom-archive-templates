@@ -84,7 +84,9 @@ if ( ! class_exists( 'archivist' ) ) {
  
 	if ( function_exists( 'add_action' ) && function_exists( 'register_activation_hook' ) ) {
 		add_action( 'plugins_loaded', array( 'archivist', 'get_object' ) );
-		register_activation_hook( __FILE__, array( 'archivist', 'activation_hook' ) );
+		// TODO: why does register_activation_hook() not work? can't figure it out? ;-(
+		// register_activation_hook( __FILE__, array( 'archivist', 'activation_hook' ) );
+		add_action('activate_archivist-custom-archive-templates/archivist.php', array( 'archivist', 'activation_hook' ) );
 	}
 
 	class archivist {
@@ -98,8 +100,6 @@ if ( ! class_exists( 'archivist' ) ) {
 			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
 			
 			$this->keep_backwards_compatibility();
-			// HOTFIX: call this all the time as activation_hook doesn't get fired?!
-			$this->create_default_template();
 		}
 		
 		static function activation_hook() {
@@ -121,13 +121,14 @@ if ( ! class_exists( 'archivist' ) ) {
 				wp_die( wp_sprintf( '%1s: ' . __( 'Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>.', $obj->get_textdomain() ), self::get_plugin_data( 'Name' ), PHP_VERSION ) );
 			}
 			
+			// set default template name
+			add_option( 'archivist_default_template_name', 'default' );
 			// create default template
 			$obj->create_default_template();
 		}
 		
 		static function get_default_template_name() {
-			$name = get_option( 'archivist_default_template_name' );
-			return ( strlen( $name ) > 0 ) ? $name : 'default';
+			return get_option( 'archivist_default_template_name' );
 		}
 		
 		public function create_default_template() {

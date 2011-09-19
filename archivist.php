@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.3.0
+Version: 1.3.1
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -175,6 +175,11 @@ if ( ! class_exists( 'archivist' ) ) {
 				delete_option( 'archivist_template_after' );
 				delete_option( 'archivist_template_before' );
 			}
+			
+			// v1.2.3 -> 1.3.0
+			// default template name is now an option in the database
+			// if it's not set, it should be 'default' like in the prior versions
+			add_option( 'archivist_default_template_name', 'default' );
 		}
 		
 		public function shortcode( $atts ) {
@@ -183,7 +188,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				'category'	=> '',
 				'tag'		=> '',
 				'template'  => self::get_default_template_name()
-			), $atts ) );			
+			), $atts ) );
 			
 			if ( $query !== '' ) {
 				return $this->display_by_query( $query, $template );
@@ -284,7 +289,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			if ( ! $template ) {
 				$template = self::get_default_template_name();
 			}
-			
+						
 			return $this->display_by_loop( $loop, $template );
 		}
 		

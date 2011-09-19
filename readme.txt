@@ -94,6 +94,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.3.1 =
+* fix backward compatibility issue
+
 = 1.3.0 =
 * templates can be renamed
 * "default" template can be renamed, too

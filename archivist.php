@@ -128,7 +128,8 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		static function get_default_template_name() {
-			return get_option( 'archivist_default_template_name' );
+			$name = get_option( 'archivist_default_template_name' );
+			return ( strlen( $name ) > 0 ) ? $name : 'default';
 		}
 		
 		public function create_default_template() {

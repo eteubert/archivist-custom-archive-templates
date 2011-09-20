@@ -551,7 +551,7 @@ if ( ! class_exists( 'archivist' ) ) {
 					<div id="side-sortables" class="meta-box-sortables ui-sortable">
 						
 						<div id="wp-archivist-infobox" class="postbox">
-							<h3 class="hndle"><span><?php _e( 'Creator', archivist::get_textdomain() ); ?></span></h3>
+							<h3><span><?php _e( 'Creator', archivist::get_textdomain() ); ?></span></h3>
 							<div class="inside">
 								<p>
 									<?php _e( 'Hey, I\'m Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer.', archivist::get_textdomain() ); ?>
@@ -587,7 +587,7 @@ if ( ! class_exists( 'archivist' ) ) {
 						}
 						?>
 						<div id="wp-archivist-usagebox" class="postbox">
-							<h3 class="hndle"><span><?php _e( 'Examples', archivist::get_textdomain() ); ?></span></h3>
+							<h3><span><?php _e( 'Examples', archivist::get_textdomain() ); ?></span></h3>
 							<div class="inside">
 								<p>
 									<?php echo __( 'Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking.', archivist::get_textdomain() ) ?>
@@ -608,7 +608,7 @@ if ( ! class_exists( 'archivist' ) ) {
 						</div>
 						
 						<div id="wp-archivist-placeholders" class="postbox">
-							<h3 class="hndle"><span><?php _e( 'Placeholders', archivist::get_textdomain() ); ?></span></h3>
+							<h3><span><?php _e( 'Placeholders', archivist::get_textdomain() ); ?></span></h3>
 							<div class="inside">
 								<div class="inline-pre">
 									<p>
@@ -641,41 +641,38 @@ if ( ! class_exists( 'archivist' ) ) {
 				<!-- Main Column -->
 				<div id="post-body">
 					<div id="post-body-content">
-						<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-					
-							<div id="add_template" class="postbox">
-								<h3 class="hndle"><span><?php _e( 'Add Template', archivist::get_textdomain() ); ?></span></h3>
-								<div class="inside">
-									<form action="" method="post">
-
-										<table class="form-table">
-											<tbody>
-												<tr>
-													<th scope="row">
-														<?php echo __( 'New Template Name', archivist::get_textdomain() ) ?>
-													</th>
-													<td>
-														<input type="text" name="archivist_new_template_name" value="" id="archivist_new_template_name" class="large-text">
-														<p>
-															<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', archivist::get_textdomain() ) ?></small>
-														</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-
-										<p class="submit">
-											<input type="submit" class="button-primary" value="<?php _e( 'Add New Template', archivist::get_textdomain() ) ?>" />
-										</p>
-										
-										<br class="clear" />
-										
-									</form>
-								</div> <!-- .inside -->
-								
-							</div> <!-- #add_template -->
+						<div id="add_template" class="postbox">
+							<h3><span><?php _e( 'Add Template', archivist::get_textdomain() ); ?></span></h3>
 							
-						</div> <!-- #normal-sortables -->
+							<div class="inside">
+								<form action="" method="post">
+
+									<table class="form-table">
+										<tbody>
+											<tr>
+												<th scope="row">
+													<?php echo __( 'New Template Name', archivist::get_textdomain() ) ?>
+												</th>
+												<td>
+													<input type="text" name="archivist_new_template_name" value="" id="archivist_new_template_name" class="large-text">
+													<p>
+														<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', archivist::get_textdomain() ) ?></small>
+													</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<p class="submit">
+										<input type="submit" class="button-primary" value="<?php _e( 'Add New Template', archivist::get_textdomain() ) ?>" />
+									</p>
+									
+									<br class="clear" />
+									
+								</form>
+							</div> <!-- .inside -->
+							
+						</div> <!-- #add_template -->
 					</div> <!-- #post-body-content -->
 				</div> <!-- #post-body -->
 			<?php
@@ -715,162 +712,159 @@ if ( ! class_exists( 'archivist' ) ) {
 				<!-- Main Column -->
 				<div id="post-body">
 					<div id="post-body-content">
-						<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-							
-							<?php // only allow template switching when there is more than one ?>
-							<?php if ( count( $all_template_settings ) > 1 ): ?>
-								<div id="switch_template" class="postbox">
-									<h3 class="hndle"><span><?php _e( 'Choose Template', archivist::get_textdomain() ); ?></span></h3>
-									<div class="inside">
-										<form action="<?php echo admin_url( 'options-general.php' ) ?>" method="get">
-											<input type="hidden" name="tab" value="edit" />
-											<input type="hidden" name="page" value="archivist_options_handle">
 
-											<script type="text/javascript" charset="utf-8">
-												jQuery( document ).ready( function() {
-													// hide button only if js is enabled
-													jQuery( '#choose_template_button' ).hide();
-													// if js is enabled, auto-submit form on change
-													jQuery( '#choose_template_name' ).change( function() {
-														this.form.submit();
-													} );
-												});
-											</script>
-
-											<table class="form-table">
-												<tbody>
-													<tr>
-														<th scope="row">
-															<?php echo __( 'Template to edit', archivist::get_textdomain() ) ?>
-														</th>
-														<td>
-															<?php // TODO: move style stuff to css block/file ?>
-															<select name="choose_template_name" id="choose_template_name" style="width:99%">
-																<?php foreach ( $all_template_settings as $template_name => $template_settings ): ?>
-																	<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name ?></option>
-																<?php endforeach ?>
-															</select>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-
-											<p class="submit" id="choose_template_button">
-												<input type="submit" class="button-primary" value="<?php _e( 'Choose Template', archivist::get_textdomain() ) ?>" />
-											</p>
-
-											<br class="clear" />
-
-										</form>
-									</div> <!-- .inside -->
-
-								</div> <!-- #switch_template -->
-							<?php endif ?>
-							
-							<div id="settings" class="postbox">
-								<h3 class="hndle">
-									<span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', archivist::get_textdomain() ), $name ); ?></span>
-									<?php if ( $name == self::get_default_template_name() ): ?>
-										(<?php _e( 'Default Template', archivist::get_textdomain() ); ?>)
-									<?php endif ?>
-								</h3>
+						<?php // only allow template switching when there is more than one ?>
+						<?php if ( count( $all_template_settings ) > 1 ): ?>
+							<div id="switch_template" class="postbox">
+								<h3><span><?php _e( 'Choose Template', archivist::get_textdomain() ); ?></span></h3>
 								<div class="inside">
-									<form action="<?php echo admin_url( 'options-general.php?page=archivist_options_handle' ) ?>" method="post">
-										<?php // settings_fields( 'archivist-options' ); ?>
-										<?php // do_settings_fields( 'archivist-options' ); ?>
-										<input type="hidden" name="choose_template_name" value="<?php echo $name ?>">
-										<input type="hidden" name="tab" value="edit">
-										<input type="hidden" name="action" value="edit">
-										
+									<form action="<?php echo admin_url( 'options-general.php' ) ?>" method="get">
+										<input type="hidden" name="tab" value="edit" />
+										<input type="hidden" name="page" value="archivist_options_handle">
+
+										<script type="text/javascript" charset="utf-8">
+											jQuery( document ).ready( function() {
+												// hide button only if js is enabled
+												jQuery( '#choose_template_button' ).hide();
+												// if js is enabled, auto-submit form on change
+												jQuery( '#choose_template_name' ).change( function() {
+													this.form.submit();
+												} );
+											});
+										</script>
 
 										<table class="form-table">
 											<tbody>
-												<tr valign="top">
-													<th scope="row" colspan="2">
-														<h4><?php echo __( 'Template', archivist::get_textdomain() ) ?></h4>
-													</th>
-												</tr>
-												<tr>	
+												<tr>
 													<th scope="row">
-														<?php echo __( 'Before', archivist::get_textdomain() ) ?>
-													</th>
-													<td valign="top">
-														<textarea name="<?php echo $field_name ?>[template_before]" rows="6" class="large-text"><?php echo $settings[ 'template_before' ] ?></textarea>
-														<p>
-															<small><?php echo __( 'Add HTML to be displayed before the archive loop.', archivist::get_textdomain() ) ?></small>
-														</p>
-													</td>
-												</tr>
-												<tr>	
-													<th scope="row">
-														<?php echo __( 'Element', archivist::get_textdomain() ) ?>
-													</th>
-													<td valign="top">
-														<textarea name="<?php echo $field_name ?>[template]" rows="10" class="large-text"><?php echo $settings[ 'template' ] ?></textarea>
-														<p>
-															<small><?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', archivist::get_textdomain() ) ?></small>
-														</p>
-													</td>
-												</tr>
-												<tr>	
-													<th scope="row">
-														<?php echo __( 'After', archivist::get_textdomain() ) ?>
-													</th>
-													<td valign="top">
-														<textarea name="<?php echo $field_name ?>[template_after]" rows="6" class="large-text"><?php echo $settings[ 'template_after' ] ?></textarea>
-														<p>
-															<small><?php echo __( 'Add HTML to be displayed after the archive loop.', archivist::get_textdomain() ) ?></small>
-														</p>
-													</td>
-												</tr>
-												<tr valign="top">
-													<th scope="row" colspan="2">
-														<h4><?php echo __( 'Other', archivist::get_textdomain() ) ?></h4>
-													</th>
-												</tr>
-												<tr valign="top">
-													<th scope="row">
-														<?php echo __( 'Custom CSS', archivist::get_textdomain() ) ?>
+														<?php echo __( 'Template to edit', archivist::get_textdomain() ) ?>
 													</th>
 													<td>
-														<textarea name="<?php echo $field_name ?>[css]" rows="10" class="large-text"><?php echo $settings[ 'css' ] ?></textarea>
-													</td>
-												</tr>
-												<tr>	
-													<th scope="row">
-														<?php echo __( 'Default Thumbnail url', archivist::get_textdomain() ) ?>
-													</th>
-													<td valign="top">
-														<input type="text" name="<?php echo $field_name ?>[default_thumb]" value="<?php echo $settings[ 'default_thumb' ] ?>" id="archivist_default_thumb" class="large-text">
-														<p>
-															<small><?php echo __( 'If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used.', archivist::get_textdomain() ) ?></small>
-														</p>
-													</td>
-												</tr>
-												<tr>	
-													<th scope="row">
-														<?php echo __( 'Template Name', archivist::get_textdomain() ) ?>
-													</th>
-													<td valign="top">
-														<input type="text" name="<?php echo $field_name ?>[name]" value="<?php echo $settings[ 'name' ]?>" id="archivist_template_name" class="large-text">
+														<?php // TODO: move style stuff to css block/file ?>
+														<select name="choose_template_name" id="choose_template_name" style="width:99%">
+															<?php foreach ( $all_template_settings as $template_name => $template_settings ): ?>
+																<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name ?></option>
+															<?php endforeach ?>
+														</select>
 													</td>
 												</tr>
 											</tbody>
 										</table>
 
-										<p class="submit">
-											<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" style="float:right" />
-											<input type="submit" class="button-secondary" style="color:#BC0B0B;margin-right:20px" name="delete" value="<?php _e( 'delete permanently', archivist::get_textdomain() ) ?>">
+										<p class="submit" id="choose_template_button">
+											<input type="submit" class="button-primary" value="<?php _e( 'Choose Template', archivist::get_textdomain() ) ?>" />
 										</p>
-										
+
 										<br class="clear" />
-										
+
 									</form>
 								</div> <!-- .inside -->
-								
-							</div> <!-- #settings -->
+
+							</div> <!-- #switch_template -->
+						<?php endif ?>
+						
+						<div id="settings" class="postbox">
+							<h3>
+								<span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', archivist::get_textdomain() ), $name ); ?></span>
+								<?php if ( $name == self::get_default_template_name() ): ?>
+									(<?php _e( 'Default Template', archivist::get_textdomain() ); ?>)
+								<?php endif ?>
+							</h3>
+							<div class="inside">
+								<form action="<?php echo admin_url( 'options-general.php?page=archivist_options_handle' ) ?>" method="post">
+									<?php // settings_fields( 'archivist-options' ); ?>
+									<?php // do_settings_fields( 'archivist-options' ); ?>
+									<input type="hidden" name="choose_template_name" value="<?php echo $name ?>">
+									<input type="hidden" name="tab" value="edit">
+									<input type="hidden" name="action" value="edit">
+									
+
+									<table class="form-table">
+										<tbody>
+											<tr valign="top">
+												<th scope="row" colspan="2">
+													<h4><?php echo __( 'Template', archivist::get_textdomain() ) ?></h4>
+												</th>
+											</tr>
+											<tr>	
+												<th scope="row">
+													<?php echo __( 'Before', archivist::get_textdomain() ) ?>
+												</th>
+												<td valign="top">
+													<textarea name="<?php echo $field_name ?>[template_before]" rows="6" class="large-text"><?php echo $settings[ 'template_before' ] ?></textarea>
+													<p>
+														<small><?php echo __( 'Add HTML to be displayed before the archive loop.', archivist::get_textdomain() ) ?></small>
+													</p>
+												</td>
+											</tr>
+											<tr>	
+												<th scope="row">
+													<?php echo __( 'Element', archivist::get_textdomain() ) ?>
+												</th>
+												<td valign="top">
+													<textarea name="<?php echo $field_name ?>[template]" rows="10" class="large-text"><?php echo $settings[ 'template' ] ?></textarea>
+													<p>
+														<small><?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', archivist::get_textdomain() ) ?></small>
+													</p>
+												</td>
+											</tr>
+											<tr>	
+												<th scope="row">
+													<?php echo __( 'After', archivist::get_textdomain() ) ?>
+												</th>
+												<td valign="top">
+													<textarea name="<?php echo $field_name ?>[template_after]" rows="6" class="large-text"><?php echo $settings[ 'template_after' ] ?></textarea>
+													<p>
+														<small><?php echo __( 'Add HTML to be displayed after the archive loop.', archivist::get_textdomain() ) ?></small>
+													</p>
+												</td>
+											</tr>
+											<tr valign="top">
+												<th scope="row" colspan="2">
+													<h4><?php echo __( 'Other', archivist::get_textdomain() ) ?></h4>
+												</th>
+											</tr>
+											<tr valign="top">
+												<th scope="row">
+													<?php echo __( 'Custom CSS', archivist::get_textdomain() ) ?>
+												</th>
+												<td>
+													<textarea name="<?php echo $field_name ?>[css]" rows="10" class="large-text"><?php echo $settings[ 'css' ] ?></textarea>
+												</td>
+											</tr>
+											<tr>	
+												<th scope="row">
+													<?php echo __( 'Default Thumbnail url', archivist::get_textdomain() ) ?>
+												</th>
+												<td valign="top">
+													<input type="text" name="<?php echo $field_name ?>[default_thumb]" value="<?php echo $settings[ 'default_thumb' ] ?>" id="archivist_default_thumb" class="large-text">
+													<p>
+														<small><?php echo __( 'If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used.', archivist::get_textdomain() ) ?></small>
+													</p>
+												</td>
+											</tr>
+											<tr>	
+												<th scope="row">
+													<?php echo __( 'Template Name', archivist::get_textdomain() ) ?>
+												</th>
+												<td valign="top">
+													<input type="text" name="<?php echo $field_name ?>[name]" value="<?php echo $settings[ 'name' ]?>" id="archivist_template_name" class="large-text">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<p class="submit">
+										<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" style="float:right" />
+										<input type="submit" class="button-secondary" style="color:#BC0B0B;margin-right:20px" name="delete" value="<?php _e( 'delete permanently', archivist::get_textdomain() ) ?>">
+									</p>
+									
+									<br class="clear" />
+									
+								</form>
+							</div> <!-- .inside -->
 							
-						</div> <!-- #normal-sortables -->
+						</div> <!-- #settings -->						
 					</div> <!-- #post-body-content -->
 				</div> <!-- #post-body -->
 			<?php

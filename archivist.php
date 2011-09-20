@@ -180,6 +180,41 @@ if ( ! class_exists( 'archivist' ) ) {
 			// default template name is now an option in the database
 			// if it's not set, it should be 'default' like in the prior versions
 			add_option( 'archivist_default_template_name', 'default' );
+			
+			// 1.3.x revalidate all settings
+			$settings = get_option( 'archivist' );
+			$new_settings = array();
+			foreach ( $settings as $template_name => $template ) {
+				if ( $template_name != $template[ 'name' ] ) {
+					continue; // skip this setting
+				}
+				// now fix missing template parts
+				if ( ! isset( $template[ 'css' ] ) ) {
+					$template[ 'css' ] = PA_CSS_DEFAULT;
+				}
+				if ( ! isset( $template[ 'template' ] ) ) {
+					$template[ 'template' ] = PA_TEMPLATE_DEFAULT;
+				}
+				if ( ! isset( $template[ 'default_thumb' ] ) ) {
+					$template[ 'default_thumb' ] = PA_THUMB_DEFAULT;
+				}
+				if ( ! isset( $template[ 'template_after' ] ) ) {
+					$template[ 'template_after' ] = PA_TEMPLATE_AFTER_DEFAULT;
+				}
+				if ( ! isset( $template[ 'template_before' ] ) ) {
+					$template[ 'template_before' ] = PA_TEMPLATE_BEFORE_DEFAULT;
+				}
+				// adopt template
+				$new_settings[ $template[ 'name' ] ] = $template;
+			}
+			update_option( 'archivist', $new_settings );
+			
+			// check if default template still exists
+			$default_template = get_option( 'archivist_default_template_name' );
+			if ( ! isset( $new_settings[ $default_template ] ) ) {
+				$first_template_name = array_shift( array_keys( $new_settings ) );
+				update_option( 'archivist_default_template_name', $first_template_name );
+			}
 		}
 		
 		public function shortcode( $atts ) {

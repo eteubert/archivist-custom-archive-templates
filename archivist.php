@@ -40,6 +40,7 @@ THE SOFTWARE.
 // TODO: enable import & export of templates
 // TODO: maybe an image picker for the default thumbnail?
 // TODO: change default template
+// TODO: save version number in database, so i know when there was an update
 
 define('PA_CSS_DEFAULT', '
 .archivist_wrapper .permalink {

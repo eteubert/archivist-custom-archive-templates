@@ -95,7 +95,7 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 == Changelog ==
 
 = 1.3.2 =
-* Bugfixes (Settings Validation)
+* Bugfixes (Settings Validation, backslashes)
 
 = 1.3.1 =
 * fix backward compatibility issue

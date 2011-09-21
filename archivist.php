@@ -87,7 +87,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		add_action( 'plugins_loaded', array( 'archivist', 'get_object' ) );
 		// TODO: why does register_activation_hook() not work? can't figure it out? ;-(
 		// register_activation_hook( __FILE__, array( 'archivist', 'activation_hook' ) );
-		add_action('activate_archivist-custom-archive-templates/archivist.php', array( 'archivist', 'activation_hook' ) );
+		add_action( 'activate_archivist-custom-archive-templates/archivist.php', array( 'archivist', 'activation_hook' ) );
 	}
 
 	class archivist {
@@ -188,6 +188,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			$new_settings = array();
 			foreach ( $settings as $template_name => $template ) {
 				if ( $template_name != $template[ 'name' ] ) {
+					die($template_name . $template_name['name']);
 					continue; // skip this setting
 				}
 				// now fix missing template parts
@@ -217,6 +218,12 @@ if ( ! class_exists( 'archivist' ) ) {
 				$first_template_name = array_shift( array_keys( $new_settings ) );
 				update_option( 'archivist_default_template_name', $first_template_name );
 			}
+			
+			// strip slashes in front of quotes
+			for ( $i = 0; $i  < 5; $i ++ ) { 
+				$new_settings = array_map( 'stripslashes_deep' , $new_settings );
+			}
+			update_option( 'archivist', $new_settings );
 		}
 		
 		public function shortcode( $atts ) {
@@ -419,6 +426,13 @@ if ( ! class_exists( 'archivist' ) ) {
 			$current_template = $this->get_current_template_name();
 			$settings = get_option( 'archivist' );
 			
+			if ( get_magic_quotes_gpc() ) {
+				// strip slashes so HTML won't be escaped
+			    $_POST      = array_map( 'stripslashes_deep', $_POST );
+			    $_GET       = array_map( 'stripslashes_deep', $_GET );
+			    $_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
+			}
+			
 			// DELETE action
 			if ( isset( $_POST[ 'delete' ] ) && strlen( $_POST[ 'delete' ] ) > 0 ) {
 				unset( $settings[ $current_template ] );
@@ -440,10 +454,6 @@ if ( ! class_exists( 'archivist' ) ) {
 			}
 			// EDIT action
 			elseif ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'edit' ) {
-				if ( get_magic_quotes_gpc() ) {
-					// strip slashes so HTML won't be escaped
-				    $_POST = array_map( 'stripslashes_deep', $_POST );
-				}
 				foreach ( $_POST[ 'archivist' ] as $key => $value ) {
 					$template_name = $key;
 					// update name

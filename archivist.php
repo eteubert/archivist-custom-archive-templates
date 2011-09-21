@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.3.2
+Version: 1.3.3
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -146,7 +146,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		
 		public function create_default_template() {
 			$default_name = self::get_default_template_name();
-			$settings = get_option( 'archivist' );
+			$settings = $this->get_template_options();
 			if ( ! isset( $settings[ $default_name ] ) ) {
 				// TODO: refactor model archivist_settings::new
 				// TODO: refactor model archivist_settings::new_with_defaults
@@ -205,7 +205,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			add_option( 'archivist_default_template_name', 'default' );
 			
 			// 1.3.x revalidate all settings
-			$settings = get_option( 'archivist' );
+			$settings = $this->get_template_options();
 			$new_settings = array();
 			foreach ( $settings as $template_name => $template ) {
 				if ( $template_name != $template[ 'name' ] ) {
@@ -245,6 +245,11 @@ if ( ! class_exists( 'archivist' ) ) {
 				$new_settings = array_map( 'stripslashes_deep' , $new_settings );
 			}
 			update_option( 'archivist', $new_settings );
+		}
+		
+		private function get_template_options() {
+			$settings = get_option( 'archivist' );
+			return array_map( 'stripslashes_deep', $settings );
 		}
 		
 		private function keep_backwards_compatibility() {
@@ -403,7 +408,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		private function display_by_loop( $loop, $template = false ) {
-			$all_settings = get_option( 'archivist' );
+			$all_settings = $settings = $this->get_template_options();;
 			
 			if ( ! $template ) {
 				$template = self::get_default_template_name();
@@ -465,7 +470,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		public function settings_page() {
 			$tab = ( $_REQUEST[ 'tab' ] == 'add' ) ? 'add' : 'edit';
 			$current_template = $this->get_current_template_name();
-			$settings = get_option( 'archivist' );
+			$settings = $this->get_template_options();
 			
 			if ( get_magic_quotes_gpc() ) {
 				// strip slashes so HTML won't be escaped
@@ -754,7 +759,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			}
 			
 			// does it still exist? might be deleted
-			$all_settings = get_option( 'archivist' );
+			$all_settings = $settings = $this->get_template_options();;
 			$settings     = $all_settings[ $name ];
 			// if the setting does not exist, take the first you can get
 			if ( ! $settings ) {
@@ -768,7 +773,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			$name       = $this->get_current_template_name();
 			$field_name = 'archivist[' . $name . ']';
 			
-			$all_template_settings = get_option( 'archivist' );
+			$all_template_settings = $settings = $this->get_template_options();;
 			$settings              = $all_template_settings[ $name ];
 			$default_template      = get_option( 'archivist_default_template_name' );
 			?>

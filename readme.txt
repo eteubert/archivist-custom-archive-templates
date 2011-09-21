@@ -94,6 +94,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.3.3 =
+* generic backslash fix
+
 = 1.3.2 =
 * you can now set any template as the default
 * current default template more easily recognizable (bold font & marked in template chooser)

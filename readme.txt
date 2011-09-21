@@ -98,7 +98,7 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 * you can now set any template as the default
 * current default template more easily recognizable (bold font & marked in template chooser)
 * add internal version number so update and compatibility scripts get run only when needed
-* Bugfixes (Settings Validation, backslashes)
+* Bugfixes (Settings Validation, backslashes, ...)
 
 = 1.3.1 =
 * fix backward compatibility issue

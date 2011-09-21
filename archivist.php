@@ -107,7 +107,12 @@ if ( ! class_exists( 'archivist' ) ) {
 			add_shortcode( 'archivist', array( $this, 'shortcode' ) );
 			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
 			
-			$this->keep_backwards_compatibility();
+			// only run update hooks if the plugin is already active
+			$plugins = get_option( 'active_plugins' );
+			$required_plugin = 'archivist-custom-archive-templates/archivist.php';
+			if ( in_array( $required_plugin , $plugins ) ) {
+				$this->keep_backwards_compatibility();
+			}
 		}
 		
 		static function activation_hook() {

@@ -39,9 +39,16 @@ THE SOFTWARE.
 // TODO: icing on the cake - add filters and hooks
 // TODO: enable import & export of templates
 // TODO: maybe an image picker for the default thumbnail?
-// TODO: change default template
-// TODO: save version number in database, so i know when there was an update
 
+/**
+ * internal version number
+ * Used to determine whether plugin has been updated
+ */
+define( 'ARCHIVIST_VERSION', '20' );
+
+/**
+ * constants with default values
+ */
 define('PA_CSS_DEFAULT', '
 .archivist_wrapper .permalink {
 	font-weight: bold;
@@ -151,7 +158,17 @@ if ( ! class_exists( 'archivist' ) ) {
 			}
 		}
 		
-		private function keep_backwards_compatibility() {
+		private function do_plugin_update( $old_version, $current_version ) {
+			// all updates before introduction of version number
+			if ( ! $old_version ) {
+				$this->update_from_zero();
+			}
+			// if ( $old_version == 20 ) ...
+			// if ( $old_version < 30 && $current_version == 40 ) ...
+			// ...
+		}
+		
+		private function update_from_zero() {
 			// v1.1.0 -> v1.2.0
 			// move from single template to multiple templates
 			// if single template stuff exists, create a 'default'
@@ -224,6 +241,26 @@ if ( ! class_exists( 'archivist' ) ) {
 				$new_settings = array_map( 'stripslashes_deep' , $new_settings );
 			}
 			update_option( 'archivist', $new_settings );
+		}
+		
+		private function keep_backwards_compatibility() {
+			if ( ! defined( 'ARCHIVIST_VERSION' ) ) {
+				return;
+			}
+			
+			$current_version = (int) ARCHIVIST_VERSION;
+			$old_version     = (int) get_option( __CLASS__ . '_version' );
+			
+			// if versions are equal, there is nothing to do
+			if ( $current_version === $old_version ) {
+				return;
+			}
+			
+			// do the updates based on old and current version
+			$this->do_plugin_update( $old_version, $current_version );
+			
+			// update internal version
+			update_option( __CLASS__ . '_version', $current_version );
 		}
 		
 		public function shortcode( $atts ) {

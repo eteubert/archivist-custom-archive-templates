@@ -220,7 +220,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			}
 			
 			// strip slashes in front of quotes
-			for ( $i = 0; $i  < 5; $i ++ ) { 
+			for ( $i = 0; $i < 5; $i ++ ) { 
 				$new_settings = array_map( 'stripslashes_deep' , $new_settings );
 			}
 			update_option( 'archivist', $new_settings );
@@ -433,8 +433,18 @@ if ( ! class_exists( 'archivist' ) ) {
 			    $_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
 			}
 			
+			// CHANGE DEFAULT action
+			if ( isset( $_POST[ 'change_default' ] ) && strlen( $_POST[ 'choose_template_name' ] ) > 0 ) {
+				update_option( 'archivist_default_template_name', $_POST[ 'choose_template_name' ] );
+				?>
+					<div class="updated">
+						<p><?php echo wp_sprintf( __( 'Template "%1s" is now your default. All [archivist ...] shortcodes without a template option will use this to display the archive.', archivist::get_textdomain() ), $_POST[ 'choose_template_name' ] ) ?>
+						</p>
+					</div>
+				<?php
+			}
 			// DELETE action
-			if ( isset( $_POST[ 'delete' ] ) && strlen( $_POST[ 'delete' ] ) > 0 ) {
+			elseif ( isset( $_POST[ 'delete' ] ) && strlen( $_POST[ 'delete' ] ) > 0 ) {
 				unset( $settings[ $current_template ] );
 				update_option( 'archivist', $settings );
 				
@@ -447,7 +457,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				?>
 					<div class="updated">
 						<p>
-							<strong><?php echo wp_sprintf( __( 'Template "%1s" deleted.', archivist::get_textdomain() ), $current_template ) ?></strong>
+							<?php echo wp_sprintf( __( 'Template "%1s" deleted.', archivist::get_textdomain() ), $current_template ) ?>
 						</p>
 					</div>
 				<?php				
@@ -500,16 +510,16 @@ if ( ! class_exists( 'archivist' ) ) {
 					?>
 						<div class="updated">
 							<p>
-								<strong><?php echo wp_sprintf( __( 'Template "%1s" created.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
+								<?php echo wp_sprintf( __( 'Template "%1s" created.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?>
 							</p>
 						</div>
 					<?php
 				} else {
 					$tab = 'add'; // display add-template-form again
 					?>
-						<div class="updated">
+						<div class="error">
 							<p>
-								<strong><?php echo wp_sprintf( __( 'Template "%1s" already exists.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?></strong>
+								<?php echo wp_sprintf( __( 'Template "%1s" already exists.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?>
 							</p>
 						</div>
 					<?php
@@ -719,6 +729,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			
 			$all_template_settings = get_option( 'archivist' );
 			$settings              = $all_template_settings[ $name ];
+			$default_template      = get_option( 'archivist_default_template_name' );
 			?>
 				<!-- Main Column -->
 				<div id="post-body">
@@ -754,7 +765,7 @@ if ( ! class_exists( 'archivist' ) ) {
 														<?php // TODO: move style stuff to css block/file ?>
 														<select name="choose_template_name" id="choose_template_name" style="width:99%">
 															<?php foreach ( $all_template_settings as $template_name => $template_settings ): ?>
-																<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name ?></option>
+																<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name . ( ( $template_name == $default_template ) ? ' ' . __( '(default)', archivist::get_textdomain() ) : '' ) ?></option>
 															<?php endforeach ?>
 														</select>
 													</td>
@@ -777,9 +788,19 @@ if ( ! class_exists( 'archivist' ) ) {
 						<div id="settings" class="postbox">
 							<h3>
 								<span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', archivist::get_textdomain() ), $name ); ?></span>
-								<?php if ( $name == self::get_default_template_name() ): ?>
-									(<?php _e( 'Default Template', archivist::get_textdomain() ); ?>)
-								<?php endif ?>
+								<span style="float: right; font-weight: bold">
+									<?php if ( $name == self::get_default_template_name() ): ?>
+										<?php _e( 'Default Template', archivist::get_textdomain() ); ?>
+									<?php else: ?>
+										<form action="<?php echo admin_url( 'options-general.php?page=archivist_options_handle' ) ?>" method="post">
+											<input type="hidden" name="choose_template_name" value="<?php echo $name ?>">
+											<input type="hidden" name="tab" value="edit">
+											<input type="hidden" name="action" value="change_default">
+											<input type="submit" class="button-secondary" name="change_default" value="<?php _e( 'Set to Default', archivist::get_textdomain() ) ?>" style="position:relative; bottom:3px">
+											
+										</form>
+									<?php endif ?>
+								</span>
 							</h3>
 							<div class="inside">
 								<form action="<?php echo admin_url( 'options-general.php?page=archivist_options_handle' ) ?>" method="post">
@@ -860,6 +881,9 @@ if ( ! class_exists( 'archivist' ) ) {
 												</th>
 												<td valign="top">
 													<input type="text" name="<?php echo $field_name ?>[name]" value="<?php echo $settings[ 'name' ]?>" id="archivist_template_name" class="large-text">
+													<p>
+														<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', archivist::get_textdomain() ) ?></small>
+													</p>
 												</td>
 											</tr>
 										</tbody>
@@ -867,7 +891,7 @@ if ( ! class_exists( 'archivist' ) ) {
 
 									<p class="submit">
 										<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" style="float:right" />
-										<input type="submit" class="button-secondary" style="color:#BC0B0B;margin-right:20px" name="delete" value="<?php _e( 'delete permanently', archivist::get_textdomain() ) ?>">
+										<input type="submit" class="button-secondary" style="color:#BC0B0B; margin-right:20px; float: right" name="delete" value="<?php _e( 'delete permanently', archivist::get_textdomain() ) ?>">
 									</p>
 									
 									<br class="clear" />

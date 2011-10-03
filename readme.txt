@@ -94,6 +94,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.3.4 =
+* minor capability fix
+
 = 1.3.3 =
 * generic backslash fix
 

@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.3.3
+Version: 1.3.4
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -292,7 +292,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		public function add_menu_entry() {
-			add_submenu_page( 'options-general.php', 'Archivist', 'Archivist', 'edit_post', 'archivist_options_handle', array( $this, 'settings_page' ) );
+			add_submenu_page( 'options-general.php', 'Archivist', 'Archivist', 'post', 'archivist_options_handle', array( $this, 'settings_page' ) );
 		}
 		
 		function render_element( $post, $template ) {
@@ -869,7 +869,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'Before', archivist::get_textdomain() ) ?>
 												</th>
 												<td valign="top">
-													<textarea name="<?php echo $field_name ?>[template_before]" rows="6" class="large-text"><?php echo $settings[ 'template_before' ] ?></textarea>
+													<textarea name="<?php echo $field_name ?>[template_before]" rows="6" class="large-text" id="archivist_template_before"><?php echo $settings[ 'template_before' ] ?></textarea>
 													<p>
 														<small><?php echo __( 'Add HTML to be displayed before the archive loop.', archivist::get_textdomain() ) ?></small>
 													</p>
@@ -880,7 +880,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'Element', archivist::get_textdomain() ) ?>
 												</th>
 												<td valign="top">
-													<textarea name="<?php echo $field_name ?>[template]" rows="10" class="large-text"><?php echo $settings[ 'template' ] ?></textarea>
+													<textarea name="<?php echo $field_name ?>[template]" rows="10" class="large-text" id="archivist_template"><?php echo $settings[ 'template' ] ?></textarea>
 													<p>
 														<small><?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', archivist::get_textdomain() ) ?></small>
 													</p>
@@ -891,7 +891,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'After', archivist::get_textdomain() ) ?>
 												</th>
 												<td valign="top">
-													<textarea name="<?php echo $field_name ?>[template_after]" rows="6" class="large-text"><?php echo $settings[ 'template_after' ] ?></textarea>
+													<textarea name="<?php echo $field_name ?>[template_after]" rows="6" class="large-text" id="archivist_template_after"><?php echo $settings[ 'template_after' ] ?></textarea>
 													<p>
 														<small><?php echo __( 'Add HTML to be displayed after the archive loop.', archivist::get_textdomain() ) ?></small>
 													</p>
@@ -907,7 +907,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'Custom CSS', archivist::get_textdomain() ) ?>
 												</th>
 												<td>
-													<textarea name="<?php echo $field_name ?>[css]" rows="10" class="large-text"><?php echo $settings[ 'css' ] ?></textarea>
+													<textarea name="<?php echo $field_name ?>[css]" rows="10" class="large-text" id="archivist_css"><?php echo $settings[ 'css' ] ?></textarea>
 												</td>
 											</tr>
 											<tr>	
@@ -926,7 +926,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'Template Name', archivist::get_textdomain() ) ?>
 												</th>
 												<td valign="top">
-													<input type="text" name="<?php echo $field_name ?>[name]" value="<?php echo $settings[ 'name' ]?>" id="archivist_template_name" class="large-text">
+													<input type="text" name="<?php echo $field_name ?>[name]" value="<?php echo $settings[ 'name' ]?>" id="archivist_name" class="large-text">
 													<p>
 														<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', archivist::get_textdomain() ) ?></small>
 													</p>

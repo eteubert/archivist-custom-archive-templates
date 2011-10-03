@@ -94,7 +94,7 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
-= 1.3.4 =
+= 1.3.4 & 1.3.5 =
 * minor capability fix
 
 = 1.3.3 =

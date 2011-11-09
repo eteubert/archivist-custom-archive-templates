@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.3.5
+Version: 1.3.6
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -398,6 +398,11 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		public function display_by_query( $query, $template = false ) {
+			// sometimes WordPress does stupid stuff with ampersands
+			$query = str_replace( "&amp;", "&", $query );
+			$query = str_replace( "#038;", "&", $query );
+			$query = str_replace( "&&", "&", $query );
+
 			$loop = new WP_Query( $query );
 			
 			if ( ! $template ) {
@@ -408,7 +413,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		private function display_by_loop( $loop, $template = false ) {
-			$all_settings = $settings = $this->get_template_options();;
+			$all_settings = $this->get_template_options();;
 			
 			if ( ! $template ) {
 				$template = self::get_default_template_name();
@@ -596,7 +601,7 @@ if ( ! class_exists( 'archivist' ) ) {
 					</a>
 				</h2>
 				
-				<div id="poststuff" class="metabox-holder has-right-sidebar">
+				<div class="metabox-holder has-right-sidebar">
 					<?php
 					$this->settings_page_sidebar();
 					
@@ -606,7 +611,7 @@ if ( ! class_exists( 'archivist' ) ) {
 						$this->settings_page_add();
 					}
 					?>
-				</div> <!-- #poststuff -->
+				</div> <!-- .metabox-holder -->
 			</div> <!-- .wrap -->
 		<?php
 		}
@@ -614,91 +619,89 @@ if ( ! class_exists( 'archivist' ) ) {
 		private function settings_page_sidebar() {
 			?>
 				<!-- Sidebar -->
-				<div id="side-info-column" class="inner-sidebar">
-					<div id="side-sortables" class="meta-box-sortables ui-sortable">
+				<div class="inner-sidebar">
 						
-						<div id="wp-archivist-infobox" class="postbox">
-							<h3><span><?php _e( 'Creator', archivist::get_textdomain() ); ?></span></h3>
-							<div class="inside">
+					<div class="postbox">
+						<h3><span><?php _e( 'Creator', archivist::get_textdomain() ); ?></span></h3>
+						<div class="inside">
+							<p>
+								<?php _e( 'Hey, I\'m Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer.', archivist::get_textdomain() ); ?>
+							</p>
+							<script type="text/javascript">
+							/* <![CDATA[ */
+							    (function() {
+							        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+							        s.type = 'text/javascript';
+							        s.async = true;
+							        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+							        t.parentNode.insertBefore(s, t);
+							    })();
+							/* ]]> */
+							</script>
+							<p>
+								<a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive"></a>
+								<noscript><a href="http://flattr.com/thing/396382/WordPress-Plugin-Archivist-Custom-Archive-Templates" target="_blank">
+								<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+							</p>
+							<p>
+								<?php echo wp_sprintf( __( 'Get in touch: Visit my <a href="%1s">Homepage</a>, follow me on <a href="%2s">Twitter</a> or look at my projects on <a href="%3s">GitHub</a>.', archivist::get_textdomain() ), 'http://www.FarBeyondProgramming.com/', 'http://www.twitter.com/ericteubert', 'https://github.com/eteubert' ) ?>
+							</p>
+						</div>
+					</div>
+							
+					<?php
+					$name = $this->get_current_template_name();
+					if ( $name == self::get_default_template_name() ) {
+						$template_part = ' ';
+					} else {
+						$template_part = ' template="' . $name . '" ';
+					}
+					?>
+					<div id="wp-archivist-usagebox" class="postbox">
+						<h3><span><?php _e( 'Examples', archivist::get_textdomain() ); ?></span></h3>
+						<div class="inside">
+							<p>
+								<?php echo __( 'Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking.', archivist::get_textdomain() ) ?>
+							</p>
+							<p>
+								<input type="text" name="example1" class="large-text" value='[archivist<?php echo $template_part  ?>category="kitten"]'>
+								<?php echo __( 'Display all posts in the "kitten" category.', archivist::get_textdomain() ) ?>
+							</p>
+							<p>
+								<input type="text" name="example2" class="large-text" value='[archivist<?php echo $template_part  ?>tag="kitten"]'>
+								<?php echo __( 'Display all posts tagged with "kitten".', archivist::get_textdomain() ) ?>
+							</p>
+							<p>
+								<input type="text" name="example3" class="large-text" value='[archivist<?php echo $template_part  ?>query="year=1984"]'>
+								<?php echo __( wp_sprintf( 'Display all posts published in year 1984. See %1s for all options.', '<a href="http://codex.wordpress.org/Class_Reference/WP_Query">WordPress Codex</a>' ), archivist::get_textdomain() ) ?>
+							</p>
+						</div>
+					</div>
+					
+					<div id="wp-archivist-placeholders" class="postbox">
+						<h3><span><?php _e( 'Placeholders', archivist::get_textdomain() ); ?></span></h3>
+						<div class="inside">
+							<div class="inline-pre">
 								<p>
-									<?php _e( 'Hey, I\'m Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer.', archivist::get_textdomain() ); ?>
-								</p>
-								<script type="text/javascript">
-								/* <![CDATA[ */
-								    (function() {
-								        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-								        s.type = 'text/javascript';
-								        s.async = true;
-								        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-								        t.parentNode.insertBefore(s, t);
-								    })();
-								/* ]]> */
-								</script>
-								<p>
-									<a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive"></a>
-									<noscript><a href="http://flattr.com/thing/396382/WordPress-Plugin-Archivist-Custom-Archive-Templates" target="_blank">
-									<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
-								</p>
-								<p>
-									<?php echo wp_sprintf( __( 'Get in touch: Visit my <a href="%1s">Homepage</a>, follow me on <a href="%2s">Twitter</a> or look at my projects on <a href="%3s">GitHub</a>.', archivist::get_textdomain() ), 'http://www.FarBeyondProgramming.com/', 'http://www.twitter.com/ericteubert', 'https://github.com/eteubert' ) ?>
+								  	<pre>%TITLE%</pre><br/><?php echo __( 'The post title.', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%PERMALINK%</pre><br/><?php echo __( 'The post permalink.', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%AUTHOR%</pre><br/><?php echo __( 'The post author.', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%CATEGORIES%</pre><br/><?php echo __( 'The post categories as unordered list.', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%CATEGORIES|...%</pre><br/><?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%TAGS%</pre><br/><?php echo __( 'The post tags with default separator.', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%TAGS|...%</pre><br/><?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%EXCERPT%</pre><br/><?php echo __( 'The post excerpt.', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%POST_META|...%</pre><br/><?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%DATE%</pre><br/><?php echo __( 'The post date with default format.', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%DATE|...%</pre><br/><?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%POST_THUMBNAIL|...x...%</pre><br/><?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%COMMENTS%</pre><br/><?php echo __( 'The post comment count.', archivist::get_textdomain() ) ?> <br/>
 								</p>
 							</div>
-						</div>
-								
-						<?php
-						$name = $this->get_current_template_name();
-						if ( $name == self::get_default_template_name() ) {
-							$template_part = ' ';
-						} else {
-							$template_part = ' template="' . $name . '" ';
-						}
-						?>
-						<div id="wp-archivist-usagebox" class="postbox">
-							<h3><span><?php _e( 'Examples', archivist::get_textdomain() ); ?></span></h3>
-							<div class="inside">
-								<p>
-									<?php echo __( 'Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking.', archivist::get_textdomain() ) ?>
-								</p>
-								<p>
-									<input type="text" name="example1" class="large-text" value='[archivist<?php echo $template_part  ?>category="kitten"]'>
-									<?php echo __( 'Display all posts in the "kitten" category.', archivist::get_textdomain() ) ?>
-								</p>
-								<p>
-									<input type="text" name="example2" class="large-text" value='[archivist<?php echo $template_part  ?>tag="kitten"]'>
-									<?php echo __( 'Display all posts tagged with "kitten".', archivist::get_textdomain() ) ?>
-								</p>
-								<p>
-									<input type="text" name="example3" class="large-text" value='[archivist<?php echo $template_part  ?>query="year=1984"]'>
-									<?php echo __( wp_sprintf( 'Display all posts published in year 1984. See %1s for all options.', '<a href="http://codex.wordpress.org/Class_Reference/WP_Query">WordPress Codex</a>' ), archivist::get_textdomain() ) ?>
-								</p>
-							</div>
-						</div>
-						
-						<div id="wp-archivist-placeholders" class="postbox">
-							<h3><span><?php _e( 'Placeholders', archivist::get_textdomain() ); ?></span></h3>
-							<div class="inside">
-								<div class="inline-pre">
-									<p>
-									  	<pre>%TITLE%</pre><br/><?php echo __( 'The post title.', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%PERMALINK%</pre><br/><?php echo __( 'The post permalink.', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%AUTHOR%</pre><br/><?php echo __( 'The post author.', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%CATEGORIES%</pre><br/><?php echo __( 'The post categories as unordered list.', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%CATEGORIES|...%</pre><br/><?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%TAGS%</pre><br/><?php echo __( 'The post tags with default separator.', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%TAGS|...%</pre><br/><?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%EXCERPT%</pre><br/><?php echo __( 'The post excerpt.', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%POST_META|...%</pre><br/><?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%DATE%</pre><br/><?php echo __( 'The post date with default format.', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%DATE|...%</pre><br/><?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%POST_THUMBNAIL|...x...%</pre><br/><?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-									  	<pre>%COMMENTS%</pre><br/><?php echo __( 'The post comment count.', archivist::get_textdomain() ) ?> <br/>
-									</p>
-								</div>
 
-							</div>
 						</div>
+					</div>
 						
-					</div> <!-- side-sortables -->
 				</div> <!-- side-info-column -->
 			<?php
 		}
@@ -708,7 +711,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				<!-- Main Column -->
 				<div id="post-body">
 					<div id="post-body-content">
-						<div id="add_template" class="postbox">
+						<div class="postbox">
 							<h3><span><?php _e( 'Add Template', archivist::get_textdomain() ); ?></span></h3>
 							
 							<div class="inside">

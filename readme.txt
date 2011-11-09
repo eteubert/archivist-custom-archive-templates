@@ -94,6 +94,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.3.7 =
+* fix typo (prevented custom css from being used)
+
 = 1.3.6 =
 * fix bug using query parameter in shortcode
 

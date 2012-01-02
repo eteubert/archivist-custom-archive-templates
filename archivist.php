@@ -101,6 +101,8 @@ if ( ! class_exists( 'archivist' ) ) {
  
 		static private $classobj = NULL;
 		public $textdomain = 'archivist';
+		// current template settings
+		static $settings = NULL;
  
 		public function __construct() {
 			$this->load_textdomain();
@@ -344,25 +346,23 @@ if ( ! class_exists( 'archivist' ) ) {
 				),
 			 	$template
 			 );
-			
+
 			// custom post thumbnails
 			$template = preg_replace_callback(
 			    '/%POST_THUMBNAIL\|(\d+)x(\d+)%/',
-			    create_function(
-					'$matches',
-					'
-					$thumb = get_the_post_thumbnail( $post->ID, array( $matches[ 1 ], $matches[ 2 ] ) );
-					
-					
-					if ( ! $thumb ) {
-						$default_thumb = get_option( "archivist_default_thumb", PA_THUMB_DEFAULT );
-						if ( $default_thumb ) {
-							$thumb = "<img src=\"$default_thumb\" alt=\"Archive Thumb\" width=\"" . $matches[ 1 ] . "\" height=\"" . $matches[ 2 ] . "\">";
+			    function ( $matches ) {
+						global $post;
+			    	$thumb = get_the_post_thumbnail( $post->ID, array( $matches[ 1 ], $matches[ 2 ] ) );
+						
+						if ( ! $thumb ) {
+							$default_thumb = archivist::$settings[ 'default_thumb' ];
+							if ( $default_thumb ) {
+								$thumb = "<img src=\"$default_thumb\" alt=\"Archive Thumb\" width=\"" . $matches[ 1 ] . "\" height=\"" . $matches[ 2 ] . "\">";
+							}
 						}
-					}
-					
-					return $thumb;'
-				),
+
+						return $thumb;
+			    },
 			 	$template
 			 );
 			
@@ -413,13 +413,16 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		private function display_by_loop( $loop, $template = false ) {
-			$all_settings = $this->get_template_options();;
+			global $post;
+			
+			$all_settings = $this->get_template_options();
 			
 			if ( ! $template ) {
 				$template = self::get_default_template_name();
 			}
 			
 			$settings = $all_settings[ $template ];
+			archivist::$settings = $settings;
 			
 			if ( ! $settings ) {
 				return '<div>' . wp_sprintf( __( 'Archivist Error: Unknown template "%1s"', archivist::get_textdomain() ), $template ) . '</div>';

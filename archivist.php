@@ -325,6 +325,17 @@ if ( ! class_exists( 'archivist' ) ) {
 			 	$template
 			 );
 
+			// custom post meta with separator
+            $template = preg_replace_callback(
+                '/%POST_META\|(.*?)\|(.*)%/',
+                function ( $matches ) {
+                    global $post;
+                    $list = get_post_meta( $post->ID, $matches[ 1 ], false );
+                    return implode( $matches[ 2 ], $list );
+                },
+                 $template
+             );
+
 			// custom post meta
 			$template = preg_replace_callback(
 			    '/%POST_META\|(.*)%/',
@@ -692,6 +703,7 @@ if ( ! class_exists( 'archivist' ) ) {
 								  	<pre>%TAGS|...%</pre><br/><?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
 								  	<pre>%EXCERPT%</pre><br/><?php echo __( 'The post excerpt.', archivist::get_textdomain() ) ?> <br/><br/>
 								  	<pre>%POST_META|...%</pre><br/><?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
+								  	<pre>%POST_META|...|...%</pre><br/><?php echo __( 'Any post meta list, separated by custom HTML. Example: <pre>%POST_META|guest|&lt;br&gt;%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
 								  	<pre>%DATE%</pre><br/><?php echo __( 'The post date with default format.', archivist::get_textdomain() ) ?> <br/><br/>
 								  	<pre>%DATE|...%</pre><br/><?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
 								  	<pre>%POST_THUMBNAIL|...x...%</pre><br/><?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', archivist::get_textdomain() ) ?> <br/><br/>

@@ -36,6 +36,7 @@ Use HTML and any of the following template placeholders.
 - `%TAGS|...%` - The post tags with a custom separator. Example: `%TAGS|, %`
 - `%EXCERPT%` - The post excerpt.
 - `%POST_META|...%` - Any post meta. Example: `%POST_META|duration%`.
+- `%POST_META|...|...%` - Any post meta list, separated by custom HTML. Example: <pre>%POST_META|guest|&lt;br&gt;%</pre>
 - `%DATE%` - The post date with default format.
 - `%DATE|...%` - The post date with custom format. Example: `%DATE|Y/m/d%`
 - `%POST_THUMBNAIL|...x...%` - The post thumbnail with certain dimensions. Example: `%POST_THUMBNAIL|75x75%`

@@ -310,40 +310,37 @@ if ( ! class_exists( 'archivist' ) ) {
 			// categories with custom separator
 			$template = preg_replace_callback(
 			    '/%TAGS\|(.*)%/',
-			    create_function(
-					'$matches',
-					'return get_the_tag_list( "", $matches[1], "" );'
-				),
+			    function ( $matches ) {
+			        return get_the_tag_list( "", $matches[ 1 ], "" );
+			    },
 			 	$template
 			 );
 
 			// categories with custom separator
 			$template = preg_replace_callback(
 			    '/%CATEGORIES\|(.*)%/',
-			    create_function(
-					'$matches',
-					'return get_the_category_list( $matches[1] );'
-				),
+			    function ( $matches ) {
+			        return get_the_category_list( $matches[ 1 ] );
+			    },
 			 	$template
 			 );
 
 			// custom post meta
 			$template = preg_replace_callback(
 			    '/%POST_META\|(.*)%/',
-			    create_function(
-					'$matches',
-					'global $post; return get_post_meta( $post->ID, "$matches[1]", true );'
-				),
+			    function ( $matches ) {
+			        global $post;
+			        return get_post_meta( $post->ID, $matches[ 1 ], true );
+			    },
 			 	$template
-			 );			
+			 );
 			
 			// custom date format
 			$template = preg_replace_callback(
 			    '/%DATE\|(.*)%/',
-			    create_function(
-					'$matches',
-					'return get_the_date($matches[1]);'
-				),
+			    function ( $matches ) {
+			        return get_the_date( $matches[ 1 ] );
+			    },
 			 	$template
 			 );
 

@@ -95,6 +95,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.4 =
+* restore PHP 5.2 backwards compatibility
+
 = 1.3.8 =
 * fix default thumb bug
 * add support for post meta lists

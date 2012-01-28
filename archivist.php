@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.3.8
+Version: 1.4
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -130,7 +130,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			}
  
 			// check php version
-			if ( ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
+			if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 				deactivate_plugins( __FILE__ ); // Deactivate ourself
 				wp_die( wp_sprintf( '%1s: ' . __( 'Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>.', $obj->get_textdomain() ), self::get_plugin_data( 'Name' ), PHP_VERSION ) );
 			}
@@ -251,6 +251,11 @@ if ( ! class_exists( 'archivist' ) ) {
 		
 		private function get_template_options() {
 			$settings = get_option( 'archivist' );
+			
+			if ( ! is_array( $settings) ) {
+				$settings = array();
+			}
+			
 			return array_map( 'stripslashes_deep', $settings );
 		}
 		
@@ -298,83 +303,9 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		function render_element( $post, $template ) {
-			$template = str_replace( '%DATE%', get_the_date(), $template );
-			$template = str_replace( '%TITLE%', get_the_title(), $template );
-			$template = str_replace( '%AUTHOR%', get_the_author(), $template );
-			$template = str_replace( '%TAGS%', get_the_tag_list(), $template );			
-			$template = str_replace( '%PERMALINK%', get_permalink(), $template );
-			$template = str_replace( '%EXCERPT%', get_the_excerpt(), $template );
-			$template = str_replace( '%COMMENTS%', get_comments_number(), $template );
-			$template = str_replace( '%CATEGORIES%', get_the_category_list(), $template );
-
-			// categories with custom separator
-			$template = preg_replace_callback(
-			    '/%TAGS\|(.*)%/',
-			    function ( $matches ) {
-			        return get_the_tag_list( "", $matches[ 1 ], "" );
-			    },
-			 	$template
-			 );
-
-			// categories with custom separator
-			$template = preg_replace_callback(
-			    '/%CATEGORIES\|(.*)%/',
-			    function ( $matches ) {
-			        return get_the_category_list( $matches[ 1 ] );
-			    },
-			 	$template
-			 );
-
-			// custom post meta with separator
-            $template = preg_replace_callback(
-                '/%POST_META\|(.*?)\|(.*)%/',
-                function ( $matches ) {
-                    global $post;
-                    $list = get_post_meta( $post->ID, $matches[ 1 ], false );
-                    return implode( $matches[ 2 ], $list );
-                },
-                 $template
-             );
-
-			// custom post meta
-			$template = preg_replace_callback(
-			    '/%POST_META\|(.*)%/',
-			    function ( $matches ) {
-			        global $post;
-			        return get_post_meta( $post->ID, $matches[ 1 ], true );
-			    },
-			 	$template
-			 );
-			
-			// custom date format
-			$template = preg_replace_callback(
-			    '/%DATE\|(.*)%/',
-			    function ( $matches ) {
-			        return get_the_date( $matches[ 1 ] );
-			    },
-			 	$template
-			 );
-
-			// custom post thumbnails
-			$template = preg_replace_callback(
-			    '/%POST_THUMBNAIL\|(\d+)x(\d+)%/',
-			    function ( $matches ) {
-						global $post;
-			    	$thumb = get_the_post_thumbnail( $post->ID, array( $matches[ 1 ], $matches[ 2 ] ) );
-						
-						if ( ! $thumb ) {
-							$default_thumb = archivist::$settings[ 'default_thumb' ];
-							if ( $default_thumb ) {
-								$thumb = "<img src=\"$default_thumb\" alt=\"Archive Thumb\" width=\"" . $matches[ 1 ] . "\" height=\"" . $matches[ 2 ] . "\">";
-							}
-						}
-
-						return $thumb;
-			    },
-			 	$template
-			 );
-			
-			return $template;
+			require_once dirname( __FILE__ ) . '/parser.php';
+			$parser = new Archivist_Parser( $post, $template );
+			return $parser->render();
 		}
 		
 		public function display_by_category( $category, $template = false ) {

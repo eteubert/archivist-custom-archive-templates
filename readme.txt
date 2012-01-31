@@ -95,6 +95,9 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.4.1 =
+* hotfix: forgot to deploy a new file to svn
+
 = 1.4 =
 * restore PHP 5.2 backwards compatibility
 

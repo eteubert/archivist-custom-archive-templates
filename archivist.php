@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.4.3
+Version: 1.5
 Author: Eric Teubert
 Author URI: ericteubert@googlemail.com
 License: MIT

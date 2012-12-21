@@ -95,10 +95,8 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
-= 1.4.3 =
+= 1.5 =
 * Enhancement: display_by_query: default to displaying all posts (like tag and category display)
-
-= 1.4.2 =
 * Feature: enable shortcodes in templates
 
 = 1.4.1 =

@@ -97,7 +97,7 @@ class Archivist_Parser {
 		 	$this->template
 		 );
 		
-		return $this->template;
+		return do_shortcode( $this->template );
 	}
 	
 }

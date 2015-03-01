@@ -400,7 +400,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			return $content;
 		}
  
-		public function get_object() {
+		public static function get_object() {
 			if ( NULL === self::$classobj ) {
 				self::$classobj = new self;
 			}

@@ -92,8 +92,6 @@ if ( ! class_exists( 'archivist' ) ) {
  
 	if ( function_exists( 'add_action' ) && function_exists( 'register_activation_hook' ) ) {
 		add_action( 'plugins_loaded', array( 'archivist', 'get_object' ) );
-		// TODO: why does register_activation_hook() not work? can't figure it out? ;-(
-		// register_activation_hook( __FILE__, array( 'archivist', 'activation_hook' ) );
 		add_action( 'activate_archivist-custom-archive-templates/archivist.php', array( 'archivist', 'activation_hook' ) );
 	}
 
@@ -108,11 +106,18 @@ if ( ! class_exists( 'archivist' ) ) {
 			$this->load_textdomain();
 			add_shortcode( 'archivist', array( $this, 'shortcode' ) );
 			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'load_scripts' ) );
 			
 			// only run update hooks if the plugin is already active
 			$active_plugins = get_option( 'active_plugins' );
 			if ( in_array( 'archivist-custom-archive-templates/archivist.php', $active_plugins ) ) {
 				$this->keep_backwards_compatibility();
+			}
+		}
+
+		public function load_scripts() {
+			if (filter_input(INPUT_GET, 'page') === 'archivist_options_handle') {
+				wp_enqueue_script( 'archivist-ace', plugins_url('vendor/ace/ace.js', __FILE__) );
 			}
 		}
 		
@@ -806,6 +811,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'Before', archivist::get_textdomain() ) ?>
 												</th>
 												<td valign="top">
+													<div id="archivist_template_before_editor" style="height: 200px"><?php echo htmlentities($settings[ 'template_before' ]); ?></div>
 													<textarea name="<?php echo $field_name ?>[template_before]" rows="6" class="large-text" id="archivist_template_before"><?php echo $settings[ 'template_before' ] ?></textarea>
 													<p>
 														<small><?php echo __( 'Add HTML to be displayed before the archive loop.', archivist::get_textdomain() ) ?></small>
@@ -817,6 +823,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'Element', archivist::get_textdomain() ) ?>
 												</th>
 												<td valign="top">
+													<div id="archivist_template_editor" style="height: 300px"><?php echo htmlentities($settings[ 'template' ]); ?></div>
 													<textarea name="<?php echo $field_name ?>[template]" rows="10" class="large-text" id="archivist_template"><?php echo $settings[ 'template' ] ?></textarea>
 													<p>
 														<small><?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', archivist::get_textdomain() ) ?></small>
@@ -828,6 +835,7 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'After', archivist::get_textdomain() ) ?>
 												</th>
 												<td valign="top">
+													<div id="archivist_template_after_editor" style="height: 200px"><?php echo htmlentities($settings[ 'template_after' ]); ?></div>
 													<textarea name="<?php echo $field_name ?>[template_after]" rows="6" class="large-text" id="archivist_template_after"><?php echo $settings[ 'template_after' ] ?></textarea>
 													<p>
 														<small><?php echo __( 'Add HTML to be displayed after the archive loop.', archivist::get_textdomain() ) ?></small>
@@ -844,7 +852,8 @@ if ( ! class_exists( 'archivist' ) ) {
 													<?php echo __( 'Custom CSS', archivist::get_textdomain() ) ?>
 												</th>
 												<td>
-													<textarea name="<?php echo $field_name ?>[css]" rows="10" class="large-text" id="archivist_css"><?php echo $settings[ 'css' ] ?></textarea>
+													<div id="archivist_css_editor" style="height: 300px"><?php echo htmlentities($settings[ 'css' ]); ?></div>
+													<textarea data-mode="css" name="<?php echo $field_name ?>[css]" rows="10" class="large-text" id="archivist_css"><?php echo $settings[ 'css' ] ?></textarea>
 												</td>
 											</tr>
 											<tr>	
@@ -881,6 +890,39 @@ if ( ! class_exists( 'archivist' ) ) {
 									
 								</form>
 							</div> <!-- .inside -->
+
+							<script type="text/javascript">
+							jQuery(document).ready(function($) {
+								var edit_fields = [
+									'archivist_template_before', 
+									'archivist_template', 
+									'archivist_template_after', 
+									'archivist_css'
+								];
+
+								$.each(edit_fields, function(index, editor_field_id) {
+									var editor = ace.edit(editor_field_id + "_editor");
+									var textarea = $('#' + editor_field_id).hide();
+									var mode = 'html';
+
+									if (textarea.data('mode')) {
+										mode = textarea.data('mode');
+									};
+
+									// fix console deprecation warning
+									editor.$blockScrolling = Infinity; 
+
+									editor.getSession().setValue(textarea.val());
+									editor.getSession().on('change', function(){
+										textarea.val(editor.getSession().getValue());
+									});
+
+									editor.setTheme("ace/theme/chrome");
+									editor.getSession().setMode("ace/mode/" + mode);
+									editor.session.setUseWorker(false); // disable warnings/errors
+								});
+							});
+							</script>
 							
 						</div> <!-- #settings -->						
 					</div> <!-- #post-body-content -->

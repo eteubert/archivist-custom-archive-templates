@@ -29,7 +29,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// FIXME: load_textdomain is called as both static and nonstatic
 // TODO: refactoring: rethinking plugin architecture
 // - better (more visually pleasing for the eye of the programmer) way to have DEFAULTs
 // - separate module to handle the settings page
@@ -98,7 +97,6 @@ if ( ! class_exists( 'archivist' ) ) {
 	class archivist {
  
 		static private $classobj = NULL;
-		public $textdomain = 'archivist';
 		// current template settings
 		static $settings = NULL;
  
@@ -131,13 +129,13 @@ if ( ! class_exists( 'archivist' ) ) {
 			// check wp version
 			if ( ! version_compare( $wp_version, '3.0', '>=' ) ) {
 				deactivate_plugins( __FILE__ );
-				wp_die( wp_sprintf( '%s: ' . __( 'Sorry, This plugin requires WordPress 3.0+', $obj->get_textdomain() ),  self::get_plugin_data( 'Name' ) ) );
+				wp_die( wp_sprintf( '%s: ' . __( 'Sorry, This plugin requires WordPress 3.0+', 'archivist' ),  self::get_plugin_data( 'Name' ) ) );
 			}
  
 			// check php version
 			if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 				deactivate_plugins( __FILE__ ); // Deactivate ourself
-				wp_die( wp_sprintf( '%1s: ' . __( 'Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>.', $obj->get_textdomain() ), self::get_plugin_data( 'Name' ), PHP_VERSION ) );
+				wp_die( wp_sprintf( '%1s: ' . __( 'Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>.', 'archivist' ), self::get_plugin_data( 'Name' ), PHP_VERSION ) );
 			}
 			
 			// set default template name
@@ -373,7 +371,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			archivist::$settings = $settings;
 			
 			if ( ! $settings ) {
-				return '<div>' . wp_sprintf( __( 'Archivist Error: Unknown template "%1s"', archivist::get_textdomain() ), $template ) . '</div>';
+				return '<div>' . wp_sprintf( __( 'Archivist Error: Unknown template "%1s"', 'archivist' ), $template ) . '</div>';
 			}
 
 			ob_start();
@@ -409,13 +407,9 @@ if ( ! class_exists( 'archivist' ) ) {
 			return self::$classobj;
 		}
  
-		public function get_textdomain() {
-			return $this->textdomain;
-		}
- 
 		public function load_textdomain() {
 			$plugin_dir = basename(dirname(__FILE__));
-			load_plugin_textdomain( $this->get_textdomain(), FALSE, $plugin_dir . '/languages' );
+			load_plugin_textdomain( 'archivist', FALSE, $plugin_dir . '/languages' );
 		}
  
 		private function get_plugin_data( $value = 'Version' ) {
@@ -440,7 +434,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				update_option( 'archivist_default_template_name', $_POST[ 'choose_template_name' ] );
 				?>
 					<div class="updated">
-						<p><?php echo wp_sprintf( __( 'Template "%1s" is now your default. All [archivist ...] shortcodes without a template option will use this to display the archive.', archivist::get_textdomain() ), $_POST[ 'choose_template_name' ] ) ?>
+						<p><?php echo wp_sprintf( __( 'Template "%1s" is now your default. All [archivist ...] shortcodes without a template option will use this to display the archive.', 'archivist' ), $_POST[ 'choose_template_name' ] ) ?>
 						</p>
 					</div>
 				<?php
@@ -459,7 +453,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				?>
 					<div class="updated">
 						<p>
-							<?php echo wp_sprintf( __( 'Template "%1s" deleted.', archivist::get_textdomain() ), $current_template ) ?>
+							<?php echo wp_sprintf( __( 'Template "%1s" deleted.', 'archivist' ), $current_template ) ?>
 						</p>
 					</div>
 				<?php				
@@ -512,7 +506,7 @@ if ( ! class_exists( 'archivist' ) ) {
 					?>
 						<div class="updated">
 							<p>
-								<?php echo wp_sprintf( __( 'Template "%1s" created.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?>
+								<?php echo wp_sprintf( __( 'Template "%1s" created.', 'archivist' ), $_POST[ 'archivist_new_template_name' ] ) ?>
 							</p>
 						</div>
 					<?php
@@ -521,7 +515,7 @@ if ( ! class_exists( 'archivist' ) ) {
 					?>
 						<div class="error">
 							<p>
-								<?php echo wp_sprintf( __( 'Template "%1s" already exists.', archivist::get_textdomain() ), $_POST[ 'archivist_new_template_name' ] ) ?>
+								<?php echo wp_sprintf( __( 'Template "%1s" already exists.', 'archivist' ), $_POST[ 'archivist_new_template_name' ] ) ?>
 							</p>
 						</div>
 					<?php
@@ -545,10 +539,10 @@ if ( ! class_exists( 'archivist' ) ) {
 				<div id="icon-options-general" class="icon32"></div>
 				<h2 class="nav-tab-wrapper">
 					<a href="<?php echo admin_url( 'options-general.php?page=archivist_options_handle' ) ?>" class="nav-tab <?php echo ( $tab == 'edit' ) ? 'nav-tab-active' : '' ?>">
-						<?php echo __( 'Edit Templates', archivist::get_textdomain() ) ?>
+						<?php echo __( 'Edit Templates', 'archivist' ) ?>
 					</a>
 					<a href="<?php echo admin_url( 'options-general.php?page=archivist_options_handle&tab=add' ) ?>" class="nav-tab <?php echo ( $tab == 'add' ) ? 'nav-tab-active' : '' ?>">
-						<?php echo __( 'Add Templates', archivist::get_textdomain() ) ?>
+						<?php echo __( 'Add Templates', 'archivist' ) ?>
 					</a>
 				</h2>
 				
@@ -573,16 +567,16 @@ if ( ! class_exists( 'archivist' ) ) {
 				<div class="inner-sidebar">
 						
 					<div class="postbox">
-						<h3><span><?php _e( 'Creator', archivist::get_textdomain() ); ?></span></h3>
+						<h3><span><?php _e( 'Creator', 'archivist' ); ?></span></h3>
 						<div class="inside">
 							<p>
-								<?php _e( 'Hey, I\'m Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer.', archivist::get_textdomain() ); ?>
+								<?php _e( 'Hey, I\'m Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer.', 'archivist' ); ?>
 							</p>
 							<p>
 								<script id='fb61vb1'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ericteubert&button=compact&url=https%3A%2F%2Fflattr.com%2Fprofile%2Fericteubert';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fb61vb1');</script>
 							</p>
 							<p>
-								<?php echo wp_sprintf( __( 'Get in touch: Visit my <a href="%1s">Homepage</a>, follow me on <a href="%2s">Twitter</a> or look at my projects on <a href="%3s">GitHub</a>.', archivist::get_textdomain() ), 'http://www.ericteubert.de/', 'http://www.twitter.com/ericteubert', 'https://github.com/eteubert' ) ?>
+								<?php echo wp_sprintf( __( 'Get in touch: Visit my <a href="%1s">Homepage</a>, follow me on <a href="%2s">Twitter</a> or look at my projects on <a href="%3s">GitHub</a>.', 'archivist' ), 'http://www.ericteubert.de/', 'http://www.twitter.com/ericteubert', 'https://github.com/eteubert' ) ?>
 							</p>
 						</div>
 					</div>
@@ -596,45 +590,45 @@ if ( ! class_exists( 'archivist' ) ) {
 					}
 					?>
 					<div id="wp-archivist-usagebox" class="postbox">
-						<h3><span><?php _e( 'Examples', archivist::get_textdomain() ); ?></span></h3>
+						<h3><span><?php _e( 'Examples', 'archivist' ); ?></span></h3>
 						<div class="inside">
 							<p>
-								<?php echo __( 'Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking.', archivist::get_textdomain() ) ?>
+								<?php echo __( 'Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking.', 'archivist' ) ?>
 							</p>
 							<p>
 								<input type="text" name="example1" class="large-text" value='[archivist<?php echo $template_part  ?>category="kitten"]'>
-								<?php echo __( 'Display all posts in the "kitten" category.', archivist::get_textdomain() ) ?>
+								<?php echo __( 'Display all posts in the "kitten" category.', 'archivist' ) ?>
 							</p>
 							<p>
 								<input type="text" name="example2" class="large-text" value='[archivist<?php echo $template_part  ?>tag="kitten"]'>
-								<?php echo __( 'Display all posts tagged with "kitten".', archivist::get_textdomain() ) ?>
+								<?php echo __( 'Display all posts tagged with "kitten".', 'archivist' ) ?>
 							</p>
 							<p>
 								<input type="text" name="example3" class="large-text" value='[archivist<?php echo $template_part  ?>query="year=1984"]'>
-								<?php echo __( wp_sprintf( 'Display all posts published in year 1984. See %1s for all options.', '<a href="http://codex.wordpress.org/Class_Reference/WP_Query">WordPress Codex</a>' ), archivist::get_textdomain() ) ?>
+								<?php echo __( wp_sprintf( 'Display all posts published in year 1984. See %1s for all options.', '<a href="http://codex.wordpress.org/Class_Reference/WP_Query">WordPress Codex</a>' ), 'archivist' ) ?>
 							</p>
 						</div>
 					</div>
 					
 					<div id="wp-archivist-placeholders" class="postbox">
-						<h3><span><?php _e( 'Placeholders', archivist::get_textdomain() ); ?></span></h3>
+						<h3><span><?php _e( 'Placeholders', 'archivist' ); ?></span></h3>
 						<div class="inside">
 							<div class="inline-pre">
 								<p>
-								  	<pre>%TITLE%</pre><br/><?php echo __( 'The post title.', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%PERMALINK%</pre><br/><?php echo __( 'The post permalink.', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%AUTHOR%</pre><br/><?php echo __( 'The post author.', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%CATEGORIES%</pre><br/><?php echo __( 'The post categories as unordered list.', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%CATEGORIES|...%</pre><br/><?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%TAGS%</pre><br/><?php echo __( 'The post tags with default separator.', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%TAGS|...%</pre><br/><?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%EXCERPT%</pre><br/><?php echo __( 'The post excerpt.', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%POST_META|...%</pre><br/><?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%POST_META|...|...%</pre><br/><?php echo __( 'Any post meta list, separated by custom HTML. Example: <pre>%POST_META|guest|&lt;br&gt;%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%DATE%</pre><br/><?php echo __( 'The post date with default format.', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%DATE|...%</pre><br/><?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%POST_THUMBNAIL|...x...%</pre><br/><?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', archivist::get_textdomain() ) ?> <br/><br/>
-								  	<pre>%COMMENTS%</pre><br/><?php echo __( 'The post comment count.', archivist::get_textdomain() ) ?> <br/>
+								  	<pre>%TITLE%</pre><br/><?php echo __( 'The post title.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%PERMALINK%</pre><br/><?php echo __( 'The post permalink.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%AUTHOR%</pre><br/><?php echo __( 'The post author.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%CATEGORIES%</pre><br/><?php echo __( 'The post categories as unordered list.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%CATEGORIES|...%</pre><br/><?php echo __( 'The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>', 'archivist' ) ?> <br/><br/>
+								  	<pre>%TAGS%</pre><br/><?php echo __( 'The post tags with default separator.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%TAGS|...%</pre><br/><?php echo __( 'The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>', 'archivist' ) ?> <br/><br/>
+								  	<pre>%EXCERPT%</pre><br/><?php echo __( 'The post excerpt.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%POST_META|...%</pre><br/><?php echo __( 'Any post meta. Example: <pre>%POST_META|duration%</pre>', 'archivist' ) ?> <br/><br/>
+								  	<pre>%POST_META|...|...%</pre><br/><?php echo __( 'Any post meta list, separated by custom HTML. Example: <pre>%POST_META|guest|&lt;br&gt;%</pre>', 'archivist' ) ?> <br/><br/>
+								  	<pre>%DATE%</pre><br/><?php echo __( 'The post date with default format.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%DATE|...%</pre><br/><?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', 'archivist' ) ?> <br/><br/>
+								  	<pre>%POST_THUMBNAIL|...x...%</pre><br/><?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', 'archivist' ) ?> <br/><br/>
+								  	<pre>%COMMENTS%</pre><br/><?php echo __( 'The post comment count.', 'archivist' ) ?> <br/>
 								</p>
 							</div>
 
@@ -651,7 +645,7 @@ if ( ! class_exists( 'archivist' ) ) {
 				<div id="post-body">
 					<div id="post-body-content">
 						<div class="postbox">
-							<h3><span><?php _e( 'Add Template', archivist::get_textdomain() ); ?></span></h3>
+							<h3><span><?php _e( 'Add Template', 'archivist' ); ?></span></h3>
 							
 							<div class="inside">
 								<form action="" method="post">
@@ -660,12 +654,12 @@ if ( ! class_exists( 'archivist' ) ) {
 										<tbody>
 											<tr>
 												<th scope="row">
-													<?php echo __( 'New Template Name', archivist::get_textdomain() ) ?>
+													<?php echo __( 'New Template Name', 'archivist' ) ?>
 												</th>
 												<td>
 													<input type="text" name="archivist_new_template_name" value="" id="archivist_new_template_name" class="large-text">
 													<p>
-														<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', archivist::get_textdomain() ) ?></small>
+														<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', 'archivist' ) ?></small>
 													</p>
 												</td>
 											</tr>
@@ -673,7 +667,7 @@ if ( ! class_exists( 'archivist' ) ) {
 									</table>
 
 									<p class="submit">
-										<input type="submit" class="button-primary" value="<?php _e( 'Add New Template', archivist::get_textdomain() ) ?>" />
+										<input type="submit" class="button-primary" value="<?php _e( 'Add New Template', 'archivist' ) ?>" />
 									</p>
 									
 									<br class="clear" />
@@ -726,7 +720,7 @@ if ( ! class_exists( 'archivist' ) ) {
 						<?php // only allow template switching when there is more than one ?>
 						<?php if ( count( $all_template_settings ) > 1 ): ?>
 							<div id="switch_template" class="postbox">
-								<h3><span><?php _e( 'Choose Template', archivist::get_textdomain() ); ?></span></h3>
+								<h3><span><?php _e( 'Choose Template', 'archivist' ); ?></span></h3>
 								<div class="inside">
 									<form action="<?php echo admin_url( 'options-general.php' ) ?>" method="get">
 										<input type="hidden" name="tab" value="edit" />
@@ -747,13 +741,13 @@ if ( ! class_exists( 'archivist' ) ) {
 											<tbody>
 												<tr>
 													<th scope="row">
-														<?php echo __( 'Template to edit', archivist::get_textdomain() ) ?>
+														<?php echo __( 'Template to edit', 'archivist' ) ?>
 													</th>
 													<td>
 														<?php // TODO: move style stuff to css block/file ?>
 														<select name="choose_template_name" id="choose_template_name" style="width:99%">
 															<?php foreach ( $all_template_settings as $template_name => $template_settings ): ?>
-																<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name . ( ( $template_name == $default_template ) ? ' ' . __( '(default)', archivist::get_textdomain() ) : '' ) ?></option>
+																<option value="<?php echo $template_name ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : '' ?>><?php echo $template_name . ( ( $template_name == $default_template ) ? ' ' . __( '(default)', 'archivist' ) : '' ) ?></option>
 															<?php endforeach ?>
 														</select>
 													</td>
@@ -762,7 +756,7 @@ if ( ! class_exists( 'archivist' ) ) {
 										</table>
 
 										<p class="submit" id="choose_template_button">
-											<input type="submit" class="button-primary" value="<?php _e( 'Choose Template', archivist::get_textdomain() ) ?>" />
+											<input type="submit" class="button-primary" value="<?php _e( 'Choose Template', 'archivist' ) ?>" />
 										</p>
 
 										<br class="clear" />
@@ -775,16 +769,16 @@ if ( ! class_exists( 'archivist' ) ) {
 						
 						<div id="settings" class="postbox">
 							<h3>
-								<span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', archivist::get_textdomain() ), $name ); ?></span>
+								<span><?php echo wp_sprintf( __( 'Settings for "%1s" Template', 'archivist' ), $name ); ?></span>
 								<span style="float: right; font-weight: bold">
 									<?php if ( $name == self::get_default_template_name() ): ?>
-										<?php _e( 'Default Template', archivist::get_textdomain() ); ?>
+										<?php _e( 'Default Template', 'archivist' ); ?>
 									<?php else: ?>
 										<form action="<?php echo admin_url( 'options-general.php?page=archivist_options_handle' ) ?>" method="post">
 											<input type="hidden" name="choose_template_name" value="<?php echo $name ?>">
 											<input type="hidden" name="tab" value="edit">
 											<input type="hidden" name="action" value="change_default">
-											<input type="submit" class="button-secondary" name="change_default" value="<?php _e( 'Set to Default', archivist::get_textdomain() ) ?>" style="position:relative; bottom:3px">
+											<input type="submit" class="button-secondary" name="change_default" value="<?php _e( 'Set to Default', 'archivist' ) ?>" style="position:relative; bottom:3px">
 											
 										</form>
 									<?php endif ?>
@@ -803,53 +797,53 @@ if ( ! class_exists( 'archivist' ) ) {
 										<tbody>
 											<tr valign="top">
 												<th scope="row" colspan="2">
-													<h4><?php echo __( 'Template', archivist::get_textdomain() ) ?></h4>
+													<h4><?php echo __( 'Template', 'archivist' ) ?></h4>
 												</th>
 											</tr>
 											<tr>	
 												<th scope="row">
-													<?php echo __( 'Before', archivist::get_textdomain() ) ?>
+													<?php echo __( 'Before', 'archivist' ) ?>
 												</th>
 												<td valign="top">
 													<div id="archivist_template_before_editor" style="height: 200px"><?php echo htmlentities($settings[ 'template_before' ]); ?></div>
 													<textarea name="<?php echo $field_name ?>[template_before]" rows="6" class="large-text" id="archivist_template_before"><?php echo $settings[ 'template_before' ] ?></textarea>
 													<p>
-														<small><?php echo __( 'Add HTML to be displayed before the archive loop.', archivist::get_textdomain() ) ?></small>
+														<small><?php echo __( 'Add HTML to be displayed before the archive loop.', 'archivist' ) ?></small>
 													</p>
 												</td>
 											</tr>
 											<tr>	
 												<th scope="row">
-													<?php echo __( 'Element', archivist::get_textdomain() ) ?>
+													<?php echo __( 'Element', 'archivist' ) ?>
 												</th>
 												<td valign="top">
 													<div id="archivist_template_editor" style="height: 300px"><?php echo htmlentities($settings[ 'template' ]); ?></div>
 													<textarea name="<?php echo $field_name ?>[template]" rows="10" class="large-text" id="archivist_template"><?php echo $settings[ 'template' ] ?></textarea>
 													<p>
-														<small><?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', archivist::get_textdomain() ) ?></small>
+														<small><?php echo __( 'Add HTML for each archive element. Use placeholder tags to display post data.', 'archivist' ) ?></small>
 													</p>
 												</td>
 											</tr>
 											<tr>	
 												<th scope="row">
-													<?php echo __( 'After', archivist::get_textdomain() ) ?>
+													<?php echo __( 'After', 'archivist' ) ?>
 												</th>
 												<td valign="top">
 													<div id="archivist_template_after_editor" style="height: 200px"><?php echo htmlentities($settings[ 'template_after' ]); ?></div>
 													<textarea name="<?php echo $field_name ?>[template_after]" rows="6" class="large-text" id="archivist_template_after"><?php echo $settings[ 'template_after' ] ?></textarea>
 													<p>
-														<small><?php echo __( 'Add HTML to be displayed after the archive loop.', archivist::get_textdomain() ) ?></small>
+														<small><?php echo __( 'Add HTML to be displayed after the archive loop.', 'archivist' ) ?></small>
 													</p>
 												</td>
 											</tr>
 											<tr valign="top">
 												<th scope="row" colspan="2">
-													<h4><?php echo __( 'Other', archivist::get_textdomain() ) ?></h4>
+													<h4><?php echo __( 'Other', 'archivist' ) ?></h4>
 												</th>
 											</tr>
 											<tr valign="top">
 												<th scope="row">
-													<?php echo __( 'Custom CSS', archivist::get_textdomain() ) ?>
+													<?php echo __( 'Custom CSS', 'archivist' ) ?>
 												</th>
 												<td>
 													<div id="archivist_css_editor" style="height: 300px"><?php echo htmlentities($settings[ 'css' ]); ?></div>
@@ -858,23 +852,23 @@ if ( ! class_exists( 'archivist' ) ) {
 											</tr>
 											<tr>	
 												<th scope="row">
-													<?php echo __( 'Default Thumbnail url', archivist::get_textdomain() ) ?>
+													<?php echo __( 'Default Thumbnail url', 'archivist' ) ?>
 												</th>
 												<td valign="top">
 													<input type="text" name="<?php echo $field_name ?>[default_thumb]" value="<?php echo $settings[ 'default_thumb' ] ?>" id="archivist_default_thumb" class="large-text">
 													<p>
-														<small><?php echo __( 'If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used.', archivist::get_textdomain() ) ?></small>
+														<small><?php echo __( 'If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used.', 'archivist' ) ?></small>
 													</p>
 												</td>
 											</tr>
 											<tr>	
 												<th scope="row">
-													<?php echo __( 'Template Name', archivist::get_textdomain() ) ?>
+													<?php echo __( 'Template Name', 'archivist' ) ?>
 												</th>
 												<td valign="top">
 													<input type="text" name="<?php echo $field_name ?>[name]" value="<?php echo $settings[ 'name' ]?>" id="archivist_name" class="large-text">
 													<p>
-														<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', archivist::get_textdomain() ) ?></small>
+														<small><?php echo __( 'This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', 'archivist' ) ?></small>
 													</p>
 												</td>
 											</tr>
@@ -883,7 +877,7 @@ if ( ! class_exists( 'archivist' ) ) {
 
 									<p class="submit">
 										<input type="submit" class="button-primary" value="<?php _e( 'Save Changes' ) ?>" style="float:right" />
-										<input type="submit" class="button-secondary" style="color:#BC0B0B; margin-right:20px; float: right" name="delete" value="<?php _e( 'delete permanently', archivist::get_textdomain() ) ?>">
+										<input type="submit" class="button-secondary" style="color:#BC0B0B; margin-right:20px; float: right" name="delete" value="<?php _e( 'delete permanently', 'archivist' ) ?>">
 									</p>
 									
 									<br class="clear" />

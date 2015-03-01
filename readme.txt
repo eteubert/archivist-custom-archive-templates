@@ -95,6 +95,12 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.6 =
+
+* Enhancement: Use Ace editor with HTML and CSS syntax highlighting
+* Fix: PHP warnings
+* Fix: Some links in about box
+
 = 1.5.1 =
 * Hotfix: Typo, sorry
 

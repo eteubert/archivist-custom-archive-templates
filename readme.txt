@@ -1,6 +1,6 @@
 === Archivist - Custom Archive Templates ===
 Contributors: eteubert
-Donate link: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
+Donate link: http://flattr.com/thing/396382/WordPress-Plugin-Archivist-Custom-Archive-Templates
 Tags: archive, loop, shortcode, category, tag, custom, query, template, html, customizable
 Requires at least: 3.0
 Tested up to: 3.5

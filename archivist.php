@@ -589,7 +589,7 @@ if ( ! class_exists( 'archivist' ) ) {
 		}
 		
 		public function settings_page() {
-			$tab = ( $_REQUEST[ 'tab' ] == 'add' ) ? 'add' : 'edit';
+			$tab = ( isset($_REQUEST[ 'tab' ]) && $_REQUEST[ 'tab' ] == 'add' ) ? 'add' : 'edit';
 			$current_template = $this->get_current_template_name();
 			$settings = $this->get_template_options();
 			

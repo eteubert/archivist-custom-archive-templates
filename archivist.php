@@ -287,8 +287,17 @@ if ( ! class_exists( 'archivist' ) ) {
 				'query'		=> '',
 				'category'	=> '',
 				'tag'		=> '',
-				'template'  => self::get_default_template_name()
+				'template'  => self::get_default_template_name(),
+				'pagination' => false,
+				'controls' => 'both' // controls for pagination: top / bottom / both
 			), $atts ) );
+
+			$this->pagination = (int) $pagination;
+			if ($this->pagination < 1) {
+				$this->pagination = false;
+			}
+
+			$this->controls = $controls;
 			
 			if ( $query !== '' ) {
 				return $this->display_by_query( $query, $template );
@@ -310,12 +319,31 @@ if ( ! class_exists( 'archivist' ) ) {
 			$parser = new Archivist_Parser( $post, $template );
 			return $parser->render();
 		}
+
+		public function get_current_page_number() {
+			return isset($_GET['archivist_page']) && $_GET['archivist_page'] ? (int) $_GET['archivist_page'] : 1;
+		}
+
+		public function add_pagination_parameters($parameters) {
+
+			if (!$this->pagination) {
+				return $parameters;
+			}
+
+			$parameters['posts_per_page'] = $this->pagination;
+			$parameters['paged'] = $this->get_current_page_number();
+
+			return $parameters;
+		}
 		
 		public function display_by_category( $category, $template = false ) {
 			$parameters = array(
 				'posts_per_page' => -1,
 				'category_name'  => $category
 			);
+
+			$parameters = $this->add_pagination_parameters($parameters);
+
 			$loop = new WP_Query( $parameters );
 			
 			if ( ! $template ) {
@@ -330,6 +358,9 @@ if ( ! class_exists( 'archivist' ) ) {
 				'posts_per_page' => -1,
 				'tag'            => $tag
 			);
+
+			$parameters = $this->add_pagination_parameters($parameters);
+
 			$loop = new WP_Query( $parameters );
 			
 			if ( ! $template ) {
@@ -349,6 +380,9 @@ if ( ! class_exists( 'archivist' ) ) {
 				$query .= "&posts_per_page=-1";
 			}
 
+			// todo: maybe turn parameter string into array fist?
+			// $parameters = $this->add_pagination_parameters($parameters);
+
 			$loop = new WP_Query( $query );
 			
 			if ( ! $template ) {
@@ -358,9 +392,47 @@ if ( ! class_exists( 'archivist' ) ) {
 			return $this->display_by_loop( $loop, $template );
 		}
 		
+		function display_pagination_controls($loop) {
+			global $wp;
+
+			$total_items    = (int) $loop->found_posts;
+			$items_per_page = (int) $this->pagination;
+
+			if (!$items_per_page || !$total_items)
+				return;
+
+			$total_pages = ceil($total_items / $items_per_page);
+			$current_page = $this->get_current_page_number();
+
+			$current_url = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/{$_SERVER['REQUEST_URI']}";
+			?>
+			<ul class="archivist-pagination">
+			<?php for ($i = 1; $i <= $total_pages; $i++): ?>
+				<li class="archivist-pagination-item">
+					<?php if ($current_page === $i): ?>
+						<?php echo $i; ?>
+					<?php else: ?>
+						<a href="<?php echo add_query_arg('archivist_page', $i, $current_url); ?>" class="archivist-pagination-link">
+							<?php echo $i; ?>
+						</a>
+					<?php endif ?>
+				</li>
+			<?php endfor ?>
+			</ul>
+<style type="text/css">
+.archivist-pagination {
+	text-align: center;
+}
+.archivist-pagination-item {
+	display: inline-block;
+}
+</style>
+			<?php
+		}
+
 		private function display_by_loop( $loop, $template = false ) {
 			global $post;
-			
+
 			$all_settings = $this->get_template_options();
 			
 			if ( ! $template ) {
@@ -377,11 +449,15 @@ if ( ! class_exists( 'archivist' ) ) {
 			ob_start();
 			?>
 			<div class="archivist_wrapper">
-				
+
 				<?php if ( $settings[ 'css' ] ): ?>
 					<style type="text/css" media="screen">
 						<?php echo $settings[ 'css' ] ?>
 					</style>
+				<?php endif ?>
+
+				<?php if ($this->pagination && in_array($this->controls, array('top', 'both'))): ?>
+					<?php $this->display_pagination_controls($loop); ?>
 				<?php endif ?>
 				
 				<?php echo $settings[ 'template_before' ]; ?>
@@ -390,6 +466,11 @@ if ( ! class_exists( 'archivist' ) ) {
 					<?php echo $this->render_element( $post, $settings[ 'template' ] ); ?>
 				<?php endwhile; ?>
 				<?php echo $settings[ 'template_after' ]; ?>
+
+				<?php if ($this->pagination && in_array($this->controls, array('bottom', 'both'))): ?>
+					<?php $this->display_pagination_controls($loop); ?>
+				<?php endif ?>
+
 			</div>
 			<?php
 			$content = ob_get_contents();

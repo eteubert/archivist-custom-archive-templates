@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: https://wordpress.org/plugins/archivist-custom-archive-templates/
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.7
+Version: 1.7.1
 Author: Eric Teubert
 Author URI: eric@ericteubert.de
 License: MIT
@@ -99,6 +99,8 @@ if ( ! class_exists( 'archivist' ) ) {
 			add_action( 'wp_ajax_archivist_paginate',        array( $this, 'ajax_page') );
 			add_action( 'wp_ajax_nopriv_archivist_paginate', array( $this, 'ajax_page') );
 			
+			wp_register_script( 'archivist-pagination', plugins_url('js/archivist.js', __FILE__), ['jquery'] );
+
 			// only run update hooks if the plugin is already active
 			$active_plugins = get_option( 'active_plugins' );
 			if ( in_array( 'archivist-custom-archive-templates/archivist.php', $active_plugins ) ) {
@@ -526,6 +528,10 @@ if ( ! class_exists( 'archivist' ) ) {
 				return '<div>' . wp_sprintf( __( 'Archivist Error: Unknown template "%1s"', 'archivist' ), $template ) . '</div>';
 			}
 
+			if ($this->pagination) {
+				wp_enqueue_script('archivist-pagination');
+			}
+
 			ob_start();
 			?>
 			<div class="archivist_wrapper">
@@ -552,90 +558,9 @@ if ( ! class_exists( 'archivist' ) ) {
 				<?php endif ?>
 
 			</div>
-<?php if ($this->pagination): ?>
-<script type="text/javascript">
-(function($) {
-    "use strict";
-
-    var archivist_shortcode_attributes = <?php echo json_encode($this->shortcode_attributes); ?>
-     
-	function updateURLParameter(url, param, paramVal) {
-	    var TheAnchor = null;
-	    var newAdditionalURL = "";
-	    var tempArray = url.split("?");
-	    var baseURL = tempArray[0];
-	    var additionalURL = tempArray[1];
-	    var temp = "";
-
-	    if (additionalURL) 
-	    {
-	        var tmpAnchor = additionalURL.split("#");
-	        var TheParams = tmpAnchor[0];
-	            TheAnchor = tmpAnchor[1];
-	        if(TheAnchor)
-	            additionalURL = TheParams;
-
-	        tempArray = additionalURL.split("&");
-
-	        for (var i=0; i<tempArray.length; i++)
-	        {
-	            if(tempArray[i].split('=')[0] != param)
-	            {
-	                newAdditionalURL += temp + tempArray[i];
-	                temp = "&";
-	            }
-	        }        
-	    }
-	    else
-	    {
-	        var tmpAnchor = baseURL.split("#");
-	        var TheParams = tmpAnchor[0];
-	            TheAnchor  = tmpAnchor[1];
-
-	        if(TheParams)
-	            baseURL = TheParams;
-	    }
-
-	    if(TheAnchor)
-	        paramVal += "#" + TheAnchor;
-
-	    var rows_txt = temp + "" + param + "=" + paramVal;
-	    return baseURL + "?" + newAdditionalURL + rows_txt;
-	}
-
-    function handle_pagination_click(e) {
-    	e.preventDefault();
-
-    	var page = $(this).data('page');
-		var old_wrapper = $(".archivist_wrapper");
-
-		old_wrapper.addClass('archivist-loading');
-
-    	$.get(
-    		ajaxurl,
-    		{
-    			action: 'archivist_paginate',
-    			archivist_page: page,
-    			shortcode_attributes: archivist_shortcode_attributes
-    		},
-    		function (response) {
-    			var new_wrapper = $(response).find('.archivist_wrapper');
-
-    			$(new_wrapper).replaceAll(old_wrapper);
-
-    			// update URL
-    			if (window.history && window.history.replaceState) {
-	    			window.history.replaceState({} , '', updateURLParameter(window.location.href, 'archivist_page', page));
-    			}
-    		}
-    	)
-    }
-
-    $(document).on('click', '.archivist_wrapper .archivist-pagination-item a', handle_pagination_click);
- 
-})(jQuery);
-</script>
-<?php endif ?>
+			<script type="text/javascript">
+			var archivist_shortcode_attributes = <?php echo json_encode($this->shortcode_attributes); ?>
+			</script>
 			<?php
 			$content = ob_get_contents();
 			ob_end_clean();

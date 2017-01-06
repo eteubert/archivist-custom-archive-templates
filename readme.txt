@@ -113,6 +113,10 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.7.1 = 
+
+* fix: set jQuery as dependency
+
 = 1.7 =
 
 * New Feature: Pagination. Use `pagination="10"` as shortcode parameter to paginate your archive with 10 items per page. See readme for more details.

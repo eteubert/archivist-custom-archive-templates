@@ -112,6 +112,8 @@ class Archivist_Parser {
 		    array( $this, 'replace_acf_field' ),
 		 	$this->template
 		 );
+
+		$this->template = apply_filters( 'archivist_template_render', $this->template, $this->post );
 		
 		return do_shortcode( $this->template );
 	}

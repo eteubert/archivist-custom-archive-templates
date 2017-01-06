@@ -99,12 +99,15 @@ if ( ! class_exists( 'archivist' ) ) {
 		static private $classobj = NULL;
 		// current template settings
 		static $settings = NULL;
- 
+
 		public function __construct() {
 			$this->load_textdomain();
 			add_shortcode( 'archivist', array( $this, 'shortcode' ) );
 			add_action( 'admin_menu', array( $this, 'add_menu_entry' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_scripts' ) );
+
+			add_action( 'wp_ajax_archivist_paginate',        array( $this, 'ajax_page') );
+			add_action( 'wp_ajax_nopriv_archivist_paginate', array( $this, 'ajax_page') );
 			
 			// only run update hooks if the plugin is already active
 			$active_plugins = get_option( 'active_plugins' );
@@ -282,15 +285,30 @@ if ( ! class_exists( 'archivist' ) ) {
 			update_option( __CLASS__ . '_version', $current_version );
 		}
 		
+		function ajax_page() {
+			$shortcode_attributes = isset($_GET['shortcode_attributes']) ? $_GET['shortcode_attributes'] : null;
+
+			if (is_null($shortcode_attributes) || empty($shortcode_attributes))
+				die();
+
+			$html = $this->shortcode($shortcode_attributes);
+
+			echo $html;
+
+			die();
+		}
+
 		public function shortcode( $atts ) {
-			extract( shortcode_atts( array(
+			$this->shortcode_attributes = shortcode_atts( array(
 				'query'		=> '',
 				'category'	=> '',
 				'tag'		=> '',
 				'template'  => self::get_default_template_name(),
 				'pagination' => false,
 				'controls' => 'both' // controls for pagination: top / bottom / both
-			), $atts ) );
+			), $atts );
+
+			extract( $this->shortcode_attributes );
 
 			$this->pagination = (int) $pagination;
 			if ($this->pagination < 1) {
@@ -339,7 +357,8 @@ if ( ! class_exists( 'archivist' ) ) {
 		public function display_by_category( $category, $template = false ) {
 			$parameters = array(
 				'posts_per_page' => -1,
-				'category_name'  => $category
+				'category_name'  => $category,
+				'post_status'    => apply_filters('archivist_post_status', array('publish'), $template)
 			);
 
 			$parameters = $this->add_pagination_parameters($parameters);
@@ -356,7 +375,8 @@ if ( ! class_exists( 'archivist' ) ) {
 		public function display_by_tag( $tag, $template = false ) {
 			$parameters = array(
 				'posts_per_page' => -1,
-				'tag'            => $tag
+				'tag'            => $tag,
+				'post_status'    => apply_filters('archivist_post_status', array('publish'), $template)
 			);
 
 			$parameters = $this->add_pagination_parameters($parameters);
@@ -412,7 +432,10 @@ if ( ! class_exists( 'archivist' ) ) {
 					<?php if ($current_page === $i): ?>
 						<?php echo $i; ?>
 					<?php else: ?>
-						<a href="<?php echo add_query_arg('archivist_page', $i, $current_url); ?>" class="archivist-pagination-link">
+						<a 
+							href="<?php echo esc_attr(add_query_arg('archivist_page', $i, $current_url)); ?>" 
+							class="archivist-pagination-link"
+							data-page="<?php echo esc_attr($i); ?>">
 							<?php echo $i; ?>
 						</a>
 					<?php endif ?>
@@ -472,13 +495,98 @@ if ( ! class_exists( 'archivist' ) ) {
 				<?php endif ?>
 
 			</div>
+<?php if ($this->pagination): ?>
+<script type="text/javascript">
+(function($) {
+    "use strict";
+
+    var archivist_shortcode_attributes = <?php echo json_encode($this->shortcode_attributes); ?>
+     
+	function updateURLParameter(url, param, paramVal) {
+	    var TheAnchor = null;
+	    var newAdditionalURL = "";
+	    var tempArray = url.split("?");
+	    var baseURL = tempArray[0];
+	    var additionalURL = tempArray[1];
+	    var temp = "";
+
+	    if (additionalURL) 
+	    {
+	        var tmpAnchor = additionalURL.split("#");
+	        var TheParams = tmpAnchor[0];
+	            TheAnchor = tmpAnchor[1];
+	        if(TheAnchor)
+	            additionalURL = TheParams;
+
+	        tempArray = additionalURL.split("&");
+
+	        for (var i=0; i<tempArray.length; i++)
+	        {
+	            if(tempArray[i].split('=')[0] != param)
+	            {
+	                newAdditionalURL += temp + tempArray[i];
+	                temp = "&";
+	            }
+	        }        
+	    }
+	    else
+	    {
+	        var tmpAnchor = baseURL.split("#");
+	        var TheParams = tmpAnchor[0];
+	            TheAnchor  = tmpAnchor[1];
+
+	        if(TheParams)
+	            baseURL = TheParams;
+	    }
+
+	    if(TheAnchor)
+	        paramVal += "#" + TheAnchor;
+
+	    var rows_txt = temp + "" + param + "=" + paramVal;
+	    return baseURL + "?" + newAdditionalURL + rows_txt;
+	}
+
+    function handle_pagination_click(e) {
+    	e.preventDefault();
+    	// console.log(e);
+
+    	var page = $(this).data('page');
+    	// console.log("click", "page", page, "shortcode", archivist_shortcode_attributes);
+
+    	$.get(
+    		ajaxurl,
+    		{
+    			action: 'archivist_paginate',
+    			archivist_page: page,
+    			shortcode_attributes: archivist_shortcode_attributes
+    		},
+    		function (response) {
+    			var old_wrapper = $(".archivist_wrapper");
+    			var new_wrapper = $(response).find('.archivist_wrapper');
+
+    			$(new_wrapper).replaceAll(old_wrapper);
+
+    			// update URL
+    			if (window.history && window.history.replaceState) {
+	    			window.history.replaceState({} , '', updateURLParameter(window.location.href, 'archivist_page', page));
+    			}
+    		}
+    	)
+    }
+
+    $(document).on('click', '.archivist_wrapper .archivist-pagination-item a', handle_pagination_click);
+ 
+})(jQuery);
+</script>
+<?php endif ?>
 			<?php
 			$content = ob_get_contents();
 			ob_end_clean();
 			
 			wp_reset_postdata();
 			
-			return $content;
+			// surrounding div is required for pagination JS replacement
+			return '<div class="archivist-outer-wrapper">' . $content . '</div>';
 		}
  
 		public static function get_object() {

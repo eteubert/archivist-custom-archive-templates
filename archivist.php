@@ -449,6 +449,70 @@ if ( ! class_exists( 'archivist' ) ) {
 .archivist-pagination-item {
 	display: inline-block;
 }
+
+/* animation generated with http://cssanimate.com/ */
+.archivist-loading table {
+  animation: fadeOut ease-out 1s;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  -webkit-animation: fadeOut ease-out 1s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-transform-origin: 50% 50%;
+  -moz-animation: fadeOut ease-out 1s;
+  -moz-animation-iteration-count: 1;
+  -moz-transform-origin: 50% 50%;
+  -o-animation: fadeOut ease-out 1s;
+  -o-animation-iteration-count: 1;
+  -o-transform-origin: 50% 50%;
+  -ms-animation: fadeOut ease-out 1s;
+  -ms-animation-iteration-count: 1;
+  -ms-transform-origin: 50% 50%;
+}
+
+@keyframes fadeOut{
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0.1;
+  }
+}
+
+@-moz-keyframes fadeOut{
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0.1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0.1;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0.1;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0.1;
+  }
+}
 </style>
 			<?php
 		}
@@ -548,10 +612,11 @@ if ( ! class_exists( 'archivist' ) ) {
 
     function handle_pagination_click(e) {
     	e.preventDefault();
-    	// console.log(e);
 
     	var page = $(this).data('page');
-    	// console.log("click", "page", page, "shortcode", archivist_shortcode_attributes);
+		var old_wrapper = $(".archivist_wrapper");
+
+		old_wrapper.addClass('archivist-loading');
 
     	$.get(
     		ajaxurl,
@@ -561,7 +626,6 @@ if ( ! class_exists( 'archivist' ) ) {
     			shortcode_attributes: archivist_shortcode_attributes
     		},
     		function (response) {
-    			var old_wrapper = $(".archivist_wrapper");
     			var new_wrapper = $(response).find('.archivist_wrapper');
 
     			$(new_wrapper).replaceAll(old_wrapper);

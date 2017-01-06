@@ -508,7 +508,6 @@ if ( ! class_exists( 'archivist' ) ) {
 </style>
 			<?php
 		}
-
 		
 		private function display_by_query_parameters($parameters, $template) {
 			

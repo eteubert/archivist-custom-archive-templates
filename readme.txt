@@ -43,6 +43,16 @@ Use HTML and any of the following template placeholders.
 - `%COMMENTS%` - The post comment count.
 - `%ACF|field_name%` - Display [ACF](https://www.advancedcustomfields.com) field. Uses the [`get_field()`](https://www.advancedcustomfields.com/resources/get_field/) function.
 
+= Pagination =
+
+If you have many entries, you may prefer to paginate. The archivist comes with asynchronous pagination built-in. Use the `pagination` parameter in the shortcode to activate it. Its value is the amount of items you want to display per page.
+
+    [archivist category="kitten" pagination="10"]
+
+Pagination controls are displayed both on top and at the bottom of the archive. You can customize this by setting `controls` to `top` or `bottom`.
+
+    [archivist category="kitten" pagination="10" controls="top"]
+
 = Filter by Query =
 
 Are you feeling bold? Is filtering by category or archive not satisfying you? Read on, I've got a challenge for you.

@@ -884,7 +884,12 @@ if ( ! class_exists( 'archivist' ) ) {
 								  	<pre>%DATE%</pre><br/><?php echo __( 'The post date with default format.', 'archivist' ) ?> <br/><br/>
 								  	<pre>%DATE|...%</pre><br/><?php echo __( 'The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>', 'archivist' ) ?> <br/><br/>
 								  	<pre>%POST_THUMBNAIL|...x...%</pre><br/><?php echo __( 'The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>', 'archivist' ) ?> <br/><br/>
-								  	<pre>%COMMENTS%</pre><br/><?php echo __( 'The post comment count.', 'archivist' ) ?> <br/>
+								  	<pre>%COMMENTS%</pre><br/><?php echo __( 'The post comment count.', 'archivist' ) ?> <br/><br/>
+								  	<pre>%ACF|field_name%</pre><br/><?php echo sprintf(
+								  		__( 'Display %s field. Uses the %s function.', 'archivist' ),
+								  			'<a href="https://www.advancedcustomfields.com" target="_blank">ACF</a>',
+								  			'<a href="https://www.advancedcustomfields.com/resources/get_field/" target="_blank"><pre>get_field()</pre></a>'
+								  		); ?> <br/>
 								</p>
 							</div>
 

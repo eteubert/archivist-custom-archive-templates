@@ -41,6 +41,7 @@ Use HTML and any of the following template placeholders.
 - `%DATE|...%` - The post date with custom format. Example: `%DATE|Y/m/d%`
 - `%POST_THUMBNAIL|...x...%` - The post thumbnail with certain dimensions. Example: `%POST_THUMBNAIL|75x75%`
 - `%COMMENTS%` - The post comment count.
+- `%ACF|field_name%` - Display [ACF](https://www.advancedcustomfields.com) field. Uses the [`get_field()`](https://www.advancedcustomfields.com/resources/get_field/) function.
 
 = Filter by Query =
 

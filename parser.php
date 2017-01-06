@@ -25,6 +25,15 @@ class Archivist_Parser {
 	private function replace_post_meta( $matches ) {
 		return get_post_meta( $this->post->ID, $matches[ 1 ], true );
 	}
+
+	private function replace_acf_field( $matches ) {
+		
+		if ( ! function_exists( 'get_field' ) ) {
+			return;
+		}
+
+		return get_field( $matches[ 1 ], $this->post->ID );
+	}
 	
 	private function replace_date( $matches ) {
 		return get_the_date( $matches[ 1 ] );
@@ -94,6 +103,13 @@ class Archivist_Parser {
 		$this->template = preg_replace_callback(
 		    '/%POST_THUMBNAIL\|(\d+)x(\d+)%/',
 		    array( $this, 'replace_thumbnails' ),
+		 	$this->template
+		 );
+
+		// acf field
+		$this->template = preg_replace_callback(
+		    '/%ACF\|(.*)%/',
+		    array( $this, 'replace_acf_field' ),
 		 	$this->template
 		 );
 		

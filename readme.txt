@@ -113,6 +113,10 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.7.2 = 
+
+* fix: define own ajaxurl in case the global one is not defined
+
 = 1.7.1 = 
 
 * fix: set jQuery as dependency

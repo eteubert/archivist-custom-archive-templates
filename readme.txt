@@ -43,6 +43,13 @@ Use HTML and any of the following template placeholders.
 - `%COMMENTS%` - The post comment count.
 - `%ACF|field_name%` - Display [ACF](https://www.advancedcustomfields.com) field. Uses the [`get_field()`](https://www.advancedcustomfields.com/resources/get_field/) function.
 
+You can add your own placeholders:
+
+    add_filter( 'archivist_template_render', function( $template, $post ) {
+        // modify $template
+        return $template;
+    }, 10, 2 );
+
 = Pagination =
 
 If you have many entries, you may prefer to paginate. The archivist comes with asynchronous pagination built-in. Use the `pagination` parameter in the shortcode to activate it. Its value is the amount of items you want to display per page.
@@ -105,6 +112,13 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 2. Example Archive
 
 == Changelog ==
+
+= 1.7 =
+
+* New Feature: Pagination. Use `pagination="10"` as shortcode parameter to paginate your archive with 10 items per page. See readme for more details.
+* New Feature: Support for ACF Fields. `%ACF|field_name%` - Display [ACF](https://www.advancedcustomfields.com) field. Uses the [`get_field()`](https://www.advancedcustomfields.com/resources/get_field/) function.
+
+This update is sponsored by [Light Aware](http://lightaware.org/).
 
 = 1.6 =
 

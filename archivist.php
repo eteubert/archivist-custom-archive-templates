@@ -98,8 +98,10 @@ if ( ! class_exists( 'archivist' ) ) {
 
 			add_action( 'wp_ajax_archivist_paginate',        array( $this, 'ajax_page') );
 			add_action( 'wp_ajax_nopriv_archivist_paginate', array( $this, 'ajax_page') );
-			
-			wp_register_script( 'archivist-pagination', plugins_url('js/archivist.js', __FILE__), ['jquery'] );
+
+			add_action('wp_enqueue_scripts', function () {
+				wp_register_script( 'archivist-pagination', plugins_url('js/archivist.js', __FILE__), ['jquery'] );
+			});
 
 			// only run update hooks if the plugin is already active
 			$active_plugins = get_option( 'active_plugins' );

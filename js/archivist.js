@@ -54,7 +54,7 @@
         old_wrapper.addClass('archivist-loading');
 
         $.get(
-            ajaxurl,
+            archivist.ajaxurl,
             {
                 action: 'archivist_paginate',
                 archivist_page: page,

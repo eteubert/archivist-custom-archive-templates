@@ -353,41 +353,36 @@ if ( ! class_exists( 'archivist' ) ) {
 
 			return $parameters;
 		}
-		
+
+		public function set_post_status_parameters($parameters, $template) {
+
+			$parameters['post_status'] = apply_filters('archivist_post_status', array('publish'), $template);
+
+			return $parameters;
+		}
+
 		public function display_by_category( $category, $template = false ) {
 			$parameters = array(
 				'posts_per_page' => -1,
-				'category_name'  => $category,
-				'post_status'    => apply_filters('archivist_post_status', array('publish'), $template)
+				'category_name'  => $category
 			);
 
 			$parameters = $this->add_pagination_parameters($parameters);
+			$parameters = $this->set_post_status_parameters($parameters, $template);
 
-			$loop = new WP_Query( $parameters );
-			
-			if ( ! $template ) {
-				$template = self::get_default_template_name();
-			}
-						
-			return $this->display_by_loop( $loop, $template );
+			return $this->display_by_query_parameters($parameters, $template);
 		}
 		
 		public function display_by_tag( $tag, $template = false ) {
 			$parameters = array(
 				'posts_per_page' => -1,
-				'tag'            => $tag,
-				'post_status'    => apply_filters('archivist_post_status', array('publish'), $template)
+				'tag'            => $tag
 			);
 
 			$parameters = $this->add_pagination_parameters($parameters);
+			$parameters = $this->set_post_status_parameters($parameters, $template);
 
-			$loop = new WP_Query( $parameters );
-			
-			if ( ! $template ) {
-				$template = self::get_default_template_name();
-			}
-			
-			return $this->display_by_loop( $loop, $template );
+			return $this->display_by_query_parameters($parameters, $template);
 		}
 		
 		public function display_by_query( $query, $template = false ) {
@@ -400,16 +395,13 @@ if ( ! class_exists( 'archivist' ) ) {
 				$query .= "&posts_per_page=-1";
 			}
 
-			// todo: maybe turn parameter string into array fist?
-			// $parameters = $this->add_pagination_parameters($parameters);
+			// turn query string into parameter array
+			parse_str($query, $parameters);
 
-			$loop = new WP_Query( $query );
-			
-			if ( ! $template ) {
-				$template = self::get_default_template_name();
-			}
-			
-			return $this->display_by_loop( $loop, $template );
+			$parameters = $this->add_pagination_parameters($parameters);
+			$parameters = $this->set_post_status_parameters($parameters, $template);
+
+			return $this->display_by_query_parameters($parameters, $template);
 		}
 		
 		function display_pagination_controls($loop) {
@@ -515,6 +507,18 @@ if ( ! class_exists( 'archivist' ) ) {
 }
 </style>
 			<?php
+		}
+
+		
+		private function display_by_query_parameters($parameters, $template) {
+			
+			$loop = new WP_Query( $parameters );
+			
+			if ( ! $template ) {
+				$template = self::get_default_template_name();
+			}
+						
+			return $this->display_by_loop( $loop, $template );	
 		}
 
 		private function display_by_loop( $loop, $template = false ) {

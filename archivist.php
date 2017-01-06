@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: Archivist - Custom Archive Templates
-Plugin URI: http://www.FarBeyondProgramming.com/wordpress/plugin-archivist-custom-archive
+Plugin URI: https://wordpress.org/plugins/archivist-custom-archive-templates/
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
 Version: 1.7
 Author: Eric Teubert
-Author URI: ericteubert@googlemail.com
+Author URI: eric@ericteubert.de
 License: MIT
 
-Copyright (c) 2011 by Eric Teubert
+Copyright (c) 2017 by Eric Teubert
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,16 +28,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-
-// TODO: refactoring: rethinking plugin architecture
-// - better (more visually pleasing for the eye of the programmer) way to have DEFAULTs
-// - separate module to handle the settings page
-// - some kind of model class for the settings
-// - generic helper functions to make creating settings pages more straight forward
-// - rails-ish redirect after sending of forms, so cmd-r doesn't send them again
-// TODO: icing on the cake - add filters and hooks
-// TODO: enable import & export of templates
-// TODO: maybe an image picker for the default thumbnail?
 
 /**
  * internal version number

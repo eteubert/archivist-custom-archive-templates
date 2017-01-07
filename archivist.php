@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: https://wordpress.org/plugins/archivist-custom-archive-templates/
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.7.2
+Version: 1.7.3
 Author: Eric Teubert
 Author URI: eric@ericteubert.de
 License: MIT
@@ -100,7 +100,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			add_action( 'wp_ajax_nopriv_archivist_paginate', array( $this, 'ajax_page') );
 
 			add_action('wp_enqueue_scripts', function () {
-				wp_register_script( 'archivist-pagination', plugins_url('js/archivist.js', __FILE__), ['jquery'] );
+				wp_register_script( 'archivist-pagination', plugins_url('js/archivist.js', __FILE__), array('jquery') );
 
 				wp_localize_script( 'archivist-pagination', 'archivist', array(
 				    'ajaxurl' => admin_url( 'admin-ajax.php' )

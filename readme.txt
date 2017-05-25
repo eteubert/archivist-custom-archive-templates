@@ -3,7 +3,7 @@ Contributors: eteubert
 Donate link: http://flattr.com/thing/396382/WordPress-Plugin-Archivist-Custom-Archive-Templates
 Tags: archive, loop, shortcode, category, tag, custom, query, template, html, customizable
 Requires at least: 3.0
-Tested up to: 4.7
+Tested up to: 4.7.5
 Stable tag: trunk
 
 Shortcode Plugin to display an archive by category, tag or custom query. Customizable via HTML templates.

@@ -113,6 +113,10 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.7.4 =
+
+* ajax: autoscroll to top
+
 = 1.7.3 = 
 
 * fix use of PHP 5.4 syntax

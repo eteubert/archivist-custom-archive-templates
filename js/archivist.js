@@ -1,5 +1,19 @@
 (function($) {
     "use strict";
+
+    function totalOffset(elem) {
+        if (!elem) elem = this;
+
+        var x = elem.offsetLeft;
+        var y = elem.offsetTop;
+
+        while (elem = elem.offsetParent) {
+            x += elem.offsetLeft;
+            y += elem.offsetTop;
+        }
+
+        return { left: x, top: y };
+    };
      
     function updateURLParameter(url, param, paramVal) {
         var TheAnchor = null;
@@ -64,6 +78,15 @@
                 var new_wrapper = $(response).find('.archivist_wrapper');
 
                 $(new_wrapper).replaceAll(old_wrapper);
+
+                // maybe scroll to top
+                if (new_wrapper && new_wrapper[0]) {
+                    var offset = totalOffset(new_wrapper[0]);
+
+                    if (offset.top < window.scrollY) {
+                        window.scrollTo(0, offset.top);
+                    }
+                }
 
                 // update URL
                 if (window.history && window.history.replaceState) {

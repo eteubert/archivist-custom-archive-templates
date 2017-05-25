@@ -115,7 +115,8 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 = 1.7.4 =
 
-* ajax: autoscroll to top
+* pagination: autoscroll to top when navigating
+* remove flattr / creator box
 
 = 1.7.3 = 
 

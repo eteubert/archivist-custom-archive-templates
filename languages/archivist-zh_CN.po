@@ -1,0 +1,284 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Archivist - Custom Archive Templates\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-21 10:32+0100\n"
+"PO-Revision-Date: 2017-12-22 16:13+0800\n"
+"Last-Translator: Eric Teubert <ericteubert@googlemail.com>\n"
+"Language-Team: zChen <zchen0805@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: /Users/ericteubert/code/archivist-custom-archive-templates\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Language: zh_CN\n"
+"X-Generator: Poedit 2.0.5\n"
+"X-Poedit-SearchPath-0: /Users/ericteubert/code/archivist-custom-archive-templates\n"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:116
+msgid "Sorry, This plugin requires WordPress 3.0+"
+msgstr "抱歉，此插件要求 Wordpress 3.0 及以上版本"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:122
+#, php-format
+msgid "Sorry, This plugin has taken a bold step in requiring PHP 5.3.0+, Your server is currently running PHP %2s, Please bug your host to upgrade to a recent version of PHP which is less bug-prone. At last count, &lt;strong>over 80%% of WordPress installs are using PHP 5.2+&lt;/strong>."
+msgstr "抱歉，此插件已迈出了勇敢的一部，它需要 PHP 5.3.0 及以上版本。您服务器上运行的是 PHP %2s，请升级至更不容易出错的最新版本的 PHP。最近一次的统计表明，&lt;strong>超过 80%% 的Wordpress 都安装使用的是 PHP 5.2+&lt;/strong>。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:374
+#, php-format
+msgid "Archivist Error: Unknown template \"%1s\""
+msgstr "Archivist 错误：未知模板 \"%1s\""
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:441
+#, php-format
+msgid "Template \"%1s\" is now your default. All [archivist ...] shortcodes without a template option will use this to display the archive."
+msgstr "现在默认模板是 “%1s”。所有不含模板选项的 [archivist …] 短代码都会使用该模板来显示归档。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:460
+#, php-format
+msgid "Template \"%1s\" deleted."
+msgstr "模板 “%1s” 已删除。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:513
+#, php-format
+msgid "Template \"%1s\" created."
+msgstr "模板 “%1s” 已创建。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:522
+#, php-format
+msgid "Template \"%1s\" already exists."
+msgstr "模板 “%1s” 已存在。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:546
+msgid "Edit Templates"
+msgstr "编辑模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:549
+msgid "Add Templates"
+msgstr "新增模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:575
+msgid "Creator"
+msgstr "创建者"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:578
+msgid "Hey, I'm Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer."
+msgstr "你好，我是 Eric。我创建了这个插件。<br/> 如果你喜欢的话，请给我买杯啤酒吧。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:597
+#, php-format
+msgid "Get in touch: Visit my <a href=\"%1s\">Homepage</a>, follow me on <a href=\"%2s\">Twitter</a> or look at my projects on <a href=\"%3s\">GitHub</a>."
+msgstr "取得联系：访问我的<a href=\"%1s\">主页</a>，在<a href=\"%2s\">推特</a>上关注我，或者在 <a href=\"%3s\">GitHub</a> 上看看我的项目。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:611
+msgid "Examples"
+msgstr "示例"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:614
+msgid "Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking."
+msgstr "这里是一些短代码示例。把他们复制到任意日志或页面，然后修改成你喜欢的模样。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:618
+msgid "Display all posts in the \"kitten\" category."
+msgstr "显示“kitten”目录下的所有日志。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:622
+msgid "Display all posts tagged with \"kitten\"."
+msgstr "显示所有包含”kitten“标签的日志。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:632
+msgid "Placeholders"
+msgstr "占位符"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:636
+msgid "The post title."
+msgstr "日志标题。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:637
+msgid "The post permalink."
+msgstr "日志永久链接。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:638
+msgid "The post author."
+msgstr "日志作者。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:639
+msgid "The post categories as unordered list."
+msgstr "无序列表形式的日志分类。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:640
+msgid "The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre>"
+msgstr "自定义分隔符的日志分类。示例：<pre>%CATEGORIES|, %</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:641
+msgid "The post tags with default separator."
+msgstr "默认分隔符的日志标签。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:642
+msgid "The post tags with a custom separator. Example: <pre>%TAGS|, %</pre>"
+msgstr "自定义分隔符的日志标签。示例：<pre>%TAGS|, %</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:643
+msgid "The post excerpt."
+msgstr "日志摘要。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:644
+msgid "Any post meta. Example: <pre>%POST_META|duration%</pre>"
+msgstr "任意日志元信息。示例：<pre>%POST_META|duration%</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:645
+msgid "The post date with default format."
+msgstr "默认格式的日志日期。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:646
+msgid "The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre>"
+msgstr "自定义格式的日志日期。示例：<pre>%DATE|Y/m/d%</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:647
+msgid "The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre>"
+msgstr "指定尺寸的日志缩略图。示例：<pre>%POST_THUMBNAIL|75x75%</pre>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:648
+msgid "The post comment count."
+msgstr "日志评论条数。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:666
+msgid "Add Template"
+msgstr "新增模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:675
+msgid "New Template Name"
+msgstr "新模板名称"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:680
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:885
+msgid "This name will be used in the shortcode to identify the template.<br/>Example: If you name the template \"rockstar\", then you can use it with a shortcode like <em>[archivist template=\"rockstar\" category=\"...\"]</em>"
+msgstr "该名称会被用于短代码中，用于标识模板。<br/>示例：如果你把模板命名为“rockstar”，那么你可以使用类似的短代码：<em>[archivist template=\"rockstar\" category=\"…\"]</em>"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:688
+msgid "Add New Template"
+msgstr "添加新的模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:741
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:777
+msgid "Choose Template"
+msgstr "选择模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:762
+msgid "Template to edit"
+msgstr "需要编辑的模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:768
+msgid "(default)"
+msgstr "（默认）"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:790
+#, php-format
+msgid "Settings for \"%1s\" Template"
+msgstr "模板 “%1s” 的设置"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:793
+msgid "Default Template"
+msgstr "默认模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:799
+msgid "Set to Default"
+msgstr "设为默认"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:818
+msgid "Template"
+msgstr "模板"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:823
+msgid "Before"
+msgstr "前部"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:828
+msgid "Add HTML to be displayed before the archive loop."
+msgstr "添加需要在归档循环前部显示的 HTML。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:834
+msgid "Element"
+msgstr "元素"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:839
+msgid "Add HTML for each archive element. Use placeholder tags to display post data."
+msgstr "为每个归档元素添加 HTML。使用占位符标签来显示日志数据。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:845
+msgid "After"
+msgstr "尾部"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:850
+msgid "Add HTML to be displayed after the archive loop."
+msgstr "添加需要在归档循环尾部显示的 HTML。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:856
+msgid "Other"
+msgstr "其他"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:861
+msgid "Custom CSS"
+msgstr "自定义 CSS"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:869
+msgid "Default Thumbnail url"
+msgstr "默认缩略图地址"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:874
+msgid "If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used."
+msgstr "如果你使用了 <em>%POST_THUMBNAIL|…x…%</em> 占位符但该日志没有缩略图的话，此图像会被显示。"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:880
+msgid "Template Name"
+msgstr "模板名称"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:893
+msgid "Save Changes"
+msgstr "保存更改"
+
+#: /Users/ericteubert/code/archivist-custom-archive-templates/archivist.php:894
+msgid "delete permanently"
+msgstr "永久删除"
+
+#~ msgid "Archivist Options"
+#~ msgstr "Archivist Optionen"
+
+#~ msgid "General Settings"
+#~ msgstr "Einstellungen"
+
+#~ msgid ""
+#~ "Add HTML for each archive element. Use placeholder tags to display post data.\n"
+#~ "\t\t\t\t\t<br/><br/>\n"
+#~ "\t\t\t\t  \t<pre>%TITLE%</pre> - The post title. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%PERMALINK%</pre> - The post permalink. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%AUTHOR%</pre> - The post author. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES%</pre> - The post categories as unordered list. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES|...%</pre> - The post categories with a custom separator. Example: <pre>%CATEGORIES|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%TAGS%</pre> - The post tags with default separator. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%TAGS|...%</pre> - The post tags with a custom separator. Example: <pre>%TAGS|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%EXCERPT%</pre> - The post excerpt. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%POST_META|duration%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE%</pre> - The post date with default format. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE|...%</pre> - The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%COMMENTS%</pre> - The post comment count. <br/>\n"
+#~ "\t\t\t\t\t"
+#~ msgstr ""
+#~ "Dieses HTML wird benutzt, um ein einzelnes Archiv-Element darzustellen. Benutze Platzhalter, um Artikel-spezifische Daten anzuzeigen.\n"
+#~ "\t\t\t\t\t<br/><br/>\n"
+#~ "\t\t\t\t  \t<pre>%TITLE%</pre> - Der Titel des Artikels. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%PERMALINK%</pre> - Der Permalink des Artikels. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%AUTHOR%</pre> - Der Autor des Artikels. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES%</pre> - Die Kategorien des Artikels als ungeordnete Liste. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%CATEGORIES|...%</pre> - Die Kategorien des Artikels mit definiertem Trennzeichen. Beispiel: <pre>%CATEGORIES|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%TAGS%</pre> - Die Tags des Artikels mit dem Standard Trennzeichen. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%TAGS|...%</pre> - Die Tags des Artikels mit definiertem Trennzeichen. Beispiel: <pre>%TAGS|, %</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%EXCERPT%</pre> - The post excerpt. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_META|...%</pre> - Any post meta. Example: <pre>%POST_META|duration%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE%</pre> - The post date with default format. <br/>\n"
+#~ "\t\t\t\t  \t<pre>%DATE|...%</pre> - The post date with custom format. Example: <pre>%DATE|Y/m/d%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%POST_THUMBNAIL|...x...%</pre> - The post thumbnail with certain dimensions. Example: <pre>%POST_THUMBNAIL|75x75%</pre> <br/>\n"
+#~ "\t\t\t\t  \t<pre>%COMMENTS%</pre> - The post comment count. <br/>\n"
+#~ "\t\t\t\t\t"

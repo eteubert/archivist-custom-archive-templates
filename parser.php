@@ -15,7 +15,7 @@ class Archivist_Parser {
 	
 	private function replace_categories( $matches ) {
 		return get_the_category_list( $matches[ 1 ] );
-    }
+	}
 
 	private function replace_post_meta_with_separator( $matches ) {
 		$list = get_post_meta( $this->post->ID, $matches[ 1 ], false );
@@ -26,6 +26,16 @@ class Archivist_Parser {
 		return get_post_meta( $this->post->ID, $matches[ 1 ], true );
 	}
 
+	private function replace_acf_with_separator( $matches ) {
+
+		if ( ! function_exists( 'get_field' ) ) {
+			return;
+		}
+
+		$list = get_field( $matches[ 1 ], $this->post->ID );
+		return implode( $matches[ 2 ], $list );
+
+	}
 	private function replace_acf_field( $matches ) {
 		
 		if ( ! function_exists( 'get_field' ) ) {
@@ -103,6 +113,13 @@ class Archivist_Parser {
 		$this->template = preg_replace_callback(
 		    '/%POST_THUMBNAIL\|(\d+)x(\d+)%/',
 		    array( $this, 'replace_thumbnails' ),
+		 	$this->template
+		 );
+
+		// acf field with separator
+		$this->template = preg_replace_callback(
+		    '/%ACF\|(.*?)\|(.*)%/',
+		    array( $this, 'replace_acf_with_separator' ),
 		 	$this->template
 		 );
 

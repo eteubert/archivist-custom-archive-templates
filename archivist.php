@@ -811,6 +811,11 @@ if ( ! class_exists( 'archivist' ) ) {
 								  			'<a href="https://www.advancedcustomfields.com" target="_blank">ACF</a>',
 								  			'<a href="https://www.advancedcustomfields.com/resources/get_field/" target="_blank"><pre>get_field()</pre></a>'
 								  		); ?> <br/>
+									<pre>%ACF|field_name|...%</pre><br/><?php echo sprintf(
+								  		__( 'Display %s list, separated by custom HTML. Uses the %s function.', 'archivist' ),
+								  			'<a href="https://www.advancedcustomfields.com" target="_blank">ACF</a>',
+								  			'<a href="https://www.advancedcustomfields.com/resources/get_field/" target="_blank"><pre>get_field()</pre></a>'
+								  		); ?> <br/>
 								</p>
 							</div>
 

@@ -599,7 +599,7 @@ if ( ! class_exists( 'archivist' ) ) {
 			$current_template = $this->get_current_template_name();
 			$settings = $this->get_template_options();
 			
-			if ( get_magic_quotes_gpc() ) {
+			if ( function_exists( 'get_magic_quotes_gpc' ) && get_magic_quotes_gpc() ) {
 				// strip slashes so HTML won't be escaped
 			    $_POST      = array_map( 'stripslashes_deep', $_POST );
 			    $_GET       = array_map( 'stripslashes_deep', $_GET );

@@ -437,6 +437,10 @@ if (!class_exists('archivist')) {
 
             // CHANGE DEFAULT action
             if (isset($_POST['change_default']) && strlen($_POST['choose_template_name']) > 0) {
+                if (!wp_verify_nonce($_REQUEST['_archivist_nonce'], 'make_default')) {
+                    return;
+                }
+
                 update_option('archivist_default_template_name', $_POST['choose_template_name']);
                 ?>
 					<div class="updated">
@@ -447,6 +451,10 @@ if (!class_exists('archivist')) {
             }
             // DELETE action
             elseif (isset($_POST['delete']) && strlen($_POST['delete']) > 0) {
+                if (!wp_verify_nonce($_REQUEST['_archivist_nonce'], 'edit')) {
+                    return;
+                }
+
                 unset($settings[$current_template]);
                 update_option('archivist', $settings);
 
@@ -466,6 +474,10 @@ if (!class_exists('archivist')) {
             }
             // EDIT action
             elseif (isset($_POST['action']) && $_POST['action'] == 'edit') {
+                if (!wp_verify_nonce($_REQUEST['_archivist_nonce'], 'edit')) {
+                    return;
+                }
+
                 foreach ($_POST['archivist'] as $key => $value) {
                     $template_name = $key;
                     // update name
@@ -484,6 +496,10 @@ if (!class_exists('archivist')) {
             }
             // CREATE action
             elseif (isset($_POST['archivist_new_template_name'])) {
+                if (!wp_verify_nonce($_REQUEST['_archivist_nonce'], 'create')) {
+                    return;
+                }
+
                 if (isset($settings[$_POST['archivist_new_template_name']])) {
                     $success = false;
                 } else {
@@ -649,7 +665,7 @@ if (!class_exists('archivist')) {
             }
 
             // strip slashes in front of quotes
-            for ($i = 0; $i < 5; ++$i ) {
+            for ($i = 0; $i < 5; ++$i) {
                 $new_settings = array_map('stripslashes_deep', $new_settings);
             }
             update_option('archivist', $new_settings);
@@ -845,6 +861,7 @@ if (!class_exists('archivist')) {
 
 							<div class="inside">
 								<form action="" method="post">
+                                    <?php wp_nonce_field('create', '_archivist_nonce'); ?>
 
 									<table class="form-table">
 										<tbody>
@@ -921,6 +938,7 @@ if (!class_exists('archivist')) {
 								<h3><span><?php _e('Choose Template', 'archivist'); ?></span></h3>
 								<div class="inside">
 									<form action="<?php echo admin_url('options-general.php'); ?>" method="get">
+                                        <?php wp_nonce_field('save', '_archivist_nonce'); ?>
 										<input type="hidden" name="tab" value="edit" />
 										<input type="hidden" name="page" value="archivist_options_handle">
 
@@ -973,6 +991,7 @@ if (!class_exists('archivist')) {
 										<?php _e('Default Template', 'archivist'); ?>
 									<?php } else { ?>
 										<form action="<?php echo admin_url('options-general.php?page=archivist_options_handle'); ?>" method="post">
+                                            <?php wp_nonce_field('make_default', '_archivist_nonce'); ?>
 											<input type="hidden" name="choose_template_name" value="<?php echo $name; ?>">
 											<input type="hidden" name="tab" value="edit">
 											<input type="hidden" name="action" value="change_default">
@@ -984,8 +1003,7 @@ if (!class_exists('archivist')) {
 							</h3>
 							<div class="inside">
 								<form action="<?php echo admin_url('options-general.php?page=archivist_options_handle'); ?>" method="post">
-									<?php // settings_fields( 'archivist-options' );?>
-									<?php // do_settings_fields( 'archivist-options' );?>
+									<?php wp_nonce_field('edit', '_archivist_nonce'); ?>
 									<input type="hidden" name="choose_template_name" value="<?php echo $name; ?>">
 									<input type="hidden" name="tab" value="edit">
 									<input type="hidden" name="action" value="edit">

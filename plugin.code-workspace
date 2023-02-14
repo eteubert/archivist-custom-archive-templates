@@ -1,0 +1,12 @@
+{
+	"folders": [{
+			"path": ".",
+			"name": "Archivist"
+		},
+		{
+			"path": "../../..",
+			"name": "WordPress"
+		}
+	],
+	"settings": {}
+}

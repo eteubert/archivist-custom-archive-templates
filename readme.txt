@@ -3,8 +3,8 @@ Contributors: eteubert
 Donate link: http://flattr.com/thing/396382/WordPress-Plugin-Archivist-Custom-Archive-Templates
 Tags: archive, loop, shortcode, category, tag, custom, query, template, html, customizable
 Requires at least: 3.0
-Tested up to: 4.9.1
-Stable tag: trunk
+Tested up to: 6.1.1
+Stable tag: 1.7.5
 
 Shortcode Plugin to display an archive by category, tag or custom query. Customizable via HTML templates.
 
@@ -64,15 +64,15 @@ Pagination controls are displayed both on top and at the bottom of the archive. 
 
 Are you feeling bold? Is filtering by category or archive not satisfying you? Read on, I've got a challenge for you.
 WordPress uses a certain query syntax to define the so called loop which is used to display the archive.
-You can find the complete documentation at http://codex.wordpress.org/Class_Reference/WP_Query 
+You can find the complete documentation at http://codex.wordpress.org/Class_Reference/WP_Query
 and you can take advantage of every single parameter or combination of parameters listed there. Some examples:
 
 	[archivist query="year=1984&author_name=gorwell"]
-	
+
 Lists all entries from the year `1984` by the author with `user_nicename` `gorwell`.
 
 	[archivist query="tag=straw+mask&post_status=private&orderby=comment_count&order=DESC"]
-	
+
 Lists all entries marked with post status `private` which are tagged with both `straw` and `mask`, ordered by the amount of comments in a descending order.
 
 = Using multiple Templates =
@@ -83,7 +83,7 @@ Therefore the following two shortcodes yield identical results.
 
 	[archivist category="kitten"]
 	[archivist category="kitten" template="default"]
-	
+
 You can add as many templates as you like. Think twice before deleting one. If it's still in use, the archive can't be displayed.
 
 == Installation ==
@@ -92,20 +92,6 @@ You can add as many templates as you like. Think twice before deleting one. If i
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Place `[archivist category="kitten"]` in your archive post or page
 
-== Frequently Asked Questions ==
-
-= W00t, it says I need PHP 5.3?! =
-
-PHP 5.3 is available since June 2009.
-It introduced some long overdue features to the language and I refuse to support legacy junk.
-Please ask your hoster to update, kindly.
-
-= Can I help to add a feature? =
-
-That would be awesome!
-
-Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the project, add your feature and create a Pull Request. I'll be happy to review and add your changes.
-
 == Screenshots ==
 
 1. The Admin Interface
@@ -113,19 +99,24 @@ Visit https://github.com/eteubert/archivist-custom-archive-templates, fork the p
 
 == Changelog ==
 
+= 1.7.5 =
+
+* fix PHP 8 compatibility
+* fix security issues
+
 = 1.7.4 =
 
 * add Chinese language files
 
-= 1.7.3 = 
+= 1.7.3 =
 
 * fix use of PHP 5.4 syntax
 
-= 1.7.2 = 
+= 1.7.2 =
 
 * fix: define own ajaxurl in case the global one is not defined
 
-= 1.7.1 = 
+= 1.7.1 =
 
 * fix: set jQuery as dependency
 

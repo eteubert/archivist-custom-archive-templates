@@ -742,21 +742,6 @@ if ( ! class_exists( 'archivist' ) ) {
 			?>
 				<!-- Sidebar -->
 				<div class="inner-sidebar">
-						
-					<div class="postbox">
-						<h3><span><?php _e( 'Creator', 'archivist' ); ?></span></h3>
-						<div class="inside">
-							<p>
-								<?php _e( 'Hey, I\'m Eric. I created this plugin.<br/> If you like it, consider to flattr me a beer.', 'archivist' ); ?>
-							</p>
-							<p>
-								<script id='fb61vb1'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ericteubert&button=compact&url=https%3A%2F%2Fflattr.com%2Fprofile%2Fericteubert';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fb61vb1');</script>
-							</p>
-							<p>
-								<?php echo wp_sprintf( __( 'Get in touch: Visit my <a href="%1s">Homepage</a>, follow me on <a href="%2s">Twitter</a> or look at my projects on <a href="%3s">GitHub</a>.', 'archivist' ), 'http://www.ericteubert.de/', 'http://www.twitter.com/ericteubert', 'https://github.com/eteubert' ) ?>
-							</p>
-						</div>
-					</div>
 							
 					<?php
 					$name = $this->get_current_template_name();

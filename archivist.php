@@ -802,15 +802,15 @@ if (!class_exists('archivist')) {
 								<?php echo __('Here are some example shortcodes. Copy them into any of your posts or pages and modify to your liking.', 'archivist'); ?>
 							</p>
 							<p>
-								<input type="text" name="example1" class="large-text" value='[archivist<?php echo $template_part; ?>category="kitten"]'>
+								<input type="text" name="example1" class="large-text" value='[archivist<?php echo esc_attr($template_part); ?>category="kitten"]'>
 								<?php echo __('Display all posts in the "kitten" category.', 'archivist'); ?>
 							</p>
 							<p>
-								<input type="text" name="example2" class="large-text" value='[archivist<?php echo $template_part; ?>tag="kitten"]'>
+								<input type="text" name="example2" class="large-text" value='[archivist<?php echo esc_attr($template_part); ?>tag="kitten"]'>
 								<?php echo __('Display all posts tagged with "kitten".', 'archivist'); ?>
 							</p>
 							<p>
-								<input type="text" name="example3" class="large-text" value='[archivist<?php echo $template_part; ?>query="year=1984"]'>
+								<input type="text" name="example3" class="large-text" value='[archivist<?php echo esc_attr($template_part); ?>query="year=1984"]'>
 								<?php echo __(wp_sprintf('Display all posts published in year 1984. See %1s for all options.', '<a href="http://codex.wordpress.org/Class_Reference/WP_Query">WordPress Codex</a>'), 'archivist'); ?>
 							</p>
 						</div>
@@ -1063,7 +1063,7 @@ if (!class_exists('archivist')) {
 												</th>
 												<td>
 													<div id="archivist_css_editor" style="height: 300px"><?php echo htmlentities($settings['css']); ?></div>
-													<textarea data-mode="css" name="<?php echo $field_name; ?>[css]" rows="10" class="large-text" id="archivist_css"><?php echo $settings['css']; ?></textarea>
+													<textarea data-mode="css" name="<?php echo esc_attr($field_name); ?>[css]" rows="10" class="large-text" id="archivist_css"><?php echo $settings['css']; ?></textarea>
 												</td>
 											</tr>
 											<tr>
@@ -1071,7 +1071,7 @@ if (!class_exists('archivist')) {
 													<?php echo __('Default Thumbnail url', 'archivist'); ?>
 												</th>
 												<td valign="top">
-													<input type="text" name="<?php echo $field_name; ?>[default_thumb]" value="<?php echo $settings['default_thumb']; ?>" id="archivist_default_thumb" class="large-text">
+													<input type="text" name="<?php echo esc_attr($field_name); ?>[default_thumb]" value="<?php echo esc_attr($settings['default_thumb']); ?>" id="archivist_default_thumb" class="large-text">
 													<p>
 														<small><?php echo __('If you are using the <em>%POST_THUMBNAIL|...x...%</em> placeholder and the post has no thumbnail, then this image will be used.', 'archivist'); ?></small>
 													</p>
@@ -1082,7 +1082,7 @@ if (!class_exists('archivist')) {
 													<?php echo __('Template Name', 'archivist'); ?>
 												</th>
 												<td valign="top">
-													<input type="text" name="<?php echo $field_name; ?>[name]" value="<?php echo $settings['name']; ?>" id="archivist_name" class="large-text">
+													<input type="text" name="<?php echo esc_attr($field_name); ?>[name]" value="<?php echo esc_attr($settings['name']); ?>" id="archivist_name" class="large-text">
 													<p>
 														<small><?php echo __('This name will be used in the shortcode to identify the template.<br/>Example: If you name the template "rockstar", then you can use it with a shortcode like <em>[archivist template="rockstar" category="..."]</em>', 'archivist'); ?></small>
 													</p>

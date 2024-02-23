@@ -4,7 +4,7 @@ Donate link: http://flattr.com/thing/396382/WordPress-Plugin-Archivist-Custom-Ar
 Tags: archive, loop, shortcode, category, tag, custom, query, template, html, customizable
 Requires at least: 3.0
 Tested up to: 6.1.1
-Stable tag: 1.7.5
+Stable tag: 1.7.7
 
 Shortcode Plugin to display an archive by category, tag or custom query. Customizable via HTML templates.
 
@@ -98,6 +98,10 @@ You can add as many templates as you like. Think twice before deleting one. If i
 2. Example Archive
 
 == Changelog ==
+
+= 1.7.7 =
+
+* fix security issues (XSS)
 
 = 1.7.5 =
 

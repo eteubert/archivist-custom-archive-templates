@@ -6,14 +6,14 @@ on:
       - "!*-beta*"
 jobs:
   tag:
-    name: New tag
-    runs-on: ubuntu-18.04
+    name: Build and Release to WordPress.org
+    runs-on: ubuntu-20.04
     steps:
     - name: Setup PHP with PECL extension
       uses: shivammathur/setup-php@v2
       with:
         php-version: '7.4'
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v3
     - name: Build
       run: echo "Nothing to build, just take it :)"
     - name: WordPress Plugin Deploy

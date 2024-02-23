@@ -3,7 +3,7 @@
 Plugin Name: Archivist - Custom Archive Templates
 Plugin URI: https://wordpress.org/plugins/archivist-custom-archive-templates/
 Description: Shortcode Plugin to display an archive by category, tag or custom query.
-Version: 1.7.5
+Version: 1.7.7
 Author: Eric Teubert
 Author URI: eric@ericteubert.de
 License: MIT
@@ -728,7 +728,7 @@ if (!class_exists('archivist')) {
             archivist::$settings = $settings;
 
             if (!$settings) {
-                return '<div>'.wp_sprintf(__('Archivist Error: Unknown template "%1s"', 'archivist'), $template).'</div>';
+                return '<div>'.wp_sprintf(__('Archivist Error: Unknown template "%1s"', 'archivist'), esc_attr($template)).'</div>';
             }
 
             if ($this->pagination) {
@@ -963,7 +963,7 @@ if (!class_exists('archivist')) {
 														<?php // TODO: move style stuff to css block/file?>
 														<select name="choose_template_name" id="choose_template_name" style="width:99%">
 															<?php foreach ($all_template_settings as $template_name => $template_settings) { ?>
-																<option value="<?php echo $template_name; ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : ''; ?>><?php echo $template_name.(($template_name == $default_template) ? ' '.__('(default)', 'archivist') : ''); ?></option>
+																<option value="<?php echo esc_attr($template_name); ?>" <?php echo ($template_name == $name) ? 'selected="selected"' : ''; ?>><?php echo $template_name.(($template_name == $default_template) ? ' '.__('(default)', 'archivist') : ''); ?></option>
 															<?php } ?>
 														</select>
 													</td>
@@ -992,7 +992,7 @@ if (!class_exists('archivist')) {
 									<?php } else { ?>
 										<form action="<?php echo admin_url('options-general.php?page=archivist_options_handle'); ?>" method="post">
                                             <?php wp_nonce_field('make_default', '_archivist_nonce'); ?>
-											<input type="hidden" name="choose_template_name" value="<?php echo $name; ?>">
+											<input type="hidden" name="choose_template_name" value="<?php echo esc_attr($name); ?>">
 											<input type="hidden" name="tab" value="edit">
 											<input type="hidden" name="action" value="change_default">
 											<input type="submit" class="button-secondary" name="change_default" value="<?php _e('Set to Default', 'archivist'); ?>" style="position:relative; bottom:3px">
@@ -1004,7 +1004,7 @@ if (!class_exists('archivist')) {
 							<div class="inside">
 								<form action="<?php echo admin_url('options-general.php?page=archivist_options_handle'); ?>" method="post">
 									<?php wp_nonce_field('edit', '_archivist_nonce'); ?>
-									<input type="hidden" name="choose_template_name" value="<?php echo $name; ?>">
+									<input type="hidden" name="choose_template_name" value="<?php echo esc_attr($name); ?>">
 									<input type="hidden" name="tab" value="edit">
 									<input type="hidden" name="action" value="edit">
 
@@ -1022,7 +1022,7 @@ if (!class_exists('archivist')) {
 												</th>
 												<td valign="top">
 													<div id="archivist_template_before_editor" style="height: 200px"><?php echo htmlentities($settings['template_before']); ?></div>
-													<textarea name="<?php echo $field_name; ?>[template_before]" rows="6" class="large-text" id="archivist_template_before"><?php echo $settings['template_before']; ?></textarea>
+													<textarea name="<?php echo esc_attr($field_name); ?>[template_before]" rows="6" class="large-text" id="archivist_template_before"><?php echo $settings['template_before']; ?></textarea>
 													<p>
 														<small><?php echo __('Add HTML to be displayed before the archive loop.', 'archivist'); ?></small>
 													</p>
@@ -1034,7 +1034,7 @@ if (!class_exists('archivist')) {
 												</th>
 												<td valign="top">
 													<div id="archivist_template_editor" style="height: 300px"><?php echo htmlentities($settings['template']); ?></div>
-													<textarea name="<?php echo $field_name; ?>[template]" rows="10" class="large-text" id="archivist_template"><?php echo $settings['template']; ?></textarea>
+													<textarea name="<?php echo esc_attr($field_name); ?>[template]" rows="10" class="large-text" id="archivist_template"><?php echo $settings['template']; ?></textarea>
 													<p>
 														<small><?php echo __('Add HTML for each archive element. Use placeholder tags to display post data.', 'archivist'); ?></small>
 													</p>
@@ -1046,7 +1046,7 @@ if (!class_exists('archivist')) {
 												</th>
 												<td valign="top">
 													<div id="archivist_template_after_editor" style="height: 200px"><?php echo htmlentities($settings['template_after']); ?></div>
-													<textarea name="<?php echo $field_name; ?>[template_after]" rows="6" class="large-text" id="archivist_template_after"><?php echo $settings['template_after']; ?></textarea>
+													<textarea name="<?php echo esc_attr($field_name); ?>[template_after]" rows="6" class="large-text" id="archivist_template_after"><?php echo $settings['template_after']; ?></textarea>
 													<p>
 														<small><?php echo __('Add HTML to be displayed after the archive loop.', 'archivist'); ?></small>
 													</p>
